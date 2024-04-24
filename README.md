@@ -7,16 +7,21 @@
 
 **Cloud Service**
 
--- Ec2 instance
--- RDS (Relation Database Service)
--- ALB (Application Load Balancer)
--- IAM (Identify Access Management)
--- Cloud Watch
+- Ec2 instance
+  
+- RDS (Relation Database Service)
+  
+- ALB (Application Load Balancer)
+  
+- IAM (Identify Access Management)
+  
+- Cloud Watch
 
-**Infrastructure as Code Tool**
+**Infrastructure as Code Tool*
+
 -- Terraform
 
-**CICD Tool**
+**CICD Tool*
 -- Jenkins
 
 **Dev Environment and Architecture** 
