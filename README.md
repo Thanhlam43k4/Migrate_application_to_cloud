@@ -15,7 +15,7 @@
   
 - IAM (Identify Access Management)
   
-- Cloud Watch
+- Cloud Watch (Monitor CPU,MEMORY and logs of Ec2 instance)
 
 **Infrastructure as Code Tool**
 
