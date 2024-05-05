@@ -1,4 +1,4 @@
-# Migrate_application_to_AWS
+    # Migrate_application_to_AWS
 
 
 
@@ -34,7 +34,7 @@
 
 **CLOUD Environment and Architecture**
 
-<img align = "center" alt = "coding" width = "600" src = "https://blogger.googleusercontent.com/img/a/AVvXsEh9Y0_h4sA04pWBLDeAELQC8KmHL9jEfocWBK39l6o6y566lHxKxqr5-uLFbrAUleucpME9EciIhKKzYZxSXiusXDc_r2x70i-GJ25ePFY2qKevG0eG8XswZR2clTbIoIRbUJL8HIkhsYZ1UN1sV6xMS6VHn8FnK_iBPHYdl-JK3FFvCyW1OSurAfEpiU_k">
+<img align = "center" alt = "coding" width = "600" src = "https://blogger.googleusercontent.com/img/a/AVvXsEiqmWdsA9GXMmrN8EvleZQbbSOcSB0IguNtw4pB-DDDwouCUPTepm-Aoa91ZdoOJlQbmdmFVfjy-1qUNuKAaOLFInCtN4YsB0Ou7T8ioqtHfA0FgtMi9BQebXy9mgcd8BpdwDNV-aBdQgnoAVn4oIGhJrzb6Pq3YIVZPbA-CJL4ZSSxt18-ghpMxkrWsIhL">
 
 
 
