@@ -1,5 +1,6 @@
 # Launch Cloud Infrastructure with Terraform
 
+
 **VPC Description**
 
 
@@ -26,3 +27,10 @@
 **EC2 Description**
 
 - Security_Group: 8080, 3000 ,80 tcp 22 ssh from outside 
+
+
+**Role in IAM**
+
+- Attach **AmazonRDSFullAccess** to 2 ec2 instances for it can access to RDS database 
+
+instance
