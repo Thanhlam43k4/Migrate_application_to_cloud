@@ -2,7 +2,9 @@
   services:
     front_end:
       container_name: front_end
-      image: thanhlam2k4/microservice-fe
+      build:
+        context: ./front_end
+        dockerfile: Dockerfile
       ports:
       - "3000:3000"
       restart: always
@@ -14,7 +16,9 @@
 
     customer:
       container_name: customer
-      image: thanhlam2k4/microservice-customer
+      build:
+       context: ./customer
+       dockerfile: Dockerfile 
       ports:
         - "8003:8003" 
       restart: always
@@ -23,7 +27,9 @@
 
     product:
       container_name: product
-      image: thanhlam2k4/microservice-product
+      build:
+       context: ./product
+       dockerfile: Dockerfile
       ports:
         - "8001:8001" 
       restart: always
