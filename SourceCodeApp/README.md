@@ -1,5 +1,1 @@
-### You can clone source code from my previous project Microservices_Nodejs
-
-LINK PROJECT:
-
-### https://github.com/Thanhlam43k4/Microservices_Nodejs.git
+### Basic Microservice application for with function login and register and frontend 
