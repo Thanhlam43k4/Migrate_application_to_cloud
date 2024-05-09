@@ -1,15 +1,16 @@
 import mysql from 'mysql2';
 let con = null
 //Config Mysql
-
+import * as dotenv from 'dotenv'
+dotenv.config({path : '../.env'})
 
 async function Create_connect()
 {
     const mysqlConfig= {
-        host: "mysql_server",
-        user: "root",
-        password:"root",
-        database:"customer_db"
+        host: process.env.MYSQL_HOST,
+        user: process.env.MYSQL_USER,
+        password: process.env.MYSQL_PASSWORD,
+        database: process.env.MYSQL_DATABASE
     }
     con = mysql.createConnection(mysqlConfig)
     con.connect(function(err){

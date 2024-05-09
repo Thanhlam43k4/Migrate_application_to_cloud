@@ -1,2 +1,8 @@
-./SoureCodeApp/customer/node_modules
-./SoureCodeApp/product/node_modules
+SourceCodeApp/customer/node_modules
+
+
+SourceCodeApp/frontend/node_modules
+
+SouceCodeApp/product/node_modules
+
+SouceCodeApp/shopping/node_modules
