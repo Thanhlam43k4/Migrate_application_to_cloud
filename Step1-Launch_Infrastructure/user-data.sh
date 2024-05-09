@@ -44,5 +44,8 @@ sudo chmod +x /usr/local/bin/docker-compose
 docker-compose version
 
 ###Install git in Amazon EC2 instance
-sudo yum install git
+sudo yum install git -y
 
+###Clone source code
+
+git clone https://github.com/Thanhlam43k4/Migrate_application_to_cloud.git

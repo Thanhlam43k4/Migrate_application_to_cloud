@@ -55,6 +55,8 @@ resource "aws_instance" "ec2_public2" {
     availability_zone = var.availability_zone[1]
     vpc_security_group_ids = [aws_security_group.sg_aws.id]
     key_name = var.key_id
+    
+    user_data = file(var.user-data)
     tags = {
         Name = "Ec2-instance"
     }

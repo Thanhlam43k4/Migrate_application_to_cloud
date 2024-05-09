@@ -3,7 +3,7 @@
     front_end:
       container_name: front_end
       build:
-        context: ./front_end
+        context: ./frontend
         dockerfile: Dockerfile
       ports:
       - "3000:3000"
@@ -22,6 +22,8 @@
       ports:
         - "8003:8003" 
       restart: always
+      env_file:
+        - .env 
       networks:
         - micro-dev-net
 
@@ -33,6 +35,8 @@
       ports:
         - "8001:8001" 
       restart: always
+      env_file:
+        - .env 
       networks:
         - micro-dev-net
         
