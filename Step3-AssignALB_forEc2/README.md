@@ -58,8 +58,7 @@ Configure target groups and routing for your load balancer. Click on the "Next: 
 
 **Application Load Balancer**
 
-<img align = "center" alt = "coding" width = "600" src = "https://blogger.googleusercontent.com/img/a/AVvXsEjD8tUUNIyQTAt0ubJO5Mzs9jYBRiD_3UL5WzRb9wvhqziX3ZZp_uDffT0HOA-0jZdx8f1lYy2df8qfnbOAIZxp9VfYbqsRhnmYAQhG3X7HRsG-QEwWn0IYlEdJstVokBSTCZKB03cE1fTxm6WMQU3t05lqDj3z-LAp6c_WrbGsJuDUogc8KPCoYQohY80M
-">
+<img align = "center" alt = "coding" width = "600" src = "https://blogger.googleusercontent.com/img/a/AVvXsEjD8tUUNIyQTAt0ubJO5Mzs9jYBRiD_3UL5WzRb9wvhqziX3ZZp_uDffT0HOA-0jZdx8f1lYy2df8qfnbOAIZxp9VfYbqsRhnmYAQhG3X7HRsG-QEwWn0IYlEdJstVokBSTCZKB03cE1fTxm6WMQU3t05lqDj3z-LAp6c_WrbGsJuDUogc8KPCoYQohY80M">
 
 
 Register instances or IP addresses with your target group. Click on the "Next: Review" button when you're done.
