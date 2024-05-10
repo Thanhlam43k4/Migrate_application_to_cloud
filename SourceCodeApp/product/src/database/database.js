@@ -9,12 +9,13 @@ async function Create_connect()
         host: process.env.MYSQL_HOST, //for product mysql_server
         user: process.env.MYSQL_USER,
         password:process.env.MYSQL_PASSWORD,
-        database:process.env.MMYSQL_DATABASE
+        database:process.env.MYSQL_DATABASE
     }
     con = mysql.createConnection(mysqlConfig)
     con.connect(function(err){
         if(err) throw err;
-        else console.log('Connected to Database');
+        else console.log(process.env.MYSQL_DATABASE);
+
     })
 }
 export {

@@ -36,7 +36,6 @@ app.get('/addproduct',(req,res) =>{
 
 
 
-// Handle login form submission
 app.post('/login', async (req, res) => {
   try {
     const response = await axios.post('http://customer:8003/login', req.body);//dockerfile http://customer:8003/login
@@ -57,7 +56,6 @@ app.post('/login', async (req, res) => {
     }
   }
 });
-
 
 
 
