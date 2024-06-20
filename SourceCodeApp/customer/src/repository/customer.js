@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs'
 import * as dotenv from 'dotenv'
 import { con } from '../database/database.js'
 import axios  from 'axios'
-dotenv.config()
+dotenv.config({path : '../.env'})
 
 async function comparePassword(plainPassword, hashedPassword) {
     try {
@@ -59,7 +59,8 @@ const updateCus = async ({
     }
 }
 async function fetchAllProducts() {
-    const productAPIUrl = `http://product:8001/api/v1/data`;
+    const productAPIUrl = `http://${process.env.PRODUCT_SERVICE_URL}:${process.env.PRODUCT_PORT}/api/v1/data`;
+    console.log(productAPIUrl);
     try {
         const response = await axios.get(productAPIUrl);
         const productDetails = response.data; // Access the 'results' property
@@ -69,6 +70,14 @@ async function fetchAllProducts() {
         throw err; // Propagate the error
     }
 }
+async function getUser(username,email){
+    const  userDetail = {
+        username: username,
+        email: email,
+    }
+    return userDetail;
+    
+}
 export default {
-    signup, updateCus,fetchAllProducts,comparePassword
+    signup, updateCus,fetchAllProducts,comparePassword, getUser
 }

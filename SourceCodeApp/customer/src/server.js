@@ -2,7 +2,8 @@ import express from 'express'
 import * as dotenv from 'dotenv'
 import { Create_connect,con } from './database/database.js'
 import bodyParser  from 'body-parser'
-dotenv.config()
+dotenv.config({path : '../.env'})
+
 import customerRoutes from './routes/index.js'
 import { configViewEngine } from './config/viewEngine.js'
 const port = process.env.PORT || 8003
@@ -17,6 +18,6 @@ app.use('/',customerRoutes);
 
 
 app.listen(port,()=>{
-     Create_connect();
+    Create_connect();
     console.log(`Customer listening on port ${port}`)
 })

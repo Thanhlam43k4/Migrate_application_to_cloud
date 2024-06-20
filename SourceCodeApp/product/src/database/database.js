@@ -14,7 +14,7 @@ async function Create_connect()
     con = mysql.createConnection(mysqlConfig)
     con.connect(function(err){
         if(err) throw err;
-        else console.log(process.env.MYSQL_DATABASE);
+        else console.log('Connect database successfully!!');
 
     })
 }

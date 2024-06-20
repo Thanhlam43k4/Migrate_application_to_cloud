@@ -10,8 +10,14 @@ import { fetchData } from "../routes/api.js";
 import bcrypt from 'bcryptjs'
 import customerRepository from '../repository/customer.js'
 
+import jwt from "jsonwebtoken"
+
+import dotenv from "dotenv"
+dotenv.config({path : '../.env'})
 
 
+
+const JWT_SECRET = process.env.JWT_SECRET
 async function getAllUser(req, res) {
     const apiData = await fetchData();
     con.query('SELECT * FROM customers', function (err, rows) {
@@ -69,30 +75,33 @@ async function login(req, res) {
         console.log('Error input type');
         return res.status(400).json({ error: errors.array() })
     }
-    let email = req.body.email;
-    let password = req.body.password;
+    let email_ = req.body.email;
+    let password_ = req.body.password;
+    let username = null;
     // const {email,password} = req.body;
-    queryAsync('SELECT * FROM customers WHERE email = ?', [email])
+    queryAsync('SELECT * FROM customers WHERE email = ?', [email_])
         .then((results) => {
             if (results.length > 0) {
+                username = results[0].username;
+                
                 const customerpassword = results[0].password;
-                return customerRepository.comparePassword(password, customerpassword);
+                
+                return customerRepository.comparePassword(password_, customerpassword);
             }
         })
         .then((passwordMatch) => {
             if (passwordMatch) {
-                console.log('Login successfully');
-                return customerRepository.fetchAllProducts();
+                const token = jwt.sign({username: username,email: email_}, JWT_SECRET)
+                console.log(`Login successfully with token ${token}`);
+        
+                ///return customerRepository.getUser(username,email_);
+                
+                res.status(200).json({msg: 'Login Successfully',token});
             } else {
                 throw new Error('Password does not match');
             }
         })
-        .then((data) => {
-            if (data) {
-                console.log(data);
-                res.status(200).json({ data });
-            }
-        })
+      
         .catch((err) => {
             console.error('Error during login:', err);
             res.status(500).json({ error: 'Internal Server Error' });
@@ -129,11 +138,25 @@ async function getHomePage(req, res) {
     res.render('home.ejs')
 
 }
+async function getProducts(req,res){
+    const productAPIUrl = `http://${process.env.PRODUCT_SERVICE_URL}:${process.env.PRODUCT_PORT}/api/v1/data`;
+    console.log(productAPIUrl);
+    try{
+        const response = await axios.get(productAPIUrl);
+        const productDetails = response.data; // Access the 'results' property
+        return productDetails;  
+    }catch(err){
+        console.log('Error fetching product data:', err.message);
+        throw err; // Propagate the error
+    }
+    
+}
 export default {
     getAllUser,
     signup,
     login,
     getProfile,
     addInforCus,
-    getHomePage
+    getHomePage,
+    getProducts
 }

@@ -19,7 +19,9 @@ router.post('/signup',
 
 router.get('/:id',customerControllers.getProfile);
 
-router.post('/:id/add-info',customerControllers.addInforCus)
+router.post('/:id/add-info',customerControllers.addInforCus);
+
+router.get('/get-products',customerControllers.getProducts);
 
 router.post('/login',
     body('email').isEmail(),
