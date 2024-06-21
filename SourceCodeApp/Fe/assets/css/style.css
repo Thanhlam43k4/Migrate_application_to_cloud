@@ -6,9 +6,9 @@ body {
     box-sizing: border-box;
 }
 
-.main {
+main {
     width: 100%;
-    margin: 0 auto;
+    background-color: aqua;
 }
 
 header {
@@ -72,16 +72,23 @@ nav ul li a:hover {
     background-color: #e80;
 }
 main .img-title img{
-    width: 80%;
-}
-.img-title{
-    text-align: center;
-    padding: 20px;
+    width: 100%;
 
+}
+main .img-title img:hover{
+    transform: scale(1.01);
+    transition: transform 0.5s;
+}
+    
+main .img-title{
+    margin: 5%;
 }
 main {
     margin-top: 50px;
-    padding: 20px;
     background-color: #ffffff;
-    height: 1000px;
+}
+main .news{
+    display: flex;
+    background-color: #e80;
+    margin: 0 5%;
 }
