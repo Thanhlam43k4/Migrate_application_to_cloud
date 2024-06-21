@@ -16,7 +16,11 @@ header {
     justify-content: space-between;
     align-items: center;
     background-color: #e9e5e5;
-    box-shadow: 0 2px 5px rgb(255, 4, 4);
+    box-shadow: 0 2px 15px #1C3377;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
 }
 .logo{
     float: left;
@@ -67,8 +71,16 @@ nav ul li a:hover {
 .login a:hover {
     background-color: #e80;
 }
+main .img-title img{
+    width: 80%;
+}
+.img-title{
+    text-align: center;
+    padding: 20px;
 
+}
 main {
+    margin-top: 50px;
     padding: 20px;
     background-color: #ffffff;
     height: 1000px;
