@@ -97,14 +97,12 @@ footer{
     background-color: #17376E;
 }
 .footer1 {
-    background-color: #17376E;
     margin:0 5%;
     padding: 20px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    border-bottom: 2px solid #fff9f9;
-
+    border-bottom: dashed rgb(255, 255, 255);
 }
 
 .footer1 .thongtin1,
@@ -145,3 +143,72 @@ footer{
     margin-right: 8px;
     color: #ebeef1;
 }
+
+.footer2 {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin:0 5%;
+}
+
+.footer2 .thongtin5,
+.footer2 .thongtin6 {
+    flex: 1 1 200px;
+    margin: 10px;
+    text-align: left;
+}
+
+.footer2 .thongtin5 a {
+    display: block;
+    color: #ffffff;
+    text-decoration: none;
+    margin: 5px 0;
+    transition: color 0.3s;
+}
+
+.footer2 .thongtin5 a:hover {
+    color: #007BFF;
+}
+
+.footer2 .thongtin5 i {
+    margin-right: 8px;
+    color: #007BFF;
+}
+
+.footer2 .thongtin6 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    flex: 1 1 30%;
+}
+
+.footer2 .thongtin6 a {
+    display: inline-block;
+    margin: 5px 0;
+    font-size: 1.5em;
+    color: #ffffff;
+    transition: color 0.3s;
+}
+
+.footer2 .thongtin6 a:hover {
+    color: #007BFF;
+}
+
+.thongtin6 button{
+    border: 2px solid white;
+    background-color: rgba(255, 255, 255, 0);
+    padding: 0 12px;
+    color: white;
+    border-radius: 15px;
+}
+.thongtin6 button:hover{
+    background-color: white;
+    color: #000000;
+}
+
+.thongtin6 p{
+    font-size: 1.0em;
+}
+
+
