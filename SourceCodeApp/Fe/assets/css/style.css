@@ -92,3 +92,56 @@ main .news{
     background-color: #e80;
     margin: 0 5%;
 }
+footer{
+    margin-top: 20px;
+    background-color: #17376E;
+}
+.footer1 {
+    background-color: #17376E;
+    margin:0 5%;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    border-bottom: 2px solid #fff9f9;
+
+}
+
+.footer1 .thongtin1,
+.footer1 .thongtin2,
+.footer1 .thongtin3,
+.footer1 .thongtin4 {
+    flex: 1 1 200px;
+    margin: 10px;
+    text-align: left;
+}
+
+.footer1 h2 {
+    font-size: 1.2em;
+    color: #fefbfb;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #fff9f9;
+    padding-bottom: 5px;
+    text-transform: uppercase;
+    text-shadow: 1px 3px 3px rgb(0, 0, 0);
+}
+.footer1 span{
+    text-transform: capitalize;
+}
+
+.footer1 a {
+    display: block;
+    color: #fefbfb;
+    text-decoration: none;
+    margin: 5px 0;
+    transition: color 0.3s;
+}
+
+.footer1 a:hover {
+    color: #007bff;
+}
+
+.footer1 i {
+    margin-right: 8px;
+    color: #ebeef1;
+}
