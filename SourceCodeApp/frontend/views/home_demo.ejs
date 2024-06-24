@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VNU University of Engineering and Technology - VNU-UET</title>
+    <link rel="icon" href="/images/logo.svg" type="image/svg">
+
     <link rel="stylesheet" href="/stylesheets/style.css">
     <script src="https://kit.fontawesome.com/c991f90e06.js" crossorigin="anonymous"></script>
 </head>
@@ -14,8 +16,7 @@
         <header>
             <!-- logo -->
             <div class="logo">
-                <a href="/homePage"> <img src="https://blogger.googleusercontent.com/img/a/AVvXsEjf2g77FTZv4jq8Dan0WDlLAe9PrnCnk7aLGBuPFmBAkRCcMZaxd4oQARSjJU9qCyG-5-VXQziAFpDP3X4SgWaH3jRjLIEMLMO2Y9pHXih2kT6DWMj-clj5dp4ZiJSKapeajlosBwRDIpEk0GEkQDWIiYR7tg3ZlK9szD1B9K4KjBhyLBOAJGbt9Pm9E29E
-                    " alt="University Icon" class="university-icon">
+                <a href="/homePage"> <img src="/images/logo.svg" alt="University Icon" class="university-icon">
                 </a>
             </div>
             <!-- menu ve truong -->
@@ -27,6 +28,7 @@
                     <li><a href="/homePage">Giảng viên</a></li>
                     <li><a href="/homePage">Tuyển sinh</a></li>
                     <li><a href="/homePage">Tuyển dụng</a></li>
+                    <li><a href="/product-table">Cửa Hàng</a></li>
                 </ul>
             </nav>
 
@@ -36,11 +38,8 @@
                         <h4 class="welcome-message">Welcome, <span class="username">
                                 <%= user.username %>
                             </span></h4>
-                            <a class="logout" href="/logout">Đăng xuất</a>
-                    </div>
-                    <div class="bottom-row">
-                        <a  href="/myCart">Giỏ Hàng</a>
-                        <a href="/product-table">Cửa Hàng</a>
+                            <a class="mycart" href="/myCart"><i class="fa-solid fa-cart-arrow-down"></i></a>
+                            <a class="logout" href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a>
                     </div>
                 </div>
 
@@ -48,10 +47,8 @@
 
                 <% } else { %>
                     <div class="login">
-                        <a href="/homePage">Trang chủ</a>
-                        <a href="/signup">Đăng ký</a>
-                        <a href="/Product-Table">Cửa Hàng</a>
                         <a href="/login">Đăng nhập</a>
+                        <a href="/signup">Đăng ký</a>
                         <% if (notification) { %>
                             <div class="notification">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"

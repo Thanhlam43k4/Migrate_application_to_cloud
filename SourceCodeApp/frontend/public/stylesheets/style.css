@@ -61,6 +61,19 @@ nav ul li a:hover {
     padding: 10px 20px;
 }
 
+.login {
+    float: right;
+    padding: 10px 20px;
+}
+
+.login a {
+    text-decoration: none;
+    color: white;
+    background-color: #f90;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
 .top-row {
     display: flex;
     align-items: center;
@@ -83,39 +96,34 @@ nav ul li a:hover {
 
 .logout {
     text-decoration: none;
-    color: white;
-    background-color: red;
+    color: black;
+    background-color: #ffffff00;
     padding: 5px 10px;
     /* Adjusted padding to align better with the welcome message */
     border-radius: 5px;
     transition: background-color 0.3s ease;
+    border: 2px solid black;
 }
 
 .logout:hover {
-    background-color: #e80;
+    background-color: red;
 }
 
-.bottom-row {
-    margin-top: 10px;
-    /* Adds space between the top row and the bottom row */
-}
-
-.bottom-row a {
+.login .mycart{
     text-decoration: none;
+    background-color:  rgb(241, 133, 0);
     color: white;
-    background-color: #f90;
-    padding: 10px 20px;
+    padding: 5px 10px;
+    /* Adjusted padding to align better with the welcome message */
     border-radius: 5px;
-    margin-right: 10px;
-    /* Adds space between links */
     transition: background-color 0.3s ease;
+    border: 2px solid black;
+
 }
-
-.bottom-row a:hover {
-    background-color: #e80;
+.login .mycart:hover {
+    background-color: #17376E;
+    color: #ffffff;
 }
-
-
 main .img-title img {
     width: 100%;
 

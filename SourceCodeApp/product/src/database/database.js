@@ -8,6 +8,7 @@ async function Create_connect()
     const mysqlConfig= {
         host: process.env.MYSQL_HOST, //for product mysql_server
         user: process.env.MYSQL_USER,
+        port: "3307",
         password:process.env.MYSQL_PASSWORD,
         database:process.env.MYSQL_DATABASE
     }
