@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .header {
+            position: relative;
+            padding: 10px 20px;
+            background-color: #fff;
+            border-bottom: 1px solid #ccc;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .links {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            border: 5px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 10px 20px;
+        }
+
+        .links a {
+            color: #333;
+            text-decoration: none;
+            padding: 0 10px;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .links a:hover {
+            color: #007BFF;
+            text-decoration: underline;
+        }
+
+        .welcome-message {
+            display: inline;
+            font-size: 16px;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .cart-item p {
+            margin: 0;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .cart-item .quantity {
+            font-size: 16px;
+            color: #007BFF;
+        }
+
+        .cart-item .remove {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .cart-item .remove:hover {
+            background-color: #c82333;
+        }
+
+        .actions a:hover {
+            text-decoration: none;
+            opacity: 0.8;
+        }
+
+        .actions a.btn-danger {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <% if (user) { %>
+            <div class="links">
+                <a href="/">Homepage</a> |
+                <h4 class="welcome-message">Welcome, <%= user.username %>
+                </h4> |
+                <a href="/product-table">Product Table</a> |
+                <a href="/myCart">MyCart</a> |
+                <a href="/logout">Log Out</a>
+            </div>
+            <% } else { %>
+                <div class="links">
+                    <a href="/">Homepage</a> |
+                    <a href="/login">Login</a> |
+                    <a href="/register">Register</a>
+                </div>
+                <% } %>
+    </div>
+
+    <div class="container">
+        <h2>Shopping Cart</h2>
+        <% if (error) { %>
+            <p class="error-message" style="color: red;">
+                <%= error %>
+            </p>
+            <% } %>
+
+                <% if (success) { %>
+                    <p class="success-message" style="color: green;">
+                        <%= success %>
+                    </p>
+                    <% } %>
+
+                        <% if (cartItems.length> 0) { %>
+                            <% cartItems.forEach(item=> { %>
+                                <div class="cart-item">
+                                    <div>
+                                        <h3>Id:<%= item.id %></h3>
+                                        <h3>
+                                            <%= item.name %>
+                                        </h3>
+                                        <p>Added by: <%= item.username %>
+                                        </p>
+                                    </div>
+                                    <div class="quantity">
+                                        Quantity: <%= item.quantity %>
+
+                                    </div>
+                                    
+                                    <form action="/remove-from-cart/<%= item.id %>" method="POST"
+                                        style="display: inline;">
+                                        <button type="submit" class="btn btn-danger">
+                                            <i class="fas fa-trash-alt"></i>Remove
+                                        </button>
+                                    </form>
+                                </div>
+                                <% }) %>
+                                    <% } else { %>
+                                        <p>Your cart is empty.</p>
+                                        <% } %>
+    </div>
+</body>
+
+</html>

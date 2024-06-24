@@ -6,6 +6,7 @@ const path = require('path');
 const dotenv = require('dotenv')
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
+const { verify } = require('crypto');
 const app = express();
 const port = 3000;
 dotenv.config({ path: '../.env' })
@@ -18,8 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
-
-
+app.use(express.static("public"))
 
 
 
@@ -32,10 +32,6 @@ app.get('/login', (req, res) => {
   const successMessage = req.query.successMessage;
   res.render('login', { error: errorMessage, success: successMessage });
 });
-
-
-
-
 
 app.post('/login', async (req, res) => {
   try {
@@ -55,7 +51,7 @@ app.post('/login', async (req, res) => {
 
       res.cookie('token', token, { httpOnly: true });
 
-      res.redirect('/');
+      res.redirect('/homePage');
 
     } else {
       res.redirect('/login');
@@ -89,18 +85,19 @@ const authenticateJWT_log = (req, res, next) => {
     next();
   }
 };
+
 const authenticateJWT_access_key = (req, res, next) => {
   const token = req.cookies.token;
   if (token) {
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
-        return res.redirect('/');
+        return res.redirect('/homePage');
       }
       req.user = decoded;
       next();
     });
   } else {
-    return res.render('home', { user: null, notification: 'Please log in!!!!' });
+    return res.render('home_demo', { user: null, notification: 'Hãy đăng nhập trước khi truy cập vào cửa hàng!!!' });
   }
 };
 
@@ -120,6 +117,7 @@ app.get('/product-table', authenticateJWT_access_key, async (req, res) => {
   }
 
 })
+
 app.get('/', authenticateJWT_log, (req, res) => {
 
   console.log(req.user);
@@ -127,9 +125,10 @@ app.get('/', authenticateJWT_log, (req, res) => {
   res.render('home', { user: req.user, notification: null });
 
 })
-
+app.get('/homePage',authenticateJWT_log, (req, res) => {
+  res.render('home_demo',{user:req.user,notification: null});
+})
 // Render signup page
-
 app.get('/signup', (req, res) => {
 
   const errorMessage = req.query.error;
@@ -137,10 +136,7 @@ app.get('/signup', (req, res) => {
   res.render('signup', { error: errorMessage });
 
 });
-
 // Handle signup form submission
-
-
 app.post('/signup', async (req, res) => {
   try {
 
@@ -165,8 +161,6 @@ app.post('/signup', async (req, res) => {
   }
 
 });
-
-
 
 app.get('/view/:id', async (req, res) => {
   try {
@@ -212,6 +206,63 @@ app.post('/addproduct', authenticateJWT_access_key, async (req, res) => {
   }
 });
 
+app.get('/myCart', authenticateJWT_log, async (req, res) => {
+  try {
+    let id = req.user.id;
+    const response = await axios.post(`http://localhost:8002/getCartDemo`, { id });
+    const errorMessage = req.query.error;
+    const successMessage = req.query.successMessage;
+    console.log(response.data);
+    res.render('carts', {
+      user: req.user,
+      cartItems: response.data,
+      error: errorMessage,
+      success: successMessage
+    })
+
+
+  } catch (err) {
+    res.render(`/carts?error = Error function can't remove products from cart`)
+    console.error('Error occurred while logging in:', err);
+  }
+
+})
+app.post('/add-to-cart/:id', authenticateJWT_log, async (req, res) => {
+  try {
+    let productId = req.params.id;
+    let customerId = req.user.id;
+    let quantity = 1000;
+    const response = await axios.post(`http://localhost:8002/addtoCartDemo`, { productId, customerId, quantity })
+    console.log('Add product to Cart Sucessfully!');
+
+    res.redirect('/myCart?successMessage= Add product to Cart Successfully!');
+
+  } catch (err) {
+    console.log('Error occured while loggin in:', err);
+    res.redirect('/product-table')
+  }
+})
+
+
+app.post('/remove-from-cart/:id', authenticateJWT_log, async (req, res) => {
+  try {
+    let productId = req.params.id;
+    let customerId = req.user.id;
+    const response = await axios.post(`http://localhost:8002/removetoCartDemo`, { customerId, productId });
+
+    console.log('Remove product from Cart Sucessfully!');
+    if (response.data > 0) {
+      res.redirect('/myCart?successMessage= Remove product from Cart Successfully!');
+    } else {
+      res.redirect('/myCart?error= Error from system!');
+    }
+
+  } catch (err) {
+    console.log('Error occured while loggin in:', err);
+    res.redirect('/product-table')
+  }
+})
+
 
 app.get('/logout', (req, res) => {
   // Clear any user session or authentication tokens
@@ -219,6 +270,8 @@ app.get('/logout', (req, res) => {
   res.clearCookie('token');
   res.redirect('/');
 });
+
+
 
 
 app.listen(port, () => {

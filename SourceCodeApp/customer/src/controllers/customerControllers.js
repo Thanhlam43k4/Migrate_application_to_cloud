@@ -78,12 +78,13 @@ async function login(req, res) {
     let email_ = req.body.email;
     let password_ = req.body.password;
     let username = null;
+    let id = null;
     // const {email,password} = req.body;
     queryAsync('SELECT * FROM customers WHERE email = ?', [email_])
         .then((results) => {
             if (results.length > 0) {
                 username = results[0].username;
-                
+                id = results[0].id
                 const customerpassword = results[0].password;
                 
                 return customerRepository.comparePassword(password_, customerpassword);
@@ -91,7 +92,7 @@ async function login(req, res) {
         })
         .then((passwordMatch) => {
             if (passwordMatch) {
-                const token = jwt.sign({username: username,email: email_}, JWT_SECRET)
+                const token = jwt.sign({id:id,username: username,email: email_}, JWT_SECRET, {expiresIn: '10m'})
                 console.log(`Login successfully with token ${token}`);
         
                 ///return customerRepository.getUser(username,email_);

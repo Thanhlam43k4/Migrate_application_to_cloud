@@ -1,11 +1,15 @@
 SourceCodeApp/customer/node_modules
 
-
 SourceCodeApp/frontend/node_modules
 
 SouceCodeApp/product/node_modules
 
 SouceCodeApp/shopping/node_modules
+
+
+
+
+
 Step1-Launch_Infrastructure/.terraform.lock.hcl
 Step1-Launch_Infrastructure/terraform.tfstate
 Step1-Launch_Infrastructure/terraform.tfstate.backup

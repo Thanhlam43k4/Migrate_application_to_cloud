@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VNU University of Engineering and Technology - VNU-UET</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="https://kit.fontawesome.com/c991f90e06.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="main">
+        <header>
+            <!-- logo -->
+            <div class="logo">
+                <a href="/homePage"> <img src="https://blogger.googleusercontent.com/img/a/AVvXsEjf2g77FTZv4jq8Dan0WDlLAe9PrnCnk7aLGBuPFmBAkRCcMZaxd4oQARSjJU9qCyG-5-VXQziAFpDP3X4SgWaH3jRjLIEMLMO2Y9pHXih2kT6DWMj-clj5dp4ZiJSKapeajlosBwRDIpEk0GEkQDWIiYR7tg3ZlK9szD1B9K4KjBhyLBOAJGbt9Pm9E29E
+                    " alt="University Icon" class="university-icon">
+                </a>
+            </div>
+            <!-- menu ve truong -->
+            <nav>
+                <ul>
+                    <li><a href="/homePage">Trang Chủ</a></li>
+                    <li><a href="/homePage">Giới hiệu</a></li>
+                    <li><a href="/homePage">Sinh viên</a></li>
+                    <li><a href="/homePage">Giảng viên</a></li>
+                    <li><a href="/homePage">Tuyển sinh</a></li>
+                    <li><a href="/homePage">Tuyển dụng</a></li>
+                </ul>
+            </nav>
+
+            <% if(user) { %>
+                <div class="login">
+                    <div class="top-row">
+                        <h4 class="welcome-message">Welcome, <span class="username">
+                                <%= user.username %>
+                            </span></h4>
+                            <a class="logout" href="/logout">Đăng xuất</a>
+                    </div>
+                    <div class="bottom-row">
+                        <a  href="/myCart">Giỏ Hàng</a>
+                        <a href="/product-table">Cửa Hàng</a>
+                    </div>
+                </div>
+
+
+
+                <% } else { %>
+                    <div class="login">
+                        <a href="/homePage">Trang chủ</a>
+                        <a href="/signup">Đăng ký</a>
+                        <a href="/Product-Table">Cửa Hàng</a>
+                        <a href="/login">Đăng nhập</a>
+                        <% if (notification) { %>
+                            <div class="notification">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-alert-circle">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                                    <line x1="12" y1="16" x2="12" y2="16"></line>
+                                </svg>
+                                <p>
+                                    <%= notification %>
+                                </p>
+                            </div>
+                            <% } %>
+                    </div>
+                    <% } %>
+
+
+        </header>
+
+        <main>
+            <!-- content -->
+            <div class="img-title">
+                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEi0UsHUfEDySvfxqNWNczBu0owxfZcCG_9SJmBQhhyTXl_EKcg6bAzujYvqNb0RDXXUj2K4uw2lgGljMBFCzgeUUZmG0WAsF9-ZiZ3aPBkZZF1pFLhoe8dOCXcTzawX_Cnh--BNIRFB_BH3ejUfoR-ksJu32DKbgY5QaNNyOFfYURHwXn_11RoXPcq_MteR"
+                    alt="UET University">
+            </div>
+
+            <div class="news">
+                <h1>News</h1>
+            </div>
+        </main>
+        <footer>
+            <!-- thong tin lien he -->
+            <div class="footer">
+                <div class="footer1">
+                    <div class="thongtin1">
+                        <h2>Hợp tác - Phát triển</h2>
+                        <a href=""><i class="fa-solid fa-paperclip"></i><span>Giới Thiệu</span></a><br>
+                        <a href=""><i class="fa-solid fa-paperclip"></i><span>Tin Tức</span></a><br>
+                        <a href=""><i class="fa-solid fa-paperclip"></i><span>Các Đối Tác</span></a><br>
+                    </div>
+                    <div class="thongtin2">
+                        <h2>Đảm bảo chất lượng</h2>
+                        <a href=""><i class="fa-solid fa-paperclip"></i><span>Trung tâm đảm bảo chất
+                                lượng</span></a><br>
+                        <a href=""><i class="fa-solid fa-paperclip"></i><span>Ba công khai</span></a><br>
+                        <a href=""><i class="fa-solid fa-paperclip"></i><span>Kiểm định chất
+                                lượng</span></a><br>
+                    </div>
+                    <div class="thongtin3">
+                        <h2>TRUNG TÂM - LAB</h2>
+                        <a href=""><i class="fa-solid fa-paperclip"></i><span>TT Nghiên cứu Điện tử Viễn
+                                thông</span></a><br>
+                        <a href=""><i class="fa-solid fa-paperclip"></i><span>TT Công nghệ tích hợp liên ngành
+                                GSHT</span></a><br>
+                        <a href=""><i class="fa-solid fa-paperclip"></i><span>TT Máy tính</span></a><br>
+                        <a href=""><i class="fa-solid fa-paperclip"></i><span>PTN Trọng điểm Công nghệ Micro và
+                                Nano</span></a><br>
+                        <a href=""><i class="fa-solid fa-paperclip"></i><span>PTN Trọng điểm Hệ thống tích hợp
+                                thông
+                                minh</span></a><br>
+                    </div>
+                    <div class="thongtin4">
+                        <h2>Đoàn thể</h2>
+                        <a href=""><i class="fa-solid fa-paperclip"></i><span>Công Đoàn</span></a><br>
+                        <a href=""><i class="fa-solid fa-paperclip"></i><span>Đoàn Thanh Niên</span></a><br>
+                        <a href=""><i class="fa-solid fa-paperclip"></i><span>Hội Sinh Viên</span></a><br>
+                    </div>
+                </div>
+                <div class="footer2">
+                    <div class="thongtin5">
+                        <a href=""><i class="fa-solid fa-code"></i><span>2024 Trường Đại học Công nghệ, Đại học
+                                Quốc Gia
+                                Hà Nội</span></a><br>
+                        <a href=""><i class="fa-solid fa-map-location-dot"></i><span>Địa chỉ: Số 144 đường Xuân
+                                Thủy,
+                                Cầu Giấy, Hà Nội</span></a><br>
+                        <a href=""><i class="fa-solid fa-phone"></i><span>Điện thoại: 0123456789</span></a><br>
+                        <a href=""><i class="fa-solid fa-envelope"></i><span>Email:
+                                uet@vnu.edu.vn</span></a><br>
+                    </div>
+                    <div class="thongtin6">
+                        <a href="https://www.facebook.com/vuquocviet.0904"><i class="fa-brands fa-facebook"></i></a><br>
+                        <a href="https://www.instagram.com/vi.et_/"><i class="fa-brands fa-instagram"></i></a><br>
+                        <button class="back-to-top" onclick="scrollToTop()">
+                            <p>đầu trang</p>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src = "/javascript/main.js"></script>
+</body>
+
+</html>

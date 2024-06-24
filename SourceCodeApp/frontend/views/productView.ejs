@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product View UET WebSite</title>
+  <title>Product View UET Website</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <!-- Bootstrap JS (optional for some features) -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -12,38 +22,85 @@
       padding: 0;
     }
 
-    .container {
-      max-width: 800px;
-      margin: 20px auto;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    .header {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 0;
+      text-align: center;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      margin-bottom: 20px;
     }
 
     h1 {
       font-size: 28px;
       color: #333;
       margin-bottom: 20px;
+      text-align: center;
     }
 
-    table {
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      grid-gap: 30px;
+    }
+
+    .product-item {
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .product-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .product-img {
       width: 100%;
-      border-collapse: collapse;
+      height: auto;
+      border-radius: 8px;
     }
 
-    th, td {
-      padding: 12px;
-      border-bottom: 1px solid #ddd;
-      text-align: left;
+    .product-details {
+      margin-top: 10px;
     }
 
-    th {
-      background-color: #f2f2f2;
+    .actions {
+      text-align: center;
+      margin-top: 10px;
     }
 
-    tbody tr:nth-child(even) {
-      background-color: #f9f9f9;
+    .actions a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+      padding: 8px 16px;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+
+    .actions a.btn-success {
+      background-color: #28a745;
+    }
+
+    .actions a.btn-danger {
+      background-color: #dc3545;
+    }
+
+    .actions a:hover {
+      text-decoration: none;
+      opacity: 0.8;
     }
 
     .links {
@@ -53,84 +110,75 @@
 
     .links a {
       text-decoration: none;
-      color: #007bff;
+      color: black;
       font-weight: bold;
+      margin: 0 10px;
+      transition: color 0.3s;
     }
 
     .links a:hover {
       text-decoration: underline;
+      color: #b35400;
     }
 
-    /* Add Product form styles */
-    .add-product-form {
-      margin-top: 20px;
-    }
-
-    .add-product-form input[type="text"],
-    .add-product-form input[type="number"] {
-      width: calc(100% - 24px);
-      padding: 8px;
-      margin-bottom: 16px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 16px;
-    }
-
-    .add-product-form button {
-      padding: 10px;
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .add-product-form button:hover {
-      background-color: #0056b3;
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .product-list {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-gap: 20px;
+      }
     }
   </style>
 </head>
+
 <body>
-  
-
-
+  <div class="header">
+    <h1>Product View UET Website</h1>
+    <div class="links">
+      <a href="/">Homepage</a> |
+      <a href="/logout">Logout</a> |
+      <a href="/addproduct">Add New Product</a>
+    </div>
+  </div>
 
   <div class="container">
-    <h1>Product List</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Amount</th>
-          <th>Expiration Date</th>
-          <th>Actions</th> <!-- New column for actions -->
-        </tr>
-      </thead>
-      <tbody>
-        <% products.forEach(product => { %>
-          <tr>
-            <td><%= product.id %></td>
-            <td><%= product.name %></td>
-            <td><%= product.type %></td>
-            <td><%= product.amount %></td>
-            <td><%= product.expiration_date ? product.expiration_date : 'N/A' %></td>
-            <td>
-              <!-- Button to view product details -->
-              <a href="/view/<%=product.id%>">View Details</a>
-            </td>
-          </tr>
+    <div class="product-list">
+      <% products.forEach(product=> { %>
+        <div class="product-item">
+          <img src="https://picsum.photos/300/200?random=<%= Math.random() %>" alt="<%= product.name %>"
+            class="product-img">
+          <div class="product-details">
+            <p><strong>Name:</strong>
+              <%= product.name %>
+            </p>
+            <p><strong>Type:</strong>
+              <%= product.type %>
+            </p>
+            <p><strong>Remaining Amount:</strong>
+              <%= product.amount %>
+            </p>
+
+            <div class="actions">
+              <!-- Add to Cart form -->
+              <form action="/add-to-cart/<%= product.id %>" method="POST" style="display: inline;">
+                  <button type="submit" class="btn btn-success">
+                      <i class="fas fa-cart-plus"></i> Add to Cart
+                  </button>
+              </form>
+              <!-- Remove button (optional) -->
+              
+          </div>
+          </div>
+        </div>
         <% }) %>
-      </tbody>
-    </table>
-    
- 
-    
-    <div class="links">
-      <a href="/">Homepage</a> | <a href="/logout">Logout</a> |  <a href="/addproduct">Add new Product</a> 
+    </div>
+
+    <div class="links text-center">
+      <a href="/">Homepage</a> |
+      <a href="/logout">Logout</a> |
+      <a href="/addproduct">Add New Product</a>
     </div>
   </div>
 </body>
+
 </html>

@@ -18,8 +18,17 @@ CREATE TABLE products (
     amount INT,
     expiration_date TIMESTAMP
 );
-
+CREATE TABLE cart (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    customer_id INT,
+    product_id INT,
+    quantity INT,
+    FOREIGN KEY (customer_id) REFERENCES customers(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
 INSERT INTO products(name,type,amount)
+
+
 
 VALUES
      ('Broccoli','vegetables',3),

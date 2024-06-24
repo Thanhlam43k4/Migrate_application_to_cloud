@@ -95,32 +95,28 @@
             right: 10px;
             font-family: Arial, sans-serif;
             background-color: #fff;
-            /* White background for frame */
             border: 5px solid #ccc;
-            /* Light grey border */
             border-radius: 8px;
-            /* Rounded corners */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            /* Subtle shadow for modern look */
             padding: 10px 20px;
-            /* Padding inside the frame */
         }
 
         .links a {
             color: #333;
-            /* Dark grey text color */
             text-decoration: none;
             padding: 0 10px;
             font-size: 16px;
             transition: color 0.3s;
-            /* Smooth transition for hover effect */
         }
 
         .links a:hover {
             color: #007BFF;
-            /* Blue color on hover */
             text-decoration: underline;
-            /* Underline on hover */
+        }
+
+        .welcome-message {
+            display: inline;
+            font-size: 16px;
         }
 
         .university-icon {
@@ -146,17 +142,26 @@
 
         <% if(user) { %>
             <div class="links">
-                <a href="/">Homepage</a> |<h4> Welcome <%= user.username %>
-                </h4>| <a href="/product-table">Product Table</a> | <a href="/logout">LogOut</a>
+                <a href="/">Homepage</a> |
+                <h4 class="welcome-message">Xin Chào, <%= user.username %>
+                </h4> |
+                <a href="/product-table">Shopping</a> |
+                <a href="/myCart">MyCart</a> |
+                <a href="/logout">Log Out</a>
             </div>
             <% } else { %>
                 <div class="links">
-                    <a href="/">Homepage</a> | <a href="/signup">Register</a> | <a href="/Product-Table">Product Table</a> | <a href="/login">Login</a>
+                    <a href="/">Homepage</a> | <a href="/signup">Register</a> | <a href="/Product-Table">Shopping</a> | <a href="/login">Login</a>
                     <% if (notification) { %>
-                        <p style="color: red;">
-                            <%= notification %>
-                        </p>
-                        <% } %>
+                        <div class="notification">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12" y2="16"></line>
+                          </svg>
+                          <p><%= notification %></p>
+                        </div>
+                      <% } %>
                 </div>
                 <% } %>
                     <div class="image-section">
