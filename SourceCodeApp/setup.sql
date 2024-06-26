@@ -2,14 +2,14 @@ CREATE DATABASE customer_db;
 
 USE customer_db;
 
-CREATE TABLE customers (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(50) NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    address VARCHAR(255),
-    whislist JSON
-);
+    CREATE TABLE customers (
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        username VARCHAR(50) NOT NULL,
+        email VARCHAR(100) NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        address VARCHAR(255),
+        whislist JSON
+    );
 
 CREATE TABLE products (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -18,6 +18,7 @@ CREATE TABLE products (
     amount INT,
     expiration_date TIMESTAMP
 );
+
 CREATE TABLE cart (
     id INT PRIMARY KEY AUTO_INCREMENT,
     customer_id INT,

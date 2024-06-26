@@ -81,19 +81,6 @@ nav ul li a:hover {
     /* Optional: Change color to make the username stand out */
 }
 
-.logout {
-    text-decoration: none;
-    color: white;
-    background-color: red;
-    padding: 5px 10px;
-    /* Adjusted padding to align better with the welcome message */
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.logout:hover {
-    background-color: #e80;
-}
 
 .bottom-row {
     margin-top: 10px;
@@ -283,4 +270,52 @@ footer {
 
 .notification p {
     margin: 0;
+}
+
+.login {
+    float: right;
+    padding: 10px 20px;
+}
+
+.login .welcome-message {
+    margin: 0;
+    padding: 0 0 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.login .username {
+    color: #007bff;
+    /* Optional: Change color to make the username stand out */
+}
+
+.logout {
+    text-decoration: none;
+    color: white;
+    background-color: red;
+    padding: 5px 10px;
+    /* Adjusted padding to align better with the welcome message */
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.login a {
+    text-decoration: none;
+    color: white;
+    background-color: #f90;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-right: 10px;
+    /* Adds space between links */
+    transition: background-color 0.3s ease;
+}
+
+.login a:hover {
+    background-color: #e80;
+}
+
+
+.logout:hover {
+    background-color: #e80;
 }

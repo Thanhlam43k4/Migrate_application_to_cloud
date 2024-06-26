@@ -54,16 +54,16 @@ async function getCartDemo(req, res) {
     }
 
 }
-async function removetoCartDemo(req,res){
-    const {productId,customerId} = req.body;
-    const query = `DELETE FROM cart WHERE customer_id = ? AND product_id = ?`;
-    con.query(query, [customerId,productId],
-        (err,results) =>{
-            if(err){    
+async function removetoCartDemo(req, res) {
+    const { cartId, customerId } = req.body;
+    const query = `DELETE FROM cart WHERE customer_id = ? AND id = ?`;
+    con.query(query, [customerId, cartId],
+        (err, results) => {
+            if (err) {
                 console.error('Error executing DeleteQuery query:', err);
                 throw new Error('Internal Server Error');
             }
-            res.status(200).json({msg: 'Delete product from cart sucessfully',results})
+            res.status(200).json({ msg: 'Delete product from cart sucessfully', results })
         })
 
 }
@@ -109,6 +109,6 @@ async function addtoCartDemo(req, res) {
 
 
 export default {
-  getCartDemo, addtoCartDemo, removetoCartDemo
+    getCartDemo, addtoCartDemo, removetoCartDemo
 
 }

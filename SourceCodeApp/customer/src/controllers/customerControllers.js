@@ -13,11 +13,12 @@ import customerRepository from '../repository/customer.js'
 import jwt from "jsonwebtoken"
 
 import dotenv from "dotenv"
-dotenv.config({path : '../.env'})
+dotenv.config({ path: '../.env' })
 
 
 
 const JWT_SECRET = process.env.JWT_SECRET
+
 async function getAllUser(req, res) {
     const apiData = await fetchData();
     con.query('SELECT * FROM customers', function (err, rows) {
@@ -40,9 +41,10 @@ async function signup(req, res) {
     let password = req.body.password;
     // const {username,email,password} = req.body;
     let a = true;
-    con.query(
-        'SELECT * FROM customers WHERE username = ? OR email = ?',
-        [username, email],
+    try{
+        con.query(
+        'SELECT * FROM customers WHERE email = ?',
+        [email],
         function (err, results) {
             if (err) {
                 // Handle the error (e.g., log it or return an error response)
@@ -50,13 +52,19 @@ async function signup(req, res) {
                 throw new Error('Internal Server Error');
             }
             if (results.length > 0) {
-                console.log('User is already exist')
-                res.json({msg: 'User is already existed'})
+                console.log(results);
+                res.status(200).json({msg: 'Email is already existed'})
             } else {
                 res.json({ msg: 'Add user Successfully!!!' })
                 customerRepository.signup({ username, email, password })
             }
+           
         })
+    }catch(err){
+        if(err){
+            throw new Error('Query Signup Error!!!')
+        }
+    }
 }
 function queryAsync(sql, values) {
     return new Promise((resolve, reject) => {
@@ -79,30 +87,32 @@ async function login(req, res) {
     let password_ = req.body.password;
     let username = null;
     let id = null;
+    let role = null;
     // const {email,password} = req.body;
     queryAsync('SELECT * FROM customers WHERE email = ?', [email_])
         .then((results) => {
             if (results.length > 0) {
                 username = results[0].username;
                 id = results[0].id
+                role = results[0].role
                 const customerpassword = results[0].password;
-                
+
                 return customerRepository.comparePassword(password_, customerpassword);
             }
         })
         .then((passwordMatch) => {
             if (passwordMatch) {
-                const token = jwt.sign({id:id,username: username,email: email_}, JWT_SECRET, {expiresIn: '10m'})
+                const token = jwt.sign({ id: id, username: username, email: email_, role:role }, JWT_SECRET, { expiresIn: '20m' })
                 console.log(`Login successfully with token ${token}`);
-        
+
                 ///return customerRepository.getUser(username,email_);
-                
-                res.status(200).json({msg: 'Login Successfully',token});
+
+                res.status(200).json({ msg: 'Login Successfully', token });
             } else {
                 throw new Error('Password does not match');
             }
         })
-      
+
         .catch((err) => {
             console.error('Error during login:', err);
             res.status(500).json({ error: 'Internal Server Error' });
@@ -139,18 +149,18 @@ async function getHomePage(req, res) {
     res.render('home.ejs')
 
 }
-async function getProducts(req,res){
+async function getProducts(req, res) {
     const productAPIUrl = `http://${process.env.PRODUCT_SERVICE_URL}:${process.env.PRODUCT_PORT}/api/v1/data`;
     console.log(productAPIUrl);
-    try{
+    try {
         const response = await axios.get(productAPIUrl);
         const productDetails = response.data; // Access the 'results' property
-        return productDetails;  
-    }catch(err){
+        return productDetails;
+    } catch (err) {
         console.log('Error fetching product data:', err.message);
         throw err; // Propagate the error
     }
-    
+
 }
 export default {
     getAllUser,

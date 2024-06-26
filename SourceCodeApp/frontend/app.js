@@ -28,6 +28,7 @@ app.use(express.static("public"))
 
 app.get('/login', (req, res) => {
   // Pass error message as a parameter if present
+  res.clearCookie('token');
   const errorMessage = req.query.error;
   const successMessage = req.query.successMessage;
   res.render('login', { error: errorMessage, success: successMessage });
@@ -50,7 +51,7 @@ app.post('/login', async (req, res) => {
       const token = response.data.token;
 
       res.cookie('token', token, { httpOnly: true });
-
+      
       res.redirect('/homePage');
 
     } else {
@@ -101,16 +102,30 @@ const authenticateJWT_access_key = (req, res, next) => {
   }
 };
 
-app.get('/addproduct', authenticateJWT_access_key, (req, res) => {
+
+function checkAdminRole(req, res, next) {
+  const user = req.user;
+
+  if (user && user.role === 'admin') {
+      next(); // User is admin, proceed to the next middleware or route handler
+  } else {
+      res.redirect('/product-table?error= Access denied. Admins only.')
+  }
+}
+
+
+
+app.get('/addproduct', authenticateJWT_access_key,checkAdminRole, (req, res) => {
   const errorMessage = req.query.error;
   res.render('add-product', { error: errorMessage });
 })
 
 app.get('/product-table', authenticateJWT_access_key, async (req, res) => {
+  const errorMessage = req.query.error;
   try {
     const response = await axios.get(`http://${process.env.PRODUCT_SERVICE_URL}:${process.env.PRODUCT_PORT}/api/v1/data`)
     console.log(response.data);
-    res.render('productView', { products: response.data });
+    res.render('productView', { products: response.data,error: errorMessage});
 
   } catch (err) {
     console.log(err);
@@ -118,6 +133,8 @@ app.get('/product-table', authenticateJWT_access_key, async (req, res) => {
 
 })
 
+
+/*
 app.get('/', authenticateJWT_log, (req, res) => {
 
   console.log(req.user);
@@ -125,8 +142,11 @@ app.get('/', authenticateJWT_log, (req, res) => {
   res.render('home', { user: req.user, notification: null });
 
 })
-app.get('/homePage',authenticateJWT_log, (req, res) => {
-  res.render('home_demo',{user:req.user,notification: null});
+*/
+
+app.get('/homePage', authenticateJWT_log, (req, res) => {
+  console.log(req.user);
+  res.render('home_demo', { user: req.user, notification: null });
 })
 // Render signup page
 app.get('/signup', (req, res) => {
@@ -142,12 +162,15 @@ app.post('/signup', async (req, res) => {
 
     const response = await axios.post(`http://${process.env.CUSTOMER_SERVICE_URL}:${process.env.CUSTOMER_PORT}/signup`, req.body);//dockerfile http://customer:8003/login
     console.log('test')
-    if (response.data.msg == "User is already existed") {
+    console.log(response.data.msg);
+    if (response.data.msg == 'Email is already existed') {
 
       res.redirect('/login?error=Email is already exist');
 
+    } else {
+      res.redirect('/login?successMessage=Signup successful. Please log in.');
     }
-    res.redirect('login?successMessage=Signup successful. Please log in.');
+
   } catch (error) {
     // Handle other errors
     console.error('Error occurred while Signup in:', error);
@@ -162,25 +185,10 @@ app.post('/signup', async (req, res) => {
 
 });
 
-app.get('/view/:id', async (req, res) => {
-  try {
-    const productId = req.params.id;
-    console.log(productId);
-    // Fetch product details from your backend API
-    const response = await axios.get(`http://${process.env.PRODUCT_SERVICE_URL}:${process.env.PRODUCT_PORT}/${productId}`);//dockerfile http://product:8001/
 
-    const product = await response.data;
-    // console.log('Product:' + product);
-    console.log(response.data);
-    // Render the product details page with the fetched product data
-    res.render('productDetails', { product });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
-  }
-});
 
-app.post('/addproduct', authenticateJWT_access_key, async (req, res) => {
+
+app.post('/addproduct', authenticateJWT_access_key,checkAdminRole, async (req, res) => {
   const { name, type, amount } = req.body;
 
   try {
@@ -197,7 +205,7 @@ app.post('/addproduct', authenticateJWT_access_key, async (req, res) => {
       res.redirect('/addproduct?error=Product has already existed');
     } else if (response.data.msg == "Add product successfully!!!") {
       // Redirect to the same page without error message
-      res.redirect('/');
+      res.redirect('/homePage');
     }
   } catch (error) {
     // Handle errors
@@ -246,20 +254,16 @@ app.post('/add-to-cart/:id', authenticateJWT_log, async (req, res) => {
 
 app.post('/remove-from-cart/:id', authenticateJWT_log, async (req, res) => {
   try {
-    let productId = req.params.id;
+    let cartId = req.params.id;
     let customerId = req.user.id;
-    const response = await axios.post(`http://localhost:8002/removetoCartDemo`, { customerId, productId });
+    const response = await axios.post(`http://localhost:8002/removetoCartDemo`, { customerId, cartId });
 
     console.log('Remove product from Cart Sucessfully!');
-    if (response.data > 0) {
-      res.redirect('/myCart?successMessage= Remove product from Cart Successfully!');
-    } else {
-      res.redirect('/myCart?error= Error from system!');
-    }
-
+    res.redirect('/myCart?successMessage= Remove product from Cart Successfully!');
   } catch (err) {
     console.log('Error occured while loggin in:', err);
-    res.redirect('/product-table')
+    console.log('Error query system')
+    res.redirect('/myCart?error= Error from system!');
   }
 })
 
@@ -268,7 +272,7 @@ app.get('/logout', (req, res) => {
   // Clear any user session or authentication tokens
   // For example, if you're using sessions:
   res.clearCookie('token');
-  res.redirect('/');
+  res.redirect('/homePage');
 });
 
 

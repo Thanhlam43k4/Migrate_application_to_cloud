@@ -1,0 +1,109 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+.actions {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.header {
+    position: relative;
+    padding: 10px 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.links {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    border: 5px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+}
+
+.links a {
+    color: #333;
+    text-decoration: none;
+    padding: 0 10px;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.links a:hover {
+    color: #007BFF;
+    text-decoration: underline;
+}
+
+.welcome-message {
+    display: inline;
+    font-size: 16px;
+}
+
+.container {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.cart-item h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.cart-item p {
+    margin: 0;
+    font-size: 16px;
+    color: #555;
+}
+
+.cart-item .quantity {
+    font-size: 16px;
+    color: #007BFF;
+}
+
+.cart-item .remove {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.cart-item .remove:hover {
+    background-color: #c82333;
+}
+
+.actions a:hover {
+    text-decoration: none;
+    opacity: 0.8;
+}
+
+.actions a.btn-danger {
+    background-color: #dc3545;
+}
