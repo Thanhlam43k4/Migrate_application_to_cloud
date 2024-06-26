@@ -1,130 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login UET WebSite</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f7f7f7;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+  <link rel="icon" href="/images/logo.svg" type="image/svg">
+  <link rel="stylesheet" href="/stylesheets/login.css">
+  <script src="https://kit.fontawesome.com/c991f90e06.js" crossorigin="anonymous"></script>
 
-    .container {
-      width: 400px;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    h1 {
-      text-align: center;
-      color: #333;
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-    }
-
-    label {
-      margin-bottom: 8px;
-      color: #555;
-    }
-
-    input {
-      padding: 8px;
-      margin-bottom: 16px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 16px;
-    }
-
-    button {
-      padding: 10px;
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-
-    .error-message {
-      color: red;
-      margin-top: 10px;
-    }
-
-    /* Updated styles for links */
-    .links {
-      text-align: center;
-      margin-top: 20px;
-    }
-
-    .links a {
-      text-decoration: none;
-      color: #007bff;
-      font-weight: bold;
-    }
-
-    .links a:hover {
-      text-decoration: underline;
-    }
-    
-    /* Style for university icon */
-    .university-icon {
-      display: block;
-      margin: 0 auto 20px; /* Adjust margin as needed */
-      width: 100px; /* Adjust width as needed */
-      height: auto; /* Maintain aspect ratio */
-    }
-  </style>
 </head>
+
 <body>
-  
-  <div class="container">
-    <!-- University icon -->
-    <img src="https://blogger.googleusercontent.com/img/a/AVvXsEjf2g77FTZv4jq8Dan0WDlLAe9PrnCnk7aLGBuPFmBAkRCcMZaxd4oQARSjJU9qCyG-5-VXQziAFpDP3X4SgWaH3jRjLIEMLMO2Y9pHXih2kT6DWMj-clj5dp4ZiJSKapeajlosBwRDIpEk0GEkQDWIiYR7tg3ZlK9szD1B9K4KjBhyLBOAJGbt9Pm9E29E
-    " alt="University Icon" class="university-icon">
-    
-    <h1>Login</h1>
-    <% if (error) { %>
-      <p class="error-message"  style="color: red;"><%= error %></p>
-    <% } %>
-
-    <% if (success) { %>
-      <p class="success-message" style="color: green;" ><%= success %></p>
-    <% } %>
-
-    <form action="/login" method="post">
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required>
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required>
-      <button type="submit">Login</button>
-    </form>
-    <div class="links">
-      <a href="/">Homepage</a> | <a href="/signup">Register</a> | <a href="/login">Login</a>
+  <header>
+    <!-- logo -->
+    <div class="logo">
+      <a href="/homePage"> <img src="/images/logo.svg" alt="University Icon" class="university-icon"></a>
+      <p>Đại học Quốc gia hà nội<br>Trường Đại học Công nghệ</p>
     </div>
-    <div class="details">
-      <h3>Details</h3>
+    <!-- menu ve truong -->
+    <nav>
       <ul>
-          <li><strong>Major:</strong> Engineering, Science, Arts</li>
-          <li><strong>Fees:</strong> $10,000 per semester</li>
-          <li><strong>Contact:</strong> info@ourschool.com | (123) 456-7890</li>
-          <li><strong>Editor:</strong>Thanhlam71204@gmail.com</li>
+        <li><a href="/homePage">Trang Chủ</a></li>
+        <li><a href="/homePage">Giới hiệu</a></li>
+        <li><a href="/product-table">Cửa Hàng</a></li>
       </ul>
+    </nav>
+
+
+  </header>
+  <div class="wrapper">
+    <h2>Login</h2>
+    <% if (error) { %>
+      <p class="error-message" style="color: red;">
+        <%= error %>
+      </p>
+      <% } %>
+
+        <% if (success) { %>
+          <p class="success-message" style="color: green;">
+            <%= success %>
+          </p>
+          <% } %>
+    <form action="/login" method="post">
+              <div class="input-field">
+                <input type="email" name="email" required>
+                <label>Enter your email</label>
+              </div>
+              <div class="input-field">
+                <input type="password" name="password" required>
+                <label>Enter your password</label>
+              </div>
+              <div class="forget">
+                <label for="remember">
+                  <input type="checkbox" id="remember">
+                  <p>Remember me</p>
+                </label>
+                <a href="#">Forgot password?</a>
+              </div>
+              <button type="submit">Log In</button>
+              <div class="register">
+                <p>Don't have an account? <a href="#">Register</a></p>
+              </div>
+    </form>
   </div>
-  </div>
+  
 </body>

@@ -94,10 +94,10 @@ nav ul li a:hover {
     /* Optional: Change color to make the username stand out */
 }
 
-.logout {
+.login .logout {
     text-decoration: none;
-    color: black;
-    background-color: #ffffff00;
+    background-color:  rgb(241, 133, 0);
+    color: white;
     padding: 5px 10px;
     /* Adjusted padding to align better with the welcome message */
     border-radius: 5px;
