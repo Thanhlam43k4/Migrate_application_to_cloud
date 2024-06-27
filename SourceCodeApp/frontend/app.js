@@ -6,11 +6,10 @@ const path = require('path');
 const dotenv = require('dotenv')
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
-
+const { createClient } = require('redis');
 const crypto = require('crypto');
 const app = express();
 const port = 3000;
-
 
 dotenv.config({ path: '../.env' })
 app.set('view engine', 'ejs');
@@ -20,6 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static("public"))
+
 
 
 const authenticateJWT_log = async (req, res, next) => {
@@ -231,9 +231,7 @@ app.post('/signup', async (req, res) => {
 app.get('/verify/:email/:verifyCode', async (req, res) => {
   let email = req.params.email;
   let verifyCode = req.params.verifyCode;
-
   console.log(email, verifyCode);
-
   try {
     const response = await axios.post(`http://${process.env.CUSTOMER_SERVICE_URL}:${process.env.CUSTOMER_PORT}/verify`, { email: email });
     if (response.data.msg == 'Database error') {
@@ -281,21 +279,54 @@ app.post('/addproduct', authenticateJWT_access_key, checkAdminRole, async (req, 
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+app.get('/', (req, res) => {
+  res.redirect('/homePage');
+})
 app.get('/myCart', authenticateJWT_log, async (req, res) => {
+  let id = req.user.id;
+  const errorMessage = req.query.error;
+  const successMessage = req.query.successMessage;
   try {
-    let id = req.user.id;
-    const response = await axios.post(`http://localhost:8002/getCartDemo`, { id });
-    const errorMessage = req.query.error;
-    const successMessage = req.query.successMessage;
-    console.log(response.data);
+    const response = await axios.post(`http://${process.env.SHOPPING_SERVICE_URL}:${process.env.SHOPPING_PORT}/getCartDemo`, { id });
     res.render('carts', {
       user: req.user,
       cartItems: response.data,
       error: errorMessage,
       success: successMessage
     })
-
-
+    /*
+    client.get('cartItems', async (err, cachedCartItems) => {
+      if (err) {
+        console.log('Cache redis: ', err);
+        throw err;
+      }
+      if (cachedCartItems) {
+        console.log('Cache hit');
+        res.render('carts', {
+          user: req.user,
+          cartItems: response.data,
+          error: errorMessage,
+          success: successMessage
+        })
+      } else {
+        console.log('Cache hit');
+        try {
+          const response = await axios.post(`http://localhost:8002/getCartDemo`, { id });
+          client.setEx('cartItems',3600,JSON.stringify(response.data));
+          res.render('carts', {
+            user: req.user,
+            cartItems: response.data,
+            error: errorMessage,
+            success: successMessage
+          })
+          
+        } catch (err) {
+          console.log(err);
+          res.status(500).send('Internal Server Error');
+        }
+        
+      }
+    })*/
   } catch (err) {
     res.render(`/carts?error = Error function can't remove products from cart`)
     console.error('Error occurred while logging in:', err);
