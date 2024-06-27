@@ -65,25 +65,19 @@ async function signup(req, res) {
                 if (results.length > 0) {
                     console.log(results);
                     res.status(200).json({ msg: 'Email is already existed' })
-                } else {
-
+                }else{
+                  customerRepository.signup({ username, email, password })
+                  res.status(200).json({ msg: 'Add user successfully',email });
                 }
             })
-        const token = await customerRepository.signup({ username, email, password })
-        token_reg = token;
-        console.log('token is sent to cookie:', token);
-        res.cookie('token', token, { httpOnly: true });
-        res.status(200).json({ msg: 'Add user successfully', token ,email});
-
-    } catch (err) {
-        if (err) {
-            console.log(err);
-            throw new Error('Query Signup Error!!!')
-        }
+       
+    }catch(err){
+        console.log(err);
+        throw err;
     }
+  
+
 }
-
-
 function queryAsync(sql, values) {
     return new Promise((resolve, reject) => {
         con.query(sql, values, (err, results) => {
@@ -95,6 +89,8 @@ function queryAsync(sql, values) {
         });
     });
 }
+
+
 async function login(req, res) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -106,13 +102,14 @@ async function login(req, res) {
     let username = null;
     let id = null;
     let role = null;
-    let verfied = false;    // const {email,password} = req.body;
+    let verified = null;    // const {email,password} = req.body;
     queryAsync('SELECT * FROM customers WHERE email = ?', [email_])
         .then((results) => {
             if (results.length > 0) {
                 username = results[0].username;
-                id = results[0].id
-                role = results[0].role
+                id = results[0].id;
+                role = results[0].role;
+                verified = results[0].verified;
                 const customerpassword = results[0].password;
 
                 return customerRepository.comparePassword(password_, customerpassword);
@@ -120,21 +117,22 @@ async function login(req, res) {
         })
         .then((passwordMatch) => {
             if (passwordMatch) {
-                const token = jwt.sign({ id: id, username: username, email: email_, role: role}, JWT_SECRET, { expiresIn: '20m' })
+                const token = jwt.sign({ id: id, username: username, email: email_, role: role }, JWT_SECRET, { expiresIn: '20m' })
                 console.log(`Login successfully with token ${token}`);
 
                 ///return customerRepository.getUser(username,email_);
 
                 res.status(200).json({ msg: 'Login Successfully', token });
             } else {
-                throw new Error('Password does not match');
+                res.json({ msg: `Password doesn't not match!!` })
             }
         })
-
         .catch((err) => {
             console.error('Error during login:', err);
             res.status(500).json({ error: 'Internal Server Error' });
         });
+
+
 }
 async function getProfile(req, res) {
     const customerId = req.params.id;
@@ -178,10 +176,12 @@ async function getProducts(req, res) {
 
 }
 async function verify(req, res) {
-    console.log(req.user);
+    console.log(req.body);
+    let email = req.body.email;
+    console.log(email);
     const updateUserQuery = 'Update customers set verified = true WHERE email = ?';
     try {
-        con.query(updateUserQuery, [req.user.email], (err, results) => {
+        con.query(updateUserQuery, [email], (err, results) => {
             if (err) {
                 return res.status(500).json({ msg: 'Database error' });
             }
@@ -192,22 +192,22 @@ async function verify(req, res) {
     }
 
 }
-async function checkverify(req,res){
+async function checkverify(req, res) {
     const id = req.body.id
     const checkQuery = 'SELECT * FROM customers WHERE id = ?';
-    try{
-        con.query(checkQuery,[id],(err,results) =>{
-            if(err){
-                return res.status(500).json({msg : 'Error Query'});
+    try {
+        con.query(checkQuery, [id], (err, results) => {
+            if (err) {
+                return res.status(500).json({ msg: 'Error Query' });
             }
             let data = (results[0]).verified;
-            if(data == 1){
-                res.status(200).json({msg: `Person is verified!!!`});
-            }else{
-                res.status(200).json({msg: `Persion isn't verified!!!`});
+            if (data == 1) {
+                res.status(200).json({ msg: `Person is verified!!!` });
+            } else {
+                res.status(200).json({ msg: `Persion isn't verified!!!` });
             }
         })
-    }catch(err){
+    } catch (err) {
         console.log(err);
         throw err;
     }
@@ -215,8 +215,10 @@ async function checkverify(req,res){
 
 const sendEmailController = async (req, res) => {
     try {
-        const { email } = req.body;
-        console.log(email);
+        const email = req.body.email;
+        const verficationCode = req.body.code;
+
+        console.log(email, verficationCode);
         if (email) {
             const transporter = nodemailer.createTransport({
                 host: "smtp.gmail.com",
@@ -231,8 +233,8 @@ const sendEmailController = async (req, res) => {
                 from: `"Uet WebSite for verfication" ${process.env.EMAIL_USERNAME}`, // sender address
                 to: email, // list of receivers
                 subject: "Verification your email at website VNU_UET", // Subject line
-                text: `Please verify your email by clicking the following link: http://localhost:8003/verify?token=${token_reg}`,
-                html: `<p>Please verify your email by clicking the following link: <a href="http://localhost:8003/verify?token=${token_reg}">Verify Email</a></p>`,
+                text: `Please verify your email by clicking the following link: "http://localhost:3000/verify/${email}/${verficationCode}"`,
+                html: `<p>Please verify your email by clicking the following link: <a href="http://localhost:3000/verify/${email}/${verficationCode}">Verify Email</a></p>`,
             });
             return res.json(info);
         }

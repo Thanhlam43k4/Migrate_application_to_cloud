@@ -20,22 +20,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 
-const authenticateJWT_reg = (req, res, next) => {
-    const token = req.query.token;
-    console.log(token);
-    
-    if (token) {
-      jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-        if (err) {
-          return res.status(400).json({msg:'Not token found!!'});
-        }
-        req.user = decoded;
-        next();
-      });
-    } else {
-      next();
-    }
-  };
+
 
   
 const router = express.Router();
@@ -47,7 +32,10 @@ router.post('/signup',
     body('password').isLength({min:5}),
     body('username').isLength({min:3}),
     customerControllers.signup);
-router.get('/verify',authenticateJWT_reg,customerControllers.verify)
+
+
+    
+router.post('/verify',customerControllers.verify)
 
 
 

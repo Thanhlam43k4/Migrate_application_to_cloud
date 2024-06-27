@@ -7,7 +7,7 @@ const dotenv = require('dotenv')
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 
-const { verify } = require('crypto');
+const crypto = require('crypto');
 const app = express();
 const port = 3000;
 
@@ -22,54 +22,6 @@ app.use(cookieParser());
 app.use(express.static("public"))
 
 
-
-
-// Render login page
-
-app.get('/login', (req, res) => {
-  // Pass error message as a parameter if present
-  res.clearCookie('token');
-  const errorMessage = req.query.error;
-  const successMessage = req.query.successMessage;
-  res.render('login', { error: errorMessage, success: successMessage });
-});
-app.post('/login', async (req, res) => {
-  try {
-    const response = await axios.post(`http://${process.env.CUSTOMER_SERVICE_URL}:${process.env.CUSTOMER_PORT}/login`, req.body);//dockerfile http://customer:8003/login
-    // Check if the response contains a success message
-    // if (response.data.success) {
-    // If login is successful, render the product view page
-    //res.render('productView', { products: response.data.data });
-    console.log('Successfull');
-    // if(response.data.success){
-    //   console.log(response.data.data)
-    //   res.render('home',{user: response.data.data})
-    // }
-    if (response.data.token) {
-
-
-      const token = response.data.token;
-      console.log(token);
-      res.cookie('token', token, { httpOnly: true });
-
-      res.redirect('/homePage');
-
-    } else {
-      res.redirect('/login');
-    }
-    // 
-  } catch (error) {
-    // Handle other errors
-    console.error('Error occurred while logging in:', error);
-    if (error.response && error.response.status === 401) {
-      // Unauthorized - Password does not match
-      res.redirect('/login?error=Error response status');
-    } else {
-      // Other errors
-      res.redirect('/login?error=Password does not match');
-    }
-  }
-});
 const authenticateJWT_log = async (req, res, next) => {
   const token = req.cookies.token;
   if (token) {
@@ -86,7 +38,22 @@ const authenticateJWT_log = async (req, res, next) => {
     next();
   }
 };
+const authenticateJWT_reg = (req, res, next) => {
+  const token = req.cookies.token_reg;
+  console.log(token);
 
+  if (token) {
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+      if (err) {
+        return res.status(400).json({ msg: 'Not token found!!' });
+      }
+      req.user = decoded;
+      next();
+    });
+  } else {
+    next();
+  }
+};
 const checkverify = async (req, res, next) => {
   if (req.user) {
     const user_id = req.user.id;
@@ -99,7 +66,7 @@ const checkverify = async (req, res, next) => {
     } else {
       res.redirect('/login?error= Vui Lòng xác thực email trước khi đăng nhập');
     }
-  }else{
+  } else {
     next();
   }
 
@@ -128,6 +95,46 @@ function checkAdminRole(req, res, next) {
     res.redirect('/product-table?error= Access denied. Admins only.')
   }
 }
+function generateRandomHexCode(length) {
+  return crypto.randomBytes(length).toString('hex');
+}
+let random_Code = null;
+let email = null;
+app.get('/login', (req, res) => {
+  // Pass error message as a parameter if present
+  res.clearCookie('token');
+  const errorMessage = req.query.error;
+  const successMessage = req.query.successMessage;
+  res.render('login', { error: errorMessage, success: successMessage });
+});
+app.post('/login', async (req, res) => {
+  try {
+    const response = await axios.post(`http://${process.env.CUSTOMER_SERVICE_URL}:${process.env.CUSTOMER_PORT}/login`, req.body);//dockerfile http://customer:8003/login
+    console.log('Successfull');
+
+    if (response.data.token) {
+      const token = response.data.token;
+      console.log(token);
+      res.cookie('token', token, { httpOnly: true });
+      res.redirect('/homePage');
+    } else {
+      res.redirect('/login');
+    }
+    // 
+  } catch (error) {
+    // Handle other errors
+    console.error('Error occurred while logging in.');
+    if (error.response && error.response.status === 401) {
+      // Unauthorized - Password does not match
+      res.redirect('/login?error=Error response status');
+    } else if (res) {
+      // Other errors
+      res.redirect('/login?error=Password does not match');
+    }
+  }
+});
+
+
 app.get('/addproduct', authenticateJWT_access_key, checkAdminRole, (req, res) => {
   const errorMessage = req.query.error;
   res.render('add-product', { error: errorMessage });
@@ -170,10 +177,8 @@ app.post('/signup', async (req, res) => {
   try {
 
     const response = await axios.post(`http://${process.env.CUSTOMER_SERVICE_URL}:${process.env.CUSTOMER_PORT}/signup`, req.body);//dockerfile http://customer:8003/login
-
-
-    console.log('test')
     console.log(response.data.email);
+    let token_reg = response.data.token;
     /*
     if(response.data.token){
       const token = response.data.token;
@@ -182,15 +187,16 @@ app.post('/signup', async (req, res) => {
     }
     */
     if (response.data.msg == 'Email is already existed') {
-
       res.redirect('/login?error=Email is already exist');
-
     } else {
       const data = response.data.email
+      email = data;
+      random_Code = generateRandomHexCode(16);
       const send_email = await axios.post(`http://${process.env.CUSTOMER_SERVICE_URL}:${process.env.CUSTOMER_PORT}/sendEmail`, {
-        email: data
+        email: data,
+        code: random_Code
       });
-      console.log(send_email);
+      //  console.log(send_email);
       res.redirect('/login?successMessage=Signup successful. Please log in.');
     }
 
@@ -207,6 +213,38 @@ app.post('/signup', async (req, res) => {
   }
 
 });
+
+app.get('/verify/:email/:verifyCode', async (req, res) => {
+  let email = req.params.email;
+  let verifyCode = req.params.verifyCode;
+
+  console.log(email, verifyCode);
+
+  try {
+    const response = await axios.post(`http://${process.env.CUSTOMER_SERVICE_URL}:${process.env.CUSTOMER_PORT}/verify`, { email: email });
+    if (response.data.msg == 'Database error') {
+      res.status(200).json({ err: 'Error from database query' });
+    }
+    if (response.data.msg == 'Account verified! You can now log in.') {
+      console.log('Account verified! You can now log in.');
+      res.clearCookie('token_reg');
+      res.redirect('/login?successMessage= Verified Sucessfully Please Login!')
+    } else {
+      res.redirect('/login?error= Cannot verifiy please check email and click the link again');
+    }
+  } catch (err) {
+    if (err) {
+      console.log(err);
+      throw err;
+    }
+  }
+
+
+
+})
+
+
+
 app.post('/addproduct', authenticateJWT_access_key, checkAdminRole, async (req, res) => {
   const { name, type, amount } = req.body;
 
