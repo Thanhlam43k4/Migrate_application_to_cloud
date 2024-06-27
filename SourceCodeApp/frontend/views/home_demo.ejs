@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VNU University of Engineering and Technology - VNU-UET</title>
+    <link rel="icon" href="/images/logo.svg" type="image/svg">
+
     <link rel="stylesheet" href="/stylesheets/style.css">
     <script src="https://kit.fontawesome.com/c991f90e06.js" crossorigin="anonymous"></script>
 </head>
@@ -14,8 +16,7 @@
         <header>
             <!-- logo -->
             <div class="logo">
-                <a href="/homePage"> <img src="https://blogger.googleusercontent.com/img/a/AVvXsEjf2g77FTZv4jq8Dan0WDlLAe9PrnCnk7aLGBuPFmBAkRCcMZaxd4oQARSjJU9qCyG-5-VXQziAFpDP3X4SgWaH3jRjLIEMLMO2Y9pHXih2kT6DWMj-clj5dp4ZiJSKapeajlosBwRDIpEk0GEkQDWIiYR7tg3ZlK9szD1B9K4KjBhyLBOAJGbt9Pm9E29E
-                    " alt="University Icon" class="university-icon">
+                <a href="/homePage"> <img src="/images/logo.svg" alt="University Icon" class="university-icon">
                 </a>
             </div>
             <!-- menu ve truong -->
@@ -27,6 +28,7 @@
                     <li><a href="/homePage">Giảng viên</a></li>
                     <li><a href="/homePage">Tuyển sinh</a></li>
                     <li><a href="/homePage">Tuyển dụng</a></li>
+                    <li><a href="/product-table">Cửa Hàng</a></li>
                 </ul>
             </nav>
 
@@ -36,19 +38,14 @@
                         <h4 class="welcome-message">Welcome, <span class="username">
                                 <%= user.username %>
                             </span></h4>
-                            <a class="logout" href="/logout">Đăng xuất</a>
-                    </div>
-                    <div class="bottom-row">
-                        <a  href="/myCart">Giỏ Hàng</a>
-                        <a href="/product-table">Cửa Hàng</a>
+                        <a class="mycart" href="/myCart"><i class="fa-solid fa-cart-arrow-down"></i></a>
+                        <a class="logout" href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a>
                     </div>
                 </div>
                 <% } else { %>
                     <div class="login">
-                        <a href="/homePage">Trang chủ</a>
-                        <a href="/signup">Đăng ký</a>
-                        <a href="/Product-Table">Cửa Hàng</a>
                         <a href="/login">Đăng nhập</a>
+                        <a href="/signup">Đăng ký</a>
                         <% if (notification) { %>
                             <div class="notification">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -65,8 +62,6 @@
                             <% } %>
                     </div>
                     <% } %>
-
-
         </header>
 
         <main>
@@ -77,7 +72,40 @@
             </div>
 
             <div class="news">
-                <h1>News</h1>
+                <!-- nội dung phụ -->
+                <div class="new1">
+                    <li><a href="#"></a>
+                        <img src="https://uet.vnu.edu.vn/wp-content/uploads/2024/06/z5467594559445_20ec5e516c156ee22a117bed8c729b7b.jpg">
+                        <span>Học bổng đồng hành và tạo động lực phát triển cho sinh viên Trường Đại học Công nghệ – ĐHQGHN</span>
+                    </li>
+                    <li><a href="#"></a>
+                        <img src="https://uet.vnu.edu.vn/wp-content/uploads/2024/06/IMG_2509.jpg">
+                        <span>Trường Đại học Công nghệ, ĐHQGHN tập huấn nghiệp vụ công tác kiểm tra, coi thi kỳ thi tốt nghiệp THPT năm 2024</span>    
+                    </li>
+                    <li><a href="#"></a>
+                        <img src="https://uet.vnu.edu.vn/wp-content/uploads/2023/11/IMG_0431.jpg">
+                        <span>Trường Đại học Công nghệ không ngừng đổi mới, sáng tạo, phụng sự cộng đồng</span>
+                    </li>
+                    <li><a href="#"></a>
+                        <img src="https://uet.vnu.edu.vn/wp-content/uploads/2024/06/dtt0015-1718876615744.png">
+                        <span>Giáo sư Nguyễn Đình Đức: Người đem ngọn lửa Nga thắp khát vọng khoa học Việt</span>
+                    </li>
+                    <li><a href="#"></a>
+                        <img src="https://uet.vnu.edu.vn/wp-content/uploads/2024/06/%E1%BA%A3nh-1.png">
+                        <span>Thiết bị đo lường tiên tiến, đa chức năng cho giám sát nước, ứng phó với xâm nhập mặn</span>
+                    </li>
+                </div>
+                <!-- Nội dung chính -->
+                <div class="new2">
+                    <img src="/images/ts.gif">
+                    <h3>Đại học Công nghệ - ĐHQGHN công bố thông tin tuyển sinh 2024</h3>
+                    <h4>Phương thức xét tuyển</h4>
+                    <p>Trường Đại học Công nghệ, ĐHQGHN thông báo phương thức xét tuyển vào các ngành đào tạo đại học, cao đẳng năm 2024 như sau:</p>
+                    <p>1. Xét tuyển học bạ THPT</p>
+                    <p>2. Xét tuyển kết quả kỳ thi THPT quốc gia năm 2024</p>
+                    <p>3. Xét tuyển học bạ THPT kết hợp kết quả kỳ thi THPT quốc gia năm 2024</p>
+                    <p>4. Xét tuyển học bạ THPT kết hợp kết quả kỳ thi THPT quốc gia năm 2024 và kết quả kỳ thi tuyển sinh đại học năm 2024 của Trường Đại học Công nghệ, ĐHQGHN</p>
+                </div>
             </div>
         </main>
         <footer>
@@ -141,7 +169,7 @@
             </div>
         </footer>
     </div>
-    <script src = "/javascript/main.js"></script>
+    <script src="/javascript/main.js"></script>
 </body>
 
 </html>

@@ -61,6 +61,19 @@ nav ul li a:hover {
     padding: 10px 20px;
 }
 
+.login {
+    float: right;
+    padding: 10px 20px;
+}
+
+.login a {
+    text-decoration: none;
+    color: white;
+    background-color: #f90;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
 .top-row {
     display: flex;
     align-items: center;
@@ -81,28 +94,39 @@ nav ul li a:hover {
     /* Optional: Change color to make the username stand out */
 }
 
-
-.bottom-row {
-    margin-top: 10px;
-    /* Adds space between the top row and the bottom row */
-}
-
-.bottom-row a {
+<<<<<<< HEAD
+=======
+.login .logout {
     text-decoration: none;
+    background-color:  rgb(241, 133, 0);
     color: white;
-    background-color: #f90;
-    padding: 10px 20px;
+    padding: 5px 10px;
+    /* Adjusted padding to align better with the welcome message */
     border-radius: 5px;
-    margin-right: 10px;
-    /* Adds space between links */
     transition: background-color 0.3s ease;
+    border: 2px solid black;
 }
 
-.bottom-row a:hover {
-    background-color: #e80;
+.logout:hover {
+    background-color: red;
 }
+>>>>>>> origin/fe-from-Viet
 
+.login .mycart{
+    text-decoration: none;
+    background-color:  rgb(241, 133, 0);
+    color: white;
+    padding: 5px 10px;
+    /* Adjusted padding to align better with the welcome message */
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    border: 2px solid black;
 
+}
+.login .mycart:hover {
+    background-color: #17376E;
+    color: #ffffff;
+}
 main .img-title img {
     width: 100%;
 
@@ -114,7 +138,7 @@ main .img-title img:hover {
 }
 
 main .img-title {
-    margin: 5%;
+    margin: 1% 5%;
 }
 
 main {
@@ -124,10 +148,51 @@ main {
 
 main .news {
     display: flex;
-    background-color: #e80;
+    background-image: url(../images/back1.svg);
+    background-color: #17376e;
     margin: 0 5%;
 }
+.news .new1{
+    width: 35%;
+    margin-right: 5px;
+    float: left;
+    border: 3px solid black;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+.news .new1 li {
+    display: flex;
+    margin: 1%;
+}
+.news .new1 img {
+    width: 30%;
+    margin: 1%;
+}
+.news .new1 span {
+    margin: 2%;
+    padding: 2% 0;
+    color: #17376E;
+    font-size: 1rem;
+    line-height: auto;
+}
 
+.news .new2{
+    width: 60%;
+    margin-left: 5%;
+    float: right;
+    border: 3px solid black;
+    background-color: rgba(255, 255, 255, 0.8);
+
+}
+.new2 img{
+    padding: 1%;
+    width: 98%;
+}
+.new2 h3,
+.new2 h4,
+.new2 p{
+    padding: 0 1%;
+
+}
 footer {
     margin-top: 20px;
     background-color: #17376E;
