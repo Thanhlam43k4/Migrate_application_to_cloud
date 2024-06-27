@@ -21,7 +21,7 @@
     <nav>
       <ul>
         <li><a href="/homePage">Trang Chủ</a></li>
-        <li><a href="/homePage">Giới hiệu</a></li>
+        <li><a href="/homePage">Giới thiệu</a></li>
         <li><a href="/product-table">Cửa Hàng</a></li>
       </ul>
     </nav>
@@ -31,13 +31,13 @@
   <div class="wrapper">
     <h2>Sign up</h2>
     <% if (error) { %>
-      <p class="error-message">
+      <p class="error-message" style="color: red;">
         <%= error %>
       </p>
       <% } %>
         <form action="/signup" method="post">
           <div class="input-field">
-            <input type="text" name="username" required>            
+            <input type="text" name="username" required>
             <label for="username">Username</label>
           </div>
           <div class="input-field">
@@ -51,13 +51,21 @@
           <div class="input-field">
             <input type="password" name="password2" required>
             <label>Confirm password</label>
+            <span id="password-error" class="error-message"></span>
+            
           </div>
+          <% if (errorPass) { %>
+            <p class="error-message" style="color: red;">
+              <%= errorPass %>
+            </p>
+            <% } %>
           <button type="submit">Sign Up</button>
           <div class="register">
             <p>Already have an account? <a href="/login">Login now</a></p>
           </div>
         </form>
   </div>
+
 </body>
 
 </html>

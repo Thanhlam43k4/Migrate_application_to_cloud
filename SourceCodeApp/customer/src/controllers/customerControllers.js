@@ -124,7 +124,8 @@ async function login(req, res) {
 
                 res.status(200).json({ msg: 'Login Successfully', token });
             } else {
-                res.json({ msg: `Password doesn't not match!!` })
+                console.log(`password Doesn't not match`)
+                res.status(200).json({ msg: `Password doesn't not match!!` })
             }
         })
         .catch((err) => {

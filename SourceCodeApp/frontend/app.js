@@ -86,6 +86,7 @@ const authenticateJWT_access_key = (req, res, next) => {
     return res.render('home_demo', { user: null, notification: 'Hãy đăng nhập trước khi truy cập vào cửa hàng!!!' });
   }
 };
+
 function checkAdminRole(req, res, next) {
   const user = req.user;
 
@@ -98,8 +99,12 @@ function checkAdminRole(req, res, next) {
 function generateRandomHexCode(length) {
   return crypto.randomBytes(length).toString('hex');
 }
+function checkpassWord(pass1, pass2) {
+  return pass1 === pass2;
+}
+
+
 let random_Code = null;
-let email = null;
 app.get('/login', (req, res) => {
   // Pass error message as a parameter if present
   res.clearCookie('token');
@@ -117,22 +122,25 @@ app.post('/login', async (req, res) => {
       console.log(token);
       res.cookie('token', token, { httpOnly: true });
       res.redirect('/homePage');
+    } else if (response.data.msg == `Password doesn'tnot match!!`) {
+
+      res.redirect('/login?error= Password does not match!!');
     } else {
-      res.redirect('/login');
+      res.redirect('/login?error= Time out Login');
     }
+
+
     // 
   } catch (error) {
     // Handle other errors
-    console.error('Error occurred while logging in.');
+    console.error('Error occurred while logging in.', err);
     if (error.response && error.response.status === 401) {
       // Unauthorized - Password does not match
       res.redirect('/login?error=Error response status');
-    } else if (res) {
-      // Other errors
-      res.redirect('/login?error=Password does not match');
     }
   }
-});
+}
+);
 
 
 app.get('/addproduct', authenticateJWT_access_key, checkAdminRole, (req, res) => {
@@ -168,52 +176,58 @@ app.get('/homePage', authenticateJWT_log, checkverify, (req, res) => {
 app.get('/signup', (req, res) => {
 
   const errorMessage = req.query.error;
-
-  res.render('signup', { error: errorMessage });
+  const errorPass = req.query.errorPass;
+  res.render('signup', { error: errorMessage, errorPass: errorPass });
 
 });
 // Handle signup form submission
 app.post('/signup', async (req, res) => {
-  try {
+  const pass1 = req.body.password;
+  const pass2 = req.body.password2;
+  if (pass1 != pass2) {
+    res.redirect('/signup?errorPass= Password and Confirm Password do not match!!')
+  }
+  else {
+    try {
+      const response = await axios.post(`http://${process.env.CUSTOMER_SERVICE_URL}:${process.env.CUSTOMER_PORT}/signup`, req.body);//dockerfile http://customer:8003/login
+      console.log(response.data.email);
+      let token_reg = response.data.token;
+      /*
+      if(response.data.token){
+        const token = response.data.token;
+        console.log(token);
+        res.cookie('token', token, { httpOnly: true });
+      }
+      */
+      if (response.data.msg == 'Email is already existed') {
+        res.redirect('/login?error=Email is already exist');
+      } else {
+        const data = response.data.email
 
-    const response = await axios.post(`http://${process.env.CUSTOMER_SERVICE_URL}:${process.env.CUSTOMER_PORT}/signup`, req.body);//dockerfile http://customer:8003/login
-    console.log(response.data.email);
-    let token_reg = response.data.token;
-    /*
-    if(response.data.token){
-      const token = response.data.token;
-      console.log(token);
-      res.cookie('token', token, { httpOnly: true });
-    }
-    */
-    if (response.data.msg == 'Email is already existed') {
-      res.redirect('/login?error=Email is already exist');
-    } else {
-      const data = response.data.email
-      email = data;
-      random_Code = generateRandomHexCode(16);
-      const send_email = await axios.post(`http://${process.env.CUSTOMER_SERVICE_URL}:${process.env.CUSTOMER_PORT}/sendEmail`, {
-        email: data,
-        code: random_Code
-      });
-      //  console.log(send_email);
-      res.redirect('/login?successMessage=Signup successful. Please log in.');
-    }
+        random_Code = generateRandomHexCode(16);
+        const send_email = await axios.post(`http://${process.env.CUSTOMER_SERVICE_URL}:${process.env.CUSTOMER_PORT}/sendEmail`, {
+          email: data,
+          code: random_Code
+        });
+        //  console.log(send_email);
+        res.redirect('/login?successMessage=Signup successful. Please log in.');
+      }
 
-  } catch (error) {
-    // Handle other errors
-    console.error('Error occurred while Signup in:', error);
-    if (error.response && error.response.status === 401) {
-      // Unauthorized - Password does not match
-      res.redirect('/login?error=Error Response and status = 401');
-    } else {
-      // Other errors
-      res.redirect('/login?error=Error Input');
+    } catch (error) {
+      // Handle other errors
+      console.error('Error occurred while Signup in:', error);
+      if (error.response && error.response.status === 401) {
+        // Unauthorized - Password does not match
+        res.redirect('/login?error=Error Response and status = 401');
+      } else {
+        // Other errors
+        res.redirect('/login?error=Error Input');
+      }
     }
   }
 
-});
 
+});
 app.get('/verify/:email/:verifyCode', async (req, res) => {
   let email = req.params.email;
   let verifyCode = req.params.verifyCode;
@@ -242,9 +256,6 @@ app.get('/verify/:email/:verifyCode', async (req, res) => {
 
 
 })
-
-
-
 app.post('/addproduct', authenticateJWT_access_key, checkAdminRole, async (req, res) => {
   const { name, type, amount } = req.body;
 
@@ -326,6 +337,8 @@ app.get('/logout', (req, res) => {
   res.clearCookie('token');
   res.redirect('/homePage');
 });
+
+
 
 app.listen(port, () => {
   console.log(`Frontend server listening at http://${process.env.SERVER_URL}:${port}`);
