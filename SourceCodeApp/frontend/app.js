@@ -6,16 +6,16 @@ const path = require('path');
 const dotenv = require('dotenv')
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
+
 const { verify } = require('crypto');
 const app = express();
 const port = 3000;
+
+
 dotenv.config({ path: '../.env' })
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-
 app.use(bodyParser.urlencoded({ extended: true }));
-
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
@@ -33,7 +33,6 @@ app.get('/login', (req, res) => {
   const successMessage = req.query.successMessage;
   res.render('login', { error: errorMessage, success: successMessage });
 });
-
 app.post('/login', async (req, res) => {
   try {
     const response = await axios.post(`http://${process.env.CUSTOMER_SERVICE_URL}:${process.env.CUSTOMER_PORT}/login`, req.body);//dockerfile http://customer:8003/login
@@ -48,10 +47,11 @@ app.post('/login', async (req, res) => {
     // }
     if (response.data.token) {
 
-      const token = response.data.token;
 
+      const token = response.data.token;
+      console.log(token);
       res.cookie('token', token, { httpOnly: true });
-      
+
       res.redirect('/homePage');
 
     } else {
@@ -70,23 +70,41 @@ app.post('/login', async (req, res) => {
     }
   }
 });
-
-const authenticateJWT_log = (req, res, next) => {
+const authenticateJWT_log = async (req, res, next) => {
   const token = req.cookies.token;
-
   if (token) {
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
         return res.redirect('/login');
       }
       req.user = decoded;
+      console.log(req.user);
       next();
+
     });
   } else {
     next();
   }
 };
 
+const checkverify = async (req, res, next) => {
+  if (req.user) {
+    const user_id = req.user.id;
+    console.log(user_id);
+
+    const response = await axios.post(`http://${process.env.CUSTOMER_SERVICE_URL}:${process.env.CUSTOMER_PORT}/checkverify`, { id: user_id })
+    console.log(response.data.msg);
+    if (response.data.msg == 'Person is verified!!!') {
+      next();
+    } else {
+      res.redirect('/login?error= Vui Lòng xác thực email trước khi đăng nhập');
+    }
+  }else{
+    next();
+  }
+
+
+}
 const authenticateJWT_access_key = (req, res, next) => {
   const token = req.cookies.token;
   if (token) {
@@ -101,39 +119,31 @@ const authenticateJWT_access_key = (req, res, next) => {
     return res.render('home_demo', { user: null, notification: 'Hãy đăng nhập trước khi truy cập vào cửa hàng!!!' });
   }
 };
-
-
 function checkAdminRole(req, res, next) {
   const user = req.user;
 
   if (user && user.role === 'admin') {
-      next(); // User is admin, proceed to the next middleware or route handler
+    next(); // User is admin, proceed to the next middleware or route handler
   } else {
-      res.redirect('/product-table?error= Access denied. Admins only.')
+    res.redirect('/product-table?error= Access denied. Admins only.')
   }
 }
-
-
-
-app.get('/addproduct', authenticateJWT_access_key,checkAdminRole, (req, res) => {
+app.get('/addproduct', authenticateJWT_access_key, checkAdminRole, (req, res) => {
   const errorMessage = req.query.error;
   res.render('add-product', { error: errorMessage });
 })
-
 app.get('/product-table', authenticateJWT_access_key, async (req, res) => {
   const errorMessage = req.query.error;
   try {
     const response = await axios.get(`http://${process.env.PRODUCT_SERVICE_URL}:${process.env.PRODUCT_PORT}/api/v1/data`)
     console.log(response.data);
-    res.render('productView', { products: response.data,error: errorMessage});
+    res.render('productView', { products: response.data, error: errorMessage });
 
   } catch (err) {
     console.log(err);
   }
 
 })
-
-
 /*
 app.get('/', authenticateJWT_log, (req, res) => {
 
@@ -143,9 +153,8 @@ app.get('/', authenticateJWT_log, (req, res) => {
 
 })
 */
-
-app.get('/homePage', authenticateJWT_log, (req, res) => {
-  console.log(req.user);
+app.get('/homePage', authenticateJWT_log, checkverify, (req, res) => {
+  //console.log(req.user);
   res.render('home_demo', { user: req.user, notification: null });
 })
 // Render signup page
@@ -161,13 +170,27 @@ app.post('/signup', async (req, res) => {
   try {
 
     const response = await axios.post(`http://${process.env.CUSTOMER_SERVICE_URL}:${process.env.CUSTOMER_PORT}/signup`, req.body);//dockerfile http://customer:8003/login
+
+
     console.log('test')
-    console.log(response.data.msg);
+    console.log(response.data.email);
+    /*
+    if(response.data.token){
+      const token = response.data.token;
+      console.log(token);
+      res.cookie('token', token, { httpOnly: true });
+    }
+    */
     if (response.data.msg == 'Email is already existed') {
 
       res.redirect('/login?error=Email is already exist');
 
     } else {
+      const data = response.data.email
+      const send_email = await axios.post(`http://${process.env.CUSTOMER_SERVICE_URL}:${process.env.CUSTOMER_PORT}/sendEmail`, {
+        email: data
+      });
+      console.log(send_email);
       res.redirect('/login?successMessage=Signup successful. Please log in.');
     }
 
@@ -184,11 +207,7 @@ app.post('/signup', async (req, res) => {
   }
 
 });
-
-
-
-
-app.post('/addproduct', authenticateJWT_access_key,checkAdminRole, async (req, res) => {
+app.post('/addproduct', authenticateJWT_access_key, checkAdminRole, async (req, res) => {
   const { name, type, amount } = req.body;
 
   try {
@@ -213,7 +232,6 @@ app.post('/addproduct', authenticateJWT_access_key,checkAdminRole, async (req, r
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
 app.get('/myCart', authenticateJWT_log, async (req, res) => {
   try {
     let id = req.user.id;
@@ -250,8 +268,6 @@ app.post('/add-to-cart/:id', authenticateJWT_log, async (req, res) => {
     res.redirect('/product-table')
   }
 })
-
-
 app.post('/remove-from-cart/:id', authenticateJWT_log, async (req, res) => {
   try {
     let cartId = req.params.id;
@@ -266,17 +282,12 @@ app.post('/remove-from-cart/:id', authenticateJWT_log, async (req, res) => {
     res.redirect('/myCart?error= Error from system!');
   }
 })
-
-
 app.get('/logout', (req, res) => {
   // Clear any user session or authentication tokens
   // For example, if you're using sessions:
   res.clearCookie('token');
   res.redirect('/homePage');
 });
-
-
-
 
 app.listen(port, () => {
   console.log(`Frontend server listening at http://${process.env.SERVER_URL}:${port}`);

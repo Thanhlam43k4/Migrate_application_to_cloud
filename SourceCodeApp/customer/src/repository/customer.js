@@ -1,8 +1,11 @@
 import bcrypt from 'bcryptjs'
 import * as dotenv from 'dotenv'
 import { con } from '../database/database.js'
-import axios  from 'axios'
-dotenv.config({path : '../.env'})
+import axios from 'axios'
+dotenv.config({ path: '../.env' })
+import jwt from "jsonwebtoken"
+
+let verificationLink = null;
 
 async function comparePassword(plainPassword, hashedPassword) {
     try {
@@ -17,9 +20,10 @@ async function comparePassword(plainPassword, hashedPassword) {
 const signup = async ({
     username,
     email,
-    password
+    password,
 }) => {
     try {
+        let userId = null;
         const hashkey = process.env.SALT_ROUNDS;
         const hashpassword = await bcrypt.hash(password, parseInt(hashkey));
         //Insert into Database
@@ -29,12 +33,17 @@ const signup = async ({
             function (err, results) {
                 if (err) {
                     console.log('Error not add user!!');
+                    throw err;
+
                 }
-                console.log('Add user successfully!!!')
-        })
+                userId = results.insertId
+
+            })
+        const token_reg = await jwt.sign({ userId, email }, process.env.JWT_SECRET, { expiresIn: '5m' })
+        return token_reg;
     } catch (err) {
-    console.error('Error during signup:', err);
-}
+        console.error('Error during signup:', err);
+    }
 }
 
 
@@ -64,20 +73,20 @@ async function fetchAllProducts() {
     try {
         const response = await axios.get(productAPIUrl);
         const productDetails = response.data; // Access the 'results' property
-        return productDetails;   
+        return productDetails;
     } catch (err) {
         console.log('Error fetching product data:', err.message);
         throw err; // Propagate the error
     }
 }
-async function getUser(username,email){
-    const  userDetail = {
+async function getUser(username, email) {
+    const userDetail = {
         username: username,
         email: email,
     }
     return userDetail;
-    
+
 }
 export default {
-    signup, updateCus,fetchAllProducts,comparePassword, getUser
+    signup, updateCus, fetchAllProducts, comparePassword, getUser, verificationLink
 }

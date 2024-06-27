@@ -8,16 +8,25 @@ import {
 } from 'express-validator'
 import { fetchData } from "../routes/api.js";
 import bcrypt from 'bcryptjs'
+import crypto from 'crypto'
 import customerRepository from '../repository/customer.js'
-
+import { sendEmailService } from "../repository/emailService.js";
 import jwt from "jsonwebtoken"
-
+import nodemailer from 'nodemailer'
 import dotenv from "dotenv"
+import cookieParser from 'cookie-parser'
 dotenv.config({ path: '../.env' })
+import bodyParser from 'body-parser';
+import express from 'express'
+const app = express();
 
-
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cookieParser());
 
 const JWT_SECRET = process.env.JWT_SECRET
+let token_reg = null
 
 async function getAllUser(req, res) {
     const apiData = await fetchData();
@@ -41,31 +50,40 @@ async function signup(req, res) {
     let password = req.body.password;
     // const {username,email,password} = req.body;
     let a = true;
-    try{
+    res.clearCookie('token');
+    res.clearCookie('token_reg');
+    try {
         con.query(
-        'SELECT * FROM customers WHERE email = ?',
-        [email],
-        function (err, results) {
-            if (err) {
-                // Handle the error (e.g., log it or return an error response)
-                console.error('Error executing SELECT query:', err);
-                throw new Error('Internal Server Error');
-            }
-            if (results.length > 0) {
-                console.log(results);
-                res.status(200).json({msg: 'Email is already existed'})
-            } else {
-                res.json({ msg: 'Add user Successfully!!!' })
-                customerRepository.signup({ username, email, password })
-            }
-           
-        })
-    }catch(err){
-        if(err){
+            'SELECT * FROM customers WHERE email = ?',
+            [email],
+            function (err, results) {
+                if (err) {
+                    // Handle the error (e.g., log it or return an error response)
+                    console.error('Error executing SELECT query:', err);
+                    throw new Error('Internal Server Error');
+                }
+                if (results.length > 0) {
+                    console.log(results);
+                    res.status(200).json({ msg: 'Email is already existed' })
+                } else {
+
+                }
+            })
+        const token = await customerRepository.signup({ username, email, password })
+        token_reg = token;
+        console.log('token is sent to cookie:', token);
+        res.cookie('token', token, { httpOnly: true });
+        res.status(200).json({ msg: 'Add user successfully', token ,email});
+
+    } catch (err) {
+        if (err) {
+            console.log(err);
             throw new Error('Query Signup Error!!!')
         }
     }
 }
+
+
 function queryAsync(sql, values) {
     return new Promise((resolve, reject) => {
         con.query(sql, values, (err, results) => {
@@ -88,7 +106,7 @@ async function login(req, res) {
     let username = null;
     let id = null;
     let role = null;
-    // const {email,password} = req.body;
+    let verfied = false;    // const {email,password} = req.body;
     queryAsync('SELECT * FROM customers WHERE email = ?', [email_])
         .then((results) => {
             if (results.length > 0) {
@@ -102,7 +120,7 @@ async function login(req, res) {
         })
         .then((passwordMatch) => {
             if (passwordMatch) {
-                const token = jwt.sign({ id: id, username: username, email: email_, role:role }, JWT_SECRET, { expiresIn: '20m' })
+                const token = jwt.sign({ id: id, username: username, email: email_, role: role}, JWT_SECRET, { expiresIn: '20m' })
                 console.log(`Login successfully with token ${token}`);
 
                 ///return customerRepository.getUser(username,email_);
@@ -118,8 +136,6 @@ async function login(req, res) {
             res.status(500).json({ error: 'Internal Server Error' });
         });
 }
-
-
 async function getProfile(req, res) {
     const customerId = req.params.id;
     try {
@@ -144,7 +160,6 @@ async function addInforCus(req, res) {
             res.json({ msg: 'This Data after updated', results });
         });
 }
-
 async function getHomePage(req, res) {
     res.render('home.ejs')
 
@@ -162,6 +177,78 @@ async function getProducts(req, res) {
     }
 
 }
+async function verify(req, res) {
+    console.log(req.user);
+    const updateUserQuery = 'Update customers set verified = true WHERE email = ?';
+    try {
+        con.query(updateUserQuery, [req.user.email], (err, results) => {
+            if (err) {
+                return res.status(500).json({ msg: 'Database error' });
+            }
+            return res.json({ msg: 'Account verified! You can now log in.' });
+        })
+    } catch (err) {
+        if (err) throw err;
+    }
+
+}
+async function checkverify(req,res){
+    const id = req.body.id
+    const checkQuery = 'SELECT * FROM customers WHERE id = ?';
+    try{
+        con.query(checkQuery,[id],(err,results) =>{
+            if(err){
+                return res.status(500).json({msg : 'Error Query'});
+            }
+            let data = (results[0]).verified;
+            if(data == 1){
+                res.status(200).json({msg: `Person is verified!!!`});
+            }else{
+                res.status(200).json({msg: `Persion isn't verified!!!`});
+            }
+        })
+    }catch(err){
+        console.log(err);
+        throw err;
+    }
+}
+
+const sendEmailController = async (req, res) => {
+    try {
+        const { email } = req.body;
+        console.log(email);
+        if (email) {
+            const transporter = nodemailer.createTransport({
+                host: "smtp.gmail.com",
+                port: 587,
+                secure: false, // Use `true` for port 465, `false` for all other ports
+                auth: {
+                    user: process.env.EMAIL_USERNAME,
+                    pass: process.env.EMAIL_PASSWORD,
+                },
+            });
+            const info = await transporter.sendMail({
+                from: `"Uet WebSite for verfication" ${process.env.EMAIL_USERNAME}`, // sender address
+                to: email, // list of receivers
+                subject: "Verification your email at website VNU_UET", // Subject line
+                text: `Please verify your email by clicking the following link: http://localhost:8003/verify?token=${token_reg}`,
+                html: `<p>Please verify your email by clicking the following link: <a href="http://localhost:8003/verify?token=${token_reg}">Verify Email</a></p>`,
+            });
+            return res.json(info);
+        }
+        return res.json({
+            status: 'err',
+            msg: 'The email is required'
+        })
+    } catch (err) {
+        console.log(err);
+        return res.json({
+            status: 'err'
+        })
+    }
+
+}
+
 export default {
     getAllUser,
     signup,
@@ -169,5 +256,8 @@ export default {
     getProfile,
     addInforCus,
     getHomePage,
-    getProducts
+    getProducts,
+    sendEmailController,
+    verify,
+    checkverify
 }
