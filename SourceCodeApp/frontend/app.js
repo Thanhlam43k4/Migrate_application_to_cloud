@@ -19,9 +19,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static("public"))
-
-
-
 const authenticateJWT_log = async (req, res, next) => {
   const token = req.cookies.token;
   if (token) {
@@ -86,7 +83,22 @@ const authenticateJWT_access_key = (req, res, next) => {
     return res.render('home_demo', { user: null, notification: 'Hãy đăng nhập trước khi truy cập vào cửa hàng!!!' });
   }
 };
+const authenticateJWT_reset = (req,res,next)=>{
 
+  const token_reset = req.cookies.token_reset;
+  if (token_reset) {
+    jwt.verify(token_reset, process.env.JWT_SECRET, (err, decoded) => {
+      if (err) {
+        throw err;
+      }
+      req.user = decoded;
+      console.log(req.user);
+      next();
+    });
+  } else {
+    next();
+  }
+}
 function checkAdminRole(req, res, next) {
   const user = req.user;
 
@@ -122,7 +134,7 @@ app.post('/login', async (req, res) => {
       console.log(token);
       res.cookie('token', token, { httpOnly: true });
       res.redirect('/homePage');
-    } else if (response.data.msg == `Password doesn'tnot match!!`) {
+    } else if (response.data.msg == `Password doesn't not match!!`) {
 
       res.redirect('/login?error= Password does not match!!');
     } else {
@@ -141,8 +153,6 @@ app.post('/login', async (req, res) => {
   }
 }
 );
-
-
 app.get('/addproduct', authenticateJWT_access_key, checkAdminRole, (req, res) => {
   const errorMessage = req.query.error;
   res.render('add-product', { error: errorMessage });
@@ -203,11 +213,12 @@ app.post('/signup', async (req, res) => {
         res.redirect('/login?error=Email is already exist');
       } else {
         const data = response.data.email
-
+        
         random_Code = generateRandomHexCode(16);
         const send_email = await axios.post(`http://${process.env.CUSTOMER_SERVICE_URL}:${process.env.CUSTOMER_PORT}/sendEmail`, {
           email: data,
-          code: random_Code
+          code: random_Code,
+          msg: 'Sign Up Email!!'
         });
         //  console.log(send_email);
         res.redirect('/login?successMessage=Signup successful. Please log in.');
@@ -368,7 +379,52 @@ app.get('/logout', (req, res) => {
   res.clearCookie('token');
   res.redirect('/homePage');
 });
+app.get('/resetPass',(req,res) =>{
+  const errorMessage = req.query.error;
+  const successMessage = req.query.successMessage;
+  res.render('resetPass',{error: errorMessage, success: successMessage});
+})
+app.post('/resetPass',async(req,res) =>{
+  const email = req.body.email;
+  const code = generateRandomHexCode(16);
+  const send_email = await axios.post(`http://${process.env.CUSTOMER_SERVICE_URL}:${process.env.CUSTOMER_PORT}/sendEmail`, {
+    email: email,
+    msg: 'Reset password Email!!',
+    code : code
+  });
+  console.log('Send verification to your email successfully!!')
+  res.redirect('/resetPass?successMessage= Please Check your email for reseting password')
+})
 
+app.get('/resetPass/:email/:code',async(req,res) =>{
+  const email = req.params.email;
+  const token_reset = jwt.sign({email: email},process.env.JWT_SECRET, { expiresIn: '10m' });
+  res.cookie('token_reset',token_reset,{httpOnly:true});
+  const error = req.query.error;
+  const success = req.query.success;
+  res.render('resetPassForm',{email : email,error: error,success: success});
+})
+
+app.post('/updatePassWord',authenticateJWT_reset,async(req,res) =>{
+  if(req.user){
+    const email = req.user.email;
+    const password  = req.body.password;
+    const response = await axios.post(`http://${process.env.CUSTOMER_SERVICE_URL}:${process.env.CUSTOMER_PORT}/updatePassWord`,{
+      email: email,
+      password: password
+    })
+    if(response.data.msg == 'Change Password Successfully!'){
+      res.clearCookie('token_reset');
+      res.redirect('/login?successMessage= Reset password Sucessfully Please Log in')
+    }else{
+      res.status(200).json({msg : 'Cannot change password!!'});
+    }
+  }else{
+    res.redirect('/resetPass?error= Please reset password again');
+  }
+ 
+
+})
 
 
 app.listen(port, () => {

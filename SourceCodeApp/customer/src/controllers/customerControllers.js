@@ -65,17 +65,17 @@ async function signup(req, res) {
                 if (results.length > 0) {
                     console.log(results);
                     res.status(200).json({ msg: 'Email is already existed' })
-                }else{
-                  customerRepository.signup({ username, email, password })
-                  res.status(200).json({ msg: 'Add user successfully',email });
+                } else {
+                    customerRepository.signup({ username, email, password })
+                    res.status(200).json({ msg: 'Add user successfully', email });
                 }
             })
-       
-    }catch(err){
+
+    } catch (err) {
         console.log(err);
         throw err;
     }
-  
+
 
 }
 function queryAsync(sql, values) {
@@ -213,13 +213,39 @@ async function checkverify(req, res) {
         throw err;
     }
 }
+const updatePassword = async(req,res) =>{
+    const email = req.body.email;
+    const password = req.body.password;
 
+    const hashkey = process.env.SALT_ROUNDS;
+    const hashpassword = await bcrypt.hash(password, parseInt(hashkey));
+    try{
+        con.query(`UPDATE customers SET password = ?  WHERE email = ?`,
+        [hashpassword,email],
+        function(err,results){
+            if(err){
+                console.log(err);
+                console.log('Can not update new password')
+            }
+        })
+        console.log('Change password')
+        res.status(200).json({msg : 'Change Password Successfully!'});
+    }catch(err){
+        res.status(200).json({msg : 'Error from the queries'});
+        throw err;
+    }
+
+}
 const sendEmailController = async (req, res) => {
     try {
         const email = req.body.email;
-        const verficationCode = req.body.code;
-
-        console.log(email, verficationCode);
+        console.log(req.body.msg);
+        let URL_LINK = null;
+        if (req.body.msg == 'Sign Up Email!!') {
+            URL_LINK = `http://localhost:3000/verify/${email}/${req.body.code}`
+        } else if (req.body.msg == 'Reset password Email!!') {
+            URL_LINK = `http://localhost:3000/resetPass/${email}/${req.body.code}`
+        }
         if (email) {
             const transporter = nodemailer.createTransport({
                 host: "smtp.gmail.com",
@@ -234,8 +260,8 @@ const sendEmailController = async (req, res) => {
                 from: `"Uet WebSite for verfication" ${process.env.EMAIL_USERNAME}`, // sender address
                 to: email, // list of receivers
                 subject: "Verification your email at website VNU_UET", // Subject line
-                text: `Please verify your email by clicking the following link: "http://localhost:3000/verify/${email}/${verficationCode}"`,
-                html: `<p>Please verify your email by clicking the following link: <a href="http://localhost:3000/verify/${email}/${verficationCode}">Verify Email</a></p>`,
+                text: `Please verify your email by clicking the following link: ${URL_LINK}`,
+                html: `<p>Please verify your email by clicking the following link: <a href=${URL_LINK}>Verify Email</a></p>`,
             });
             return res.json(info);
         }
@@ -249,8 +275,10 @@ const sendEmailController = async (req, res) => {
             status: 'err'
         })
     }
-
 }
+
+
+
 
 export default {
     getAllUser,
@@ -262,5 +290,6 @@ export default {
     getProducts,
     sendEmailController,
     verify,
-    checkverify
+    checkverify,
+    updatePassword
 }

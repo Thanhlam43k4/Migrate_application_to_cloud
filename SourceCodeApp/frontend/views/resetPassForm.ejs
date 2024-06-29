@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login UET WebSite</title>
+    <link rel="icon" href="/images/logo.svg" type="image/svg">
+    <link rel="stylesheet" href="/stylesheets/login.css">
+    <script src="https://kit.fontawesome.com/c991f90e06.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header>
+        <!-- logo -->
+        <div class="logo">
+            <a href="/homePage"> <img src="/images/logo.svg" alt="University Icon" class="university-icon"></a>
+            <p>Đại học Quốc gia hà nội<br>Trường Đại học Công nghệ</p>
+        </div>
+        <!-- menu ve truong -->
+        <nav>
+            <ul>
+                <li><a href="/homePage">Trang Chủ</a></li>
+                <li><a href="/homePage">Giới hiệu</a></li>
+                <li><a href="/product-table">Cửa Hàng</a></li>
+            </ul>
+        </nav>
+
+
+    </header>
+    <div class="wrapper">
+        <h2 style="color: black">Reset Password </h2>
+        <% if (error) { %>
+            <p class="error-message" style="color: red;">
+                <%= error %>
+            </p>
+            <% } %>
+
+                <% if (success) { %>
+                    <p class="success-message" style="color: green;">
+                        <%= success %>
+                    </p>
+                    <% } %>
+                        <form action="/updatePassWord" method="post">
+                            <h4 style="color: white">Your Email: <%=(email)%>
+                            </h4>
+
+                            <div class="input-field">
+                                <input type="password" name="password" id="password" required>
+                                <label>Your new password</label>
+                            </div>
+
+                            <div class="input-field">
+                                <input type="password" name="password2" id="password2" required>
+                                <label>Confirm new password</label>
+                                
+                                <span id="password-error" class="error-message" style="color: red;"></span>
+                            </div>
+                            <div class="forget">
+                                <label for="remember">
+                                    <input type="checkbox" id="remember">
+                                    <p>Remember me</p>
+                                </label>
+                            </div>
+                            <button type="submit" id="submit-btn">Change Password</button>
+                            <div class="register">
+                                <p>Don't have an account? <a href="/signup">Register</a></p>
+                            </div>
+                        </form>
+    </div>
+
+    <script>
+       document.getElementById('password2').addEventListener('input', function () {
+    var password = document.getElementById('password').value;
+    var confirmPassword = document.getElementById('password2').value;
+    var errorElement = document.getElementById('password-error');
+    var submitBtn = document.getElementById('submit-btn');
+
+    if (password !== confirmPassword) {
+        errorElement.textContent = "Passwords do not match";
+        submitBtn.disabled = true;
+    } else {
+        errorElement.textContent = "";
+        submitBtn.disabled = false;
+    }
+});
+    </script>
+
+</body> 

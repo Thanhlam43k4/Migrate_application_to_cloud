@@ -29,39 +29,34 @@
 
   </header>
   <div class="wrapper">
-    <h2>Login</h2>
+    <h2>Reset Password </h2>
     <% if (error) { %>
       <p class="error-message" style="color: red;">
         <%= error %>
       </p>
       <% } %>
-
         <% if (success) { %>
           <p class="success-message" style="color: green;">
             <%= success %>
           </p>
           <% } %>
-    <form action="/login" method="post">
+
+            <form action="/resetPass" method="post">
               <div class="input-field">
                 <input type="email" name="email" required>
                 <label>Enter your email</label>
-              </div>
-              <div class="input-field">
-                <input type="password" name="password" required>
-                <label>Enter your password</label>
               </div>
               <div class="forget">
                 <label for="remember">
                   <input type="checkbox" id="remember">
                   <p>Remember me</p>
-                </label>  
-                <a href="/resetPass">Forgot password?</a>
+                </label>
               </div>
-              <button type="submit">Log In</button>
+              <button type="submit">Send Code to Email</button>
               <div class="register">
                 <p>Don't have an account? <a href="/signup">Register</a></p>
               </div>
-    </form>
+            </form>
   </div>
-  
+
 </body>
