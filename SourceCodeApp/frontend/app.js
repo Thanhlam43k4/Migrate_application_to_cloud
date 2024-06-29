@@ -18,102 +18,22 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static("public"))
-
-const authenticateJWT_log = async (req, res, next) => {
-  const token = req.cookies.token;
-  if (token) {
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-      if (err) {
-        return res.redirect('/login');
-      }
-      req.user = decoded;
-      console.log(req.user);
-      next();
-
-    });
-  } else {
-    next();
+const {
+  authenticateJWT_access_key,
+  authenticateJWT_log,
+  authenticateJWT_reg, authenticateJWT_reset
+} = require('./middleware/authenticate.js')
+const
+  {
+    checkpassWord,
+    checkAdminRole,
+    generateRandomHexCode,
+    checkverify
   }
-};
-const authenticateJWT_reg = (req, res, next) => {
-  const token = req.cookies.token_reg;
-  console.log(token);
-
-  if (token) {
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-      if (err) {
-        return res.status(400).json({ msg: 'Not token found!!' });
-      }
-      req.user = decoded;
-      next();
-    });
-  } else {
-    next();
-  }
-};
-const checkverify = async (req, res, next) => {
-  if (req.user) {
-    const user_id = req.user.id;
-    console.log(user_id);
-
-    const response = await axios.post(`http://${process.env.CUSTOMER_SERVICE_URL}:${process.env.CUSTOMER_PORT}/checkverify`, { id: user_id })
-    console.log(response.data.msg);
-    if (response.data.msg == 'Person is verified!!!') {
-      next();
-    } else {
-      res.redirect('/login?error= Vui Lòng xác thực email trước khi đăng nhập');
-    }
-  } else {
-    next();
-  }
+    = require('./middleware/checkmiddle.js')
 
 
-}
-const authenticateJWT_access_key = (req, res, next) => {
-  const token = req.cookies.token;
-  if (token) {
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-      if (err) {
-        return res.redirect('/homePage');
-      }
-      req.user = decoded;
-      next();
-    });
-  } else {
-    return res.render('home_demo', { user: null, notification: 'Hãy đăng nhập trước khi truy cập vào cửa hàng!!!' });
-  }
-};
-const authenticateJWT_reset = (req, res, next) => {
 
-  const token_reset = req.cookies.token_reset;
-  if (token_reset) {
-    jwt.verify(token_reset, process.env.JWT_SECRET, (err, decoded) => {
-      if (err) {
-        throw err;
-      }
-      req.user = decoded;
-      console.log(req.user);
-      next();
-    });
-  } else {
-    next();
-  }
-}
-function checkAdminRole(req, res, next) {
-  const user = req.user;
-
-  if (user && user.role === 'admin') {
-    next(); // User is admin, proceed to the next middleware or route handler
-  } else {
-    res.redirect('/product-table?error= Access denied. Admins only.')
-  }
-}
-function generateRandomHexCode(length) {
-  return crypto.randomBytes(length).toString('hex');
-}
-function checkpassWord(pass1, pass2) {
-  return pass1 === pass2;
-}
 let random_Code = null;
 app.get('/login', (req, res) => {
   // Pass error message as a parameter if present
@@ -190,52 +110,44 @@ app.get('/signup', (req, res) => {
 });
 // Handle signup form submission
 app.post('/signup', async (req, res) => {
-  const pass1 = req.body.password;
-  const pass2 = req.body.password2;
-  if (pass1 != pass2) {
-    res.redirect('/signup?errorPass= Password and Confirm Password do not match!!')
-  }
-  else {
-    try {
-      const response = await axios.post(`http://${process.env.CUSTOMER_SERVICE_URL}:${process.env.CUSTOMER_PORT}/signup`, req.body);//dockerfile http://customer:8003/login
-      console.log(response.data.email);
-      let token_reg = response.data.token;
-      /*
-      if(response.data.token){
-        const token = response.data.token;
-        console.log(token);
-        res.cookie('token', token, { httpOnly: true });
-      }
-      */
-      if (response.data.msg == 'Email is already existed') {
-        res.redirect('/login?error=Email is already exist');
-      } else {
-        const data = response.data.email
 
-        random_Code = generateRandomHexCode(16);
-        const send_email = await axios.post(`http://${process.env.CUSTOMER_SERVICE_URL}:${process.env.CUSTOMER_PORT}/sendEmail`, {
-          email: data,
-          code: random_Code,
-          msg: 'Sign Up Email!!'
-        });
-        //  console.log(send_email);
-        res.redirect('/login?successMessage=Signup successful. Please log in.');
-      }
+  try {
+    const response = await axios.post(`http://${process.env.CUSTOMER_SERVICE_URL}:${process.env.CUSTOMER_PORT}/signup`, req.body);//dockerfile http://customer:8003/login
+    console.log(response.data.email);
+    let token_reg = response.data.token;
+    /*
+    if(response.data.token){
+      const token = response.data.token;
+      console.log(token);
+      res.cookie('token', token, { httpOnly: true });
+    }
+    */
+    if (response.data.msg == 'Email is already existed') {
+      res.redirect('/login?error=Email is already exist');
+    } else {
+      const data = response.data.email
 
-    } catch (error) {
-      // Handle other errors
-      console.error('Error occurred while Signup in:', error);
-      if (error.response && error.response.status === 401) {
-        // Unauthorized - Password does not match
-        res.redirect('/login?error=Error Response and status = 401');
-      } else {
-        // Other errors
-        res.redirect('/login?error=Error Input');
-      }
+      random_Code = generateRandomHexCode(16);
+      const send_email = await axios.post(`http://${process.env.CUSTOMER_SERVICE_URL}:${process.env.CUSTOMER_PORT}/sendEmail`, {
+        email: data,
+        code: random_Code,
+        msg: 'Sign Up Email!!'
+      });
+      //  console.log(send_email);
+      res.redirect('/login?successMessage=Signup successful. Please log in.');
+    }
+
+  } catch (error) {
+    // Handle other errors
+    console.error('Error occurred while Signup in:', error);
+    if (error.response && error.response.status === 401) {
+      // Unauthorized - Password does not match
+      res.redirect('/login?error=Error Response and status = 401');
+    } else {
+      // Other errors
+      res.redirect('/login?error=Error Input');
     }
   }
-
-
 });
 app.get('/verify/:email/:verifyCode', async (req, res) => {
   let email = req.params.email;
@@ -292,54 +204,59 @@ app.get('/', (req, res) => {
   res.redirect('/homePage');
 })
 app.get('/myCart', authenticateJWT_log, async (req, res) => {
-  let id = req.user.id;
-  const errorMessage = req.query.error;
-  const successMessage = req.query.successMessage;
-  try {
-    const response = await axios.post(`http://${process.env.SHOPPING_SERVICE_URL}:${process.env.SHOPPING_PORT}/getCartDemo`, { id });
-    res.render('carts', {
-      user: req.user,
-      cartItems: response.data,
-      error: errorMessage,
-      success: successMessage
-    })
-    /*
-    client.get('cartItems', async (err, cachedCartItems) => {
-      if (err) {
-        console.log('Cache redis: ', err);
-        throw err;
-      }
-      if (cachedCartItems) {
-        console.log('Cache hit');
-        res.render('carts', {
-          user: req.user,
-          cartItems: response.data,
-          error: errorMessage,
-          success: successMessage
-        })
-      } else {
-        console.log('Cache hit');
-        try {
-          const response = await axios.post(`http://localhost:8002/getCartDemo`, { id });
-          client.setEx('cartItems',3600,JSON.stringify(response.data));
+  if (req.user != null) {
+    let id = req.user.id;
+    const errorMessage = req.query.error;
+    const successMessage = req.query.successMessage;
+    try {
+      const response = await axios.post(`http://${process.env.SHOPPING_SERVICE_URL}:${process.env.SHOPPING_PORT}/getCartDemo`, { id });
+      res.render('carts', {
+        user: req.user,
+        cartItems: response.data,
+        error: errorMessage,
+        success: successMessage
+      })
+      /*
+      client.get('cartItems', async (err, cachedCartItems) => {
+        if (err) {
+          console.log('Cache redis: ', err);
+          throw err;
+        }
+        if (cachedCartItems) {
+          console.log('Cache hit');
           res.render('carts', {
             user: req.user,
             cartItems: response.data,
             error: errorMessage,
             success: successMessage
           })
+        } else {
+          console.log('Cache hit');
+          try {
+            const response = await axios.post(`http://localhost:8002/getCartDemo`, { id });
+            client.setEx('cartItems',3600,JSON.stringify(response.data));
+            res.render('carts', {
+              user: req.user,
+              cartItems: response.data,
+              error: errorMessage,
+              success: successMessage
+            })
+            
+          } catch (err) {
+            console.log(err);
+            res.status(500).send('Internal Server Error');
+          }
           
-        } catch (err) {
-          console.log(err);
-          res.status(500).send('Internal Server Error');
         }
-        
-      }
-    })*/
-  } catch (err) {
-    res.render(`/carts?error = Error function can't remove products from cart`)
-    console.error('Error occurred while logging in:', err);
+      })*/
+    } catch (err) {
+      res.render(`/carts?error = Error function can't remove products from cart`)
+      console.error('Error occurred while logging in:', err);
+    }
+  }else{
+    res.redirect('/login')
   }
+
 
 })
 app.post('/add-to-cart/:id', authenticateJWT_log, async (req, res) => {

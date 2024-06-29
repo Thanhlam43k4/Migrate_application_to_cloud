@@ -53,7 +53,7 @@
                             <div class="input-field">
                                 <input type="password" name="password2" id="password2" required>
                                 <label>Confirm new password</label>
-                                
+
                                 <span id="password-error" class="error-message" style="color: red;"></span>
                             </div>
                             <div class="forget">
@@ -70,20 +70,20 @@
     </div>
 
     <script>
-       document.getElementById('password2').addEventListener('input', function () {
-    var password = document.getElementById('password').value;
-    var confirmPassword = document.getElementById('password2').value;
-    var errorElement = document.getElementById('password-error');
-    var submitBtn = document.getElementById('submit-btn');
+        document.getElementById('password2').addEventListener('input', function () {
+            var password = document.getElementById('password').value;
+            var confirmPassword = document.getElementById('password2').value;
+            var errorElement = document.getElementById('password-error');
+            var submitBtn = document.getElementById('submit-btn');
 
-    if (password !== confirmPassword) {
-        errorElement.textContent = "Passwords do not match";
-        submitBtn.disabled = true;
-    } else {
-        errorElement.textContent = "";
-        submitBtn.disabled = false;
-    }
-});
+            if (password !== confirmPassword) {
+                errorElement.textContent = "Passwords do not match";
+                submitBtn.disabled = true;
+            } else {
+                errorElement.textContent = "";
+                submitBtn.disabled = false;
+            }
+        });
     </script>
 
-</body> 
+</body>

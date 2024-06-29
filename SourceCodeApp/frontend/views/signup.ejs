@@ -45,27 +45,38 @@
             <label>Enter your email</label>
           </div>
           <div class="input-field">
-            <input type="password" name="password" required>
+            <input type="password" name="password" id="password" required>
             <label>Your password</label>
           </div>
           <div class="input-field">
-            <input type="password" name="password2" required>
+            <input type="password" name="password2" id="password2" required>
             <label>Confirm password</label>
-            <span id="password-error" class="error-message"></span>
-            
+
           </div>
-          <% if (errorPass) { %>
-            <p class="error-message" style="color: red;">
-              <%= errorPass %>
-            </p>
-            <% } %>
+          <span id="password-error" class="error-message" style="color: red;"></span>
+
           <button type="submit">Sign Up</button>
           <div class="register">
-            <p>Already have an account? <a href="/login">Login now</a></p>
+            <p>Already have an account? <a href="/login" style="color: black;">Login now</a></p>
           </div>
         </form>
   </div>
+  <script>
+    document.getElementById('password2').addEventListener('input', function () {
+      var password = document.getElementById('password').value;
+      var confirmPassword = document.getElementById('password2').value;
+      var errorElement = document.getElementById('password-error');
+      var submitBtn = document.getElementById('submit-btn');
 
+      if (password !== confirmPassword) {
+        errorElement.textContent = "Passwords do not match";
+        submitBtn.disabled = true;
+      } else {
+        errorElement.textContent = "";
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
 </body>
 
 </html>
