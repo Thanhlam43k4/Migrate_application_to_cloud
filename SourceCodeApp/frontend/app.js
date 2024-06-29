@@ -10,7 +10,6 @@ const { createClient } = require('redis');
 const crypto = require('crypto');
 const app = express();
 const port = 3000;
-
 dotenv.config({ path: '../.env' })
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -19,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static("public"))
+
 const authenticateJWT_log = async (req, res, next) => {
   const token = req.cookies.token;
   if (token) {
@@ -83,7 +83,7 @@ const authenticateJWT_access_key = (req, res, next) => {
     return res.render('home_demo', { user: null, notification: 'Hãy đăng nhập trước khi truy cập vào cửa hàng!!!' });
   }
 };
-const authenticateJWT_reset = (req,res,next)=>{
+const authenticateJWT_reset = (req, res, next) => {
 
   const token_reset = req.cookies.token_reset;
   if (token_reset) {
@@ -114,8 +114,6 @@ function generateRandomHexCode(length) {
 function checkpassWord(pass1, pass2) {
   return pass1 === pass2;
 }
-
-
 let random_Code = null;
 app.get('/login', (req, res) => {
   // Pass error message as a parameter if present
@@ -213,7 +211,7 @@ app.post('/signup', async (req, res) => {
         res.redirect('/login?error=Email is already exist');
       } else {
         const data = response.data.email
-        
+
         random_Code = generateRandomHexCode(16);
         const send_email = await axios.post(`http://${process.env.CUSTOMER_SERVICE_URL}:${process.env.CUSTOMER_PORT}/sendEmail`, {
           email: data,
@@ -349,7 +347,7 @@ app.post('/add-to-cart/:id', authenticateJWT_log, async (req, res) => {
     let productId = req.params.id;
     let customerId = req.user.id;
     let quantity = 1000;
-    const response = await axios.post(`http://localhost:8002/addtoCartDemo`, { productId, customerId, quantity })
+    const response = await axios.post(`http://${process.env.SHOPPING_SERVICE_URL}:${process.env.SHOPPING_PORT}/addtoCartDemo`, { productId, customerId, quantity })
     console.log('Add product to Cart Sucessfully!');
 
     res.redirect('/myCart?successMessage= Add product to Cart Successfully!');
@@ -379,50 +377,50 @@ app.get('/logout', (req, res) => {
   res.clearCookie('token');
   res.redirect('/homePage');
 });
-app.get('/resetPass',(req,res) =>{
+app.get('/resetPass', (req, res) => {
   const errorMessage = req.query.error;
   const successMessage = req.query.successMessage;
-  res.render('resetPass',{error: errorMessage, success: successMessage});
+  res.render('resetPass', { error: errorMessage, success: successMessage });
 })
-app.post('/resetPass',async(req,res) =>{
+app.post('/resetPass', async (req, res) => {
   const email = req.body.email;
   const code = generateRandomHexCode(16);
   const send_email = await axios.post(`http://${process.env.CUSTOMER_SERVICE_URL}:${process.env.CUSTOMER_PORT}/sendEmail`, {
     email: email,
     msg: 'Reset password Email!!',
-    code : code
+    code: code
   });
   console.log('Send verification to your email successfully!!')
   res.redirect('/resetPass?successMessage= Please Check your email for reseting password')
 })
 
-app.get('/resetPass/:email/:code',async(req,res) =>{
+app.get('/resetPass/:email/:code', async (req, res) => {
   const email = req.params.email;
-  const token_reset = jwt.sign({email: email},process.env.JWT_SECRET, { expiresIn: '10m' });
-  res.cookie('token_reset',token_reset,{httpOnly:true});
+  const token_reset = jwt.sign({ email: email }, process.env.JWT_SECRET, { expiresIn: '10m' });
+  res.cookie('token_reset', token_reset, { httpOnly: true });
   const error = req.query.error;
   const success = req.query.success;
-  res.render('resetPassForm',{email : email,error: error,success: success});
+  res.render('resetPassForm', { email: email, error: error, success: success });
 })
 
-app.post('/updatePassWord',authenticateJWT_reset,async(req,res) =>{
-  if(req.user){
+app.post('/updatePassWord', authenticateJWT_reset, async (req, res) => {
+  if (req.user) {
     const email = req.user.email;
-    const password  = req.body.password;
-    const response = await axios.post(`http://${process.env.CUSTOMER_SERVICE_URL}:${process.env.CUSTOMER_PORT}/updatePassWord`,{
+    const password = req.body.password;
+    const response = await axios.post(`http://${process.env.CUSTOMER_SERVICE_URL}:${process.env.CUSTOMER_PORT}/updatePassWord`, {
       email: email,
       password: password
     })
-    if(response.data.msg == 'Change Password Successfully!'){
+    if (response.data.msg == 'Change Password Successfully!') {
       res.clearCookie('token_reset');
       res.redirect('/login?successMessage= Reset password Sucessfully Please Log in')
-    }else{
-      res.status(200).json({msg : 'Cannot change password!!'});
+    } else {
+      res.status(200).json({ msg: 'Cannot change password!!' });
     }
-  }else{
+  } else {
     res.redirect('/resetPass?error= Please reset password again');
   }
- 
+
 
 })
 

@@ -7,12 +7,8 @@
   <title>Product View UET Website</title>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
-  <!-- Bootstrap JS (optional for some features) -->
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="stylesheets/productView.css">
 </head>
 
@@ -20,8 +16,9 @@
   <div class="header">
     <div class="header-content">
       <div class="logo">
-        <a href="/homePage"> <img src="https://blogger.googleusercontent.com/img/a/AVvXsEjf2g77FTZv4jq8Dan0WDlLAe9PrnCnk7aLGBuPFmBAkRCcMZaxd4oQARSjJU9qCyG-5-VXQziAFpDP3X4SgWaH3jRjLIEMLMO2Y9pHXih2kT6DWMj-clj5dp4ZiJSKapeajlosBwRDIpEk0GEkQDWIiYR7tg3ZlK9szD1B9K4KjBhyLBOAJGbt9Pm9E29E
-            " alt="University Icon" class="university-icon">
+        <a href="/homePage">
+          <img src="/images/logo.svg"
+            alt="University Icon" class="university-icon">
         </a>
       </div>
       <h1>Product View UET Website</h1>
@@ -30,30 +27,26 @@
         <a href="/logout">Đăng xuất</a>
         <a href="/addproduct">Thêm sản phẩm</a>
         <% if (error) { %>
-          <p class="error-message"  style="color: red;"><%= error %></p>
+          <p class="error-message" style="color: red;"><%= error %></p>
         <% } %>
-       
       </div>
     </div>
   </div>
 
-  <div class="container">
+  <div class="banner">
+    <img src="https://via.placeholder.com/1200x300" alt="Banner Image" class="banner-img">
+  </div>
+
+  <div class="container mt-5">
     <div class="product-list">
       <% if(products && products.length> 0) { %>
         <% products.forEach(product=> { %>
           <div class="product-item">
             <img src="https://placehold.co/600x400" alt="<%= product.name %>" class="product-img">
             <div class="product-details">
-              <p><strong>Name:</strong>
-                <%= product.name %>
-              </p>
-              <p><strong>Type:</strong>
-                <%= product.type %>
-              </p>
-              <p><strong>Remaining Amount:</strong>
-                <%= product.amount %>
-              </p>
-
+              <p><strong>Name:</strong> <%= product.name %></p>
+              <p><strong>Type:</strong> <%= product.type %></p>
+              <p><strong>Remaining Amount:</strong> <%= product.amount %></p>
               <div class="actions">
                 <!-- Add to Cart form -->
                 <form action="/add-to-cart/<%= product.id %>" method="POST" style="display: inline;">
@@ -65,12 +58,17 @@
               </div>
             </div>
           </div>
-          <% }) %>
-            <% } else { %>
-              <p class="no-products-message">No products available.</p>
-              <% } %>
+        <% }) %>
+      <% } else { %>
+        <p class="no-products-message">No products available.</p>
+      <% } %>
     </div>
   </div>
+
+  <!-- Optional JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

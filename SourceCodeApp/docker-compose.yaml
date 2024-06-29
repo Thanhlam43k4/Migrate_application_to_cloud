@@ -11,6 +11,8 @@
       depends_on:
       - "customer"
       - "product"
+      env_file:
+        - .env
       networks:
         - micro-dev-net
 
@@ -48,8 +50,12 @@
       - "front_end"
       ports:
       - "80:80"
+      env_file:
+        - .env
       networks:
         - micro-dev-net
+
+
 
   networks:
     micro-dev-net:
