@@ -2,13 +2,12 @@ CREATE DATABASE customer_db;
 
 USE customer_db;
 
+
 CREATE TABLE `customers` (
   `id` int NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `address` varchar(255) DEFAULT NULL,
-  `whislist` json DEFAULT NULL,
   `role` enum('user','admin') DEFAULT 'user',
   `verified` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
@@ -23,6 +22,17 @@ CREATE TABLE `products` (
   `expiration_date` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) 
+CREATE TABLE `cus_profile` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `gender` enum('male', 'female') DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `country` varchar(100) DEFAULT NULL,
+  `profile_picture` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`user_id`) REFERENCES `customers`(`id`)
+);
 
 CREATE TABLE `cart` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -35,10 +45,3 @@ CREATE TABLE `cart` (
   CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
   CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
 )
-
-INSERT INTO products(name,type,amount)
-VALUES
-     ('Broccoli','vegetables',3),
-     ('Pencil','school suppiles',6),
-     ('T-Shirt','clothes',100),
-     ('Update','hello',2);

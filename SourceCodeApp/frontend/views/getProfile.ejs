@@ -7,7 +7,7 @@
     <title>VNU University of Engineering and Technology - VNU-UET</title>
     <link rel="icon" href="/images/logo.svg" type="image/svg">
 
-    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/profile.css">
     <script src="https://kit.fontawesome.com/c991f90e06.js" crossorigin="anonymous"></script>
 </head>
 
@@ -40,7 +40,7 @@
                                     <% if(user.image) { %>
                                         <img src="<%= user.image %>" alt="User Image">
                                         <% } else { %>
-                                            <img src="https://via.placeholder.com/200"alt="Avatar User">
+                                            <img src="https://via.placeholder.com/200" alt="Avatar User">
                                             <% } %>
                                 </a>
                             </form>
@@ -74,57 +74,58 @@
                     </div>
                     <% } %>
         </header>
-
-        <main>
-            <!-- content -->
-            <div class="img-title">
-                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEi0UsHUfEDySvfxqNWNczBu0owxfZcCG_9SJmBQhhyTXl_EKcg6bAzujYvqNb0RDXXUj2K4uw2lgGljMBFCzgeUUZmG0WAsF9-ZiZ3aPBkZZF1pFLhoe8dOCXcTzawX_Cnh--BNIRFB_BH3ejUfoR-ksJu32DKbgY5QaNNyOFfYURHwXn_11RoXPcq_MteR"
-                    alt="UET University">
+        <main class="profile-container">
+            <div class="profile-left">
+                <form action="/update-profile" method="POST">
+                    <div class="profile-header">
+                        <img src="https://via.placeholder.com/200" alt="Profile Picture" class="profile-picture">
+                        <h1 class="user-name">
+                            <%= user.name %>
+                        </h1>
+                    </div>
+                    <div class="profile-details">
+                        <div class="profile-info">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" value="<%= user.email %>" readonly>
+                        </div>
+                        <div class="profile-info">
+                            <label for="username">Username:</label>
+                            <input type="text" id="username" name="username" value="<%= user.username %>" readonly>
+                        </div>
+                        <div class="profile-info">
+                            <label for="Address">Address:</label>
+                            <input type="text" id="address" name="address" value="<%= user.address %>">
+                        </div>
+                        <div class="profile-info">
+                            <label for="gender">Gender:</label>
+                            <select id="gender" name="gender">
+                                <option value="male" <%=user.gender==='male' ? 'selected' : '' %>>Male</option>
+                                <option value="female" <%=user.gender==='female' ? 'selected' : '' %>>Female</option>
+                            </select>
+                        </div>
+                        <div class="profile-info">
+                            <label for="phone">Phone:</label>
+                            <input type="tel" id="phone" name="phone" value="<%= user.phone %>">
+                        </div>
+                        <div class="profile-info">
+                            <label for="city">City:</label>
+                            <input type="text" id="city" name="city" value="<%= user.city %>">
+                        </div>
+                        <div class="profile-info">
+                            <label for="country">Country:</label>
+                            <input type="text" id="country" name="country" value="<%= user.country %>">
+                        </div>
+                        <button type="submit" class="save-button">Save</button>
+                    </div>
+                </form>
             </div>
-
-            <div class="news">
-                <!-- nội dung phụ -->
-                <div class="new1">
-                    <li><a href="#"></a>
-                        <img
-                            src="https://uet.vnu.edu.vn/wp-content/uploads/2024/06/z5467594559445_20ec5e516c156ee22a117bed8c729b7b.jpg">
-                        <span>Học bổng đồng hành và tạo động lực phát triển cho sinh viên Trường Đại học Công nghệ –
-                            ĐHQGHN</span>
-                    </li>
-                    <li><a href="#"></a>
-                        <img src="https://uet.vnu.edu.vn/wp-content/uploads/2024/06/IMG_2509.jpg">
-                        <span>Trường Đại học Công nghệ, ĐHQGHN tập huấn nghiệp vụ công tác kiểm tra, coi thi kỳ thi tốt
-                            nghiệp THPT năm 2024</span>
-                    </li>
-                    <li><a href="#"></a>
-                        <img src="https://uet.vnu.edu.vn/wp-content/uploads/2023/11/IMG_0431.jpg">
-                        <span>Trường Đại học Công nghệ không ngừng đổi mới, sáng tạo, phụng sự cộng đồng</span>
-                    </li>
-                    <li><a href="#"></a>
-                        <img src="https://uet.vnu.edu.vn/wp-content/uploads/2024/06/dtt0015-1718876615744.png">
-                        <span>Giáo sư Nguyễn Đình Đức: Người đem ngọn lửa Nga thắp khát vọng khoa học Việt</span>
-                    </li>
-                    <li><a href="#"></a>
-                        <img src="https://uet.vnu.edu.vn/wp-content/uploads/2024/06/%E1%BA%A3nh-1.png">
-                        <span>Thiết bị đo lường tiên tiến, đa chức năng cho giám sát nước, ứng phó với xâm nhập
-                            mặn</span>
-                    </li>
-                </div>
-                <!-- Nội dung chính -->
-                <div class="new2">
-                    <img src="/images/ts.gif">
-                    <h3>Đại học Công nghệ - ĐHQGHN công bố thông tin tuyển sinh 2024</h3>
-                    <h4>Phương thức xét tuyển</h4>
-                    <p>Trường Đại học Công nghệ, ĐHQGHN thông báo phương thức xét tuyển vào các ngành đào tạo đại học,
-                        cao đẳng năm 2024 như sau:</p>
-                    <p>1. Xét tuyển học bạ THPT</p>
-                    <p>2. Xét tuyển kết quả kỳ thi THPT quốc gia năm 2024</p>
-                    <p>3. Xét tuyển học bạ THPT kết hợp kết quả kỳ thi THPT quốc gia năm 2024</p>
-                    <p>4. Xét tuyển học bạ THPT kết hợp kết quả kỳ thi THPT quốc gia năm 2024 và kết quả kỳ thi tuyển
-                        sinh đại học năm 2024 của Trường Đại học Công nghệ, ĐHQGHN</p>
-                </div>
+            <div class="profile-right">
+                <img src="/images/uet-sideImage.png" alt="Sample Image 1" class="side-image">
+                <img src="/images/slide2-uetImage.jpg" alt="Sample Image 2" class="side-image">
+                <img src="/images/slide3-uetImage.jpg" alt="Sample Image 3" class="side-image">
             </div>
         </main>
+
         <footer>
             <!-- thong tin lien he -->
             <div class="footer">

@@ -253,8 +253,8 @@ app.get('/myCart', authenticateJWT_log, async (req, res) => {
       res.render(`/carts?error = Error function can't remove products from cart`)
       console.error('Error occurred while logging in:', err);
     }
-  }else{
-    res.redirect('/login')
+  } else {
+    res.redirect('/login?error= Your session login is expired Please login again')
   }
 
 
@@ -340,7 +340,22 @@ app.post('/updatePassWord', authenticateJWT_reset, async (req, res) => {
 
 
 })
-
+app.get('/getProfile', authenticateJWT_log, async (req, res) => {
+  if (req.user != null) {
+    let id = req.user.id;
+    console.log('id:',id);
+    try{
+      const response = await axios.post(`http://${process.env.CUSTOMER_SERVICE_URL}:${process.env.CUSTOMER_PORT}`,{
+        id:id
+      });
+      res.render('getProfile',{user:response.data.results[0]})
+    }catch(err){
+      throw err;
+    }
+  } else {
+    res.redirect('/login?error= Your session login is expired Please login again')
+  }
+})
 
 app.listen(port, () => {
   console.log(`Frontend server listening at http://${process.env.SERVER_URL}:${port}`);

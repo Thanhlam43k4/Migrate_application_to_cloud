@@ -41,7 +41,7 @@ router.post('/verify',customerControllers.verify)
 router.post('/updatePassWord',customerControllers.updatePassword);
 
 
-router.get('/:id',customerControllers.getProfile);
+router.post('/',customerControllers.getProfile);
 
 router.post('/:id/add-info',customerControllers.addInforCus);
 

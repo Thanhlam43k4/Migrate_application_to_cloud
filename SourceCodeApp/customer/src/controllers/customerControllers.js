@@ -136,12 +136,12 @@ async function login(req, res) {
 
 }
 async function getProfile(req, res) {
-    const customerId = req.params.id;
+    const customerId = req.body.id;
     try {
         con.query('SELECT * FROM customers WHERE id = ?',
             [customerId],
             function (err, results) {
-                res.json({ results });
+                res.status(200).json({results});
                 console.log(results);
             });
     } catch (err) {

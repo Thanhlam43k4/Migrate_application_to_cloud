@@ -136,81 +136,105 @@ nav ul li a:hover {
     background-color: #17376E;
     color: #ffffff;
 }
-main .img-title img {
+/*Css of profile container and the body*/
+.profile-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1600px;
+    margin: 100px auto 20px;  /* Adjust the top margin to account for header height */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-left {
+    flex: 2;
+    margin-right: 20px;
+}
+
+.profile-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-picture {
+    border-radius: 50%;
+    border: 5px solid #fff;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.user-name {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.profile-details {
+    padding: 20px;
+}
+
+.profile-info {
+    margin-bottom: 20px;
+}
+
+.profile-info label {
+    display: block;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.profile-info input {
     width: 100%;
-
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #333;
+}
+.profile-info select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #333;
+}
+.save-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #6c63ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
 }
 
-main .img-title img:hover {
-    transform: scale(1.01);
-    transition: transform 0.5s;
+.save-button:hover {
+    background-color: #5754d2;
 }
 
-main .img-title {
-    margin: 1% 5%;
+.side-image {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-main {
-    margin-top: 50px;
-    background-color: #ffffff;
-}
 
-main .news {
-    display: flex;
-    background-image: url(../images/back1.svg);
-    background-color: #17376e;
-    margin: 0 5%;
-}
-.news .new1{
-    width: 35%;
-    margin-right: 5px;
-    float: left;
-    border: 3px solid black;
-    background-color: rgba(255, 255, 255, 0.8);
-}
-.news .new1 li {
-    display: flex;
-    margin: 1%;
-    color: #17376E;
 
-}
-.news .new1 img {
-    width: 30%;
-    margin: 1%;
-}
-.news .new1 span {
-    margin: 2%;
-    padding: 2% 0;
-    font-size: 1rem;
-    line-height: auto;
-}
-
-.news .new2{
-    width: 60%;
-    margin-left: 5%;
-    float: right;
-    color: #17376E;
-    border: 3px solid black;
-    background-color: rgba(255, 255, 255, 0.8);
-
-}
-.new2 img{
-    padding: 1%;
-    width: 98%;
-}
-.new2 h3,
-.new2 h4,
-.new2 p{
-    padding: 0 1%;
-
-}
-.news .new2:hover,
-.news .new1 li:hover {
-    background-color: #17376E;
-    color: #ffffff;
-    transition: background-color 0.3s;
-
-}
 footer {
     margin-top: 20px;
     background-color: #17376E;
