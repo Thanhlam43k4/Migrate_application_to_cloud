@@ -1,6 +1,7 @@
 const axios = require('axios');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 
 function checkpassWord(pass1, pass2) {
   return pass1 === pass2;

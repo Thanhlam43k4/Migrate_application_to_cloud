@@ -66,6 +66,7 @@ async function signup(req, res) {
                     console.log(results);
                     res.status(200).json({ msg: 'Email is already existed' })
                 } else {
+                    
                     customerRepository.signup({ username, email, password })
                     res.status(200).json({ msg: 'Add user successfully', email });
                 }
@@ -276,7 +277,15 @@ const sendEmailController = async (req, res) => {
         })
     }
 }
+async function updateProfile(req,res){
+    const user_id = req.body.user_id;
+    const phone = req.body.phone;
+    const gender = req.body.gender;
+    const city = req.body.city;
+    const country = req.body.city;
 
+
+}
 
 
 

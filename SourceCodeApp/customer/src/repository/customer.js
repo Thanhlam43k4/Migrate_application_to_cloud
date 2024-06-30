@@ -27,7 +27,7 @@ const signup = async ({
         const hashkey = process.env.SALT_ROUNDS;
         const hashpassword = await bcrypt.hash(password, parseInt(hashkey));
         //Insert into Database
-        con.query(`INSERT INTO customers (username, email, password) 
+        await con.query(`INSERT INTO customers (username, email, password) 
                         VALUES (?, ?, ?)`,
             [username, email, hashpassword],
             function (err, results) {

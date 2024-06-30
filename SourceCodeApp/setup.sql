@@ -23,14 +23,12 @@ CREATE TABLE `products` (
   PRIMARY KEY (`id`)
 ) 
 CREATE TABLE `cus_profile` (
-  `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
   `phone` varchar(20) DEFAULT NULL,
   `gender` enum('male', 'female') DEFAULT NULL,
   `city` varchar(100) DEFAULT NULL,
   `country` varchar(100) DEFAULT NULL,
   `profile_picture` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
   FOREIGN KEY (`user_id`) REFERENCES `customers`(`id`)
 );
 
@@ -45,3 +43,16 @@ CREATE TABLE `cart` (
   CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
   CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
 )
+
+/*Trigger whenever insert a new customers will automatically insert a new profile with this user_id */
+DELIMITER $$
+
+CREATE TRIGGER after_customer_insert
+AFTER INSERT ON customers
+FOR EACH ROW
+BEGIN
+  INSERT INTO cus_profile (user_id, phone, gender, city, country, profile_picture) 
+  VALUES (NEW.id, NULL, NULL, NULL, NULL, NULL);
+END$$
+
+DELIMITER ;
