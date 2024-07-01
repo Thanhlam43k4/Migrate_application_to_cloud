@@ -80,7 +80,7 @@ app.get('/product-table', authenticateJWT_access_key, async (req, res) => {
   try {
     const response = await axios.get(`http://${process.env.PRODUCT_SERVICE_URL}:${process.env.PRODUCT_PORT}/api/v1/data`)
     console.log(response.data);
-    res.render('productView', { products: response.data, error: errorMessage });
+    res.render('productView', { user: req.user, products: response.data, error: errorMessage });
 
   } catch (err) {
     console.log(err);
@@ -176,23 +176,22 @@ app.get('/verify/:email/:verifyCode', async (req, res) => {
 
 })
 app.post('/addproduct', authenticateJWT_access_key, checkAdminRole, async (req, res) => {
-  const { name, type, amount } = req.body;
-
+  const { name, type, amount, price} = req.body;
   try {
     // Make a POST request to your backend API
+    const price = parseFloat(req.body.price);
     const response = await axios.post(`http://${process.env.PRODUCT_SERVICE_URL}:${process.env.PRODUCT_PORT}/add-products`, {//dockerfile http://product:8001/add-products
       name: name,
       type: type,
-      amount: amount
+      amount: amount,
+      price: price
     });
-
-    // Check the response from the server
     if (response.data.msg === 'Product has already existed!!!') {
       // Redirect to the same page with error message
       res.redirect('/addproduct?error=Product has already existed');
     } else if (response.data.msg == "Add product successfully!!!") {
       // Redirect to the same page without error message
-      res.redirect('/homePage');
+      res.redirect('/product-table');
     }
   } catch (error) {
     // Handle errors

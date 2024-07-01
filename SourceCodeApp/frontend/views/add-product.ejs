@@ -1,100 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Add Product UET WebSite</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-      margin: 0;
-      padding: 0;
-    }
-
-    .container {
-      max-width: 400px;
-      margin: 20px auto;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    h2 {
-      font-size: 24px;
-      color: #333;
-      margin-bottom: 20px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 8px;
-      color: #555;
-    }
-
-    input[type="text"],
-    input[type="number"] {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 16px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 16px;
-    }
-
-    button {
-      padding: 10px;
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-
-    .error-message {
-      color: red;
-      margin-top: 10px;
-    }
-    .links {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .links a {
-            text-decoration: none;
-            color: #007bff;
-            font-weight: bold;
-        }
-
-        .links a:not(:last-child) {
-            margin-right: 10px;
-        }
-  </style>
+  <title>Product Management - UET Website</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/stylesheets/add-product.css">
 </head>
+
 <body>
   <div class="container">
-    <h2>Add Product</h2>
+    <h2><i class="fa-solid fa-box"></i> Product Management</h2>
+
     <% if (error) { %>
       <p class="error-message"><%= error %></p>
     <% } %>
-    <form class="add-product-form" action="/addProduct" method="post">
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" required>
-      <label for="type">Type:</label>
-      <input type="text" id="type" name="type" required>
-      <label for="amount">Amount:</label>
-      <input type="number" id="amount" name="amount" required>
-      <button type="submit">Add Product</button>
-    </form>
+
+    <div class="form-container">
+      <!-- Add Product Form -->
+      <div class="form-section add-product-section">
+        <h3>Add Product</h3>
+        <form class="add-product-form" action="/addproduct" method="post">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required>
+
+          <label for="type">Type:</label>
+          <input type="text" id="type" name="type" required>
+
+          <label for="amount">Amount:</label>
+          <input type="number" id="amount" name="amount" required>
+
+          <label for="price">Price:</label>
+          <input type="number" name="price" step="0.01" id="price" required>
+
+          <button type="submit">Add Product</button>
+        </form>
+      </div>
+
+      <!-- Divider -->
+      <div class="divider"></div>
+
+      <!-- Update Product Form -->
+      <div class="form-section update-product-section">
+        <h3>Update Product</h3>
+        <form class="update-product-form" action="/updateproduct" method="post">
+          <label for="name">Product Name:</label>
+          <input type="text" id="name" name="name" required>
+          <label for="updatePrice">New Price:</label>
+          <input type="number" name="updatePrice" step="0.01" id="updatePrice" required>
+
+          <button type="submit">Update Product</button>
+        </form>
+      </div>
+    </div>
+
     <div class="links">
-        <a href="/homePage">Homepage</a> | <a href="/signup">Register</a> | <a href="/logout">Logout</a>
+      <a href="/homePage"><i class="fa-solid fa-house"></i> Homepage</a> |
+      <a href="/signup"><i class="fa-solid fa-user-plus"></i> Register</a> |
+      <a class="mycart" href="/myCart"><i class="fa-solid fa-cart-arrow-down"></i> My Cart</a> |
+      <a href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
     </div>
   </div>
 </body>
+
 </html>

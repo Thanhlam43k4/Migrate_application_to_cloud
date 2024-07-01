@@ -19,9 +19,12 @@ CREATE TABLE `products` (
   `name` varchar(100) DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
   `amount` int DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
   `expiration_date` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) 
+
+
 CREATE TABLE `cus_profile` (
   `user_id` int NOT NULL,
   `email` varchar(100) DEFAULT NULL,
@@ -60,3 +63,11 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+
+INSERT INTO products (id, name, type, amount) VALUES
+(30, 'Áo khoác đồng phục ĐHQGHN', 'Uniform', 10000),
+(31, 'Áo thể chất ĐHQGHN', 'Uniform', 10000),
+(32, 'Sách Nhập Môn Lập Trình- UET', 'Books', 5000),
+(33, 'Combo Sách Giải Tích 1 + 2 + 3 (DHQGHN)', 'Books', 2004),
+(34, 'Combo Sách Đại số tuyến tính + Vật lý đại cương (1, 2,3)', 'Books', 6000);

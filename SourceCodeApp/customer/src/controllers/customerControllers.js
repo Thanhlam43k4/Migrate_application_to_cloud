@@ -242,9 +242,12 @@ const sendEmailController = async (req, res) => {
         const email = req.body.email;
         console.log(req.body.msg);
         let URL_LINK = null;
+        let EMAIL_MESAGE = null;
         if (req.body.msg == 'Sign Up Email!!') {
+            EMAIL_MESAGE = `Please verify your email by clicking the following link`;
             URL_LINK = `http://localhost:3000/verify/${email}/${req.body.code}`
         } else if (req.body.msg == 'Reset password Email!!') {
+            EMAIL_MESAGE = `Please reset your password by clicking the following link`;
             URL_LINK = `http://localhost:3000/resetPass/${email}/${req.body.code}`
         }
         if (email) {
@@ -261,8 +264,8 @@ const sendEmailController = async (req, res) => {
                 from: `"Uet WebSite for verfication" ${process.env.EMAIL_USERNAME}`, // sender address
                 to: email, // list of receivers
                 subject: "Verification your email at website VNU_UET", // Subject line
-                text: `Please verify your email by clicking the following link: ${URL_LINK}`,
-                html: `<p>Please verify your email by clicking the following link: <a href=${URL_LINK}>Verify Email</a></p>`,
+                text: `${EMAIL_MESAGE}: ${URL_LINK}`,
+                html: `<p>${EMAIL_MESAGE} <a href=${URL_LINK}>Verify Email</a></p>`,
             });
             return res.json(info);
         }

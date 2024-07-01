@@ -1,0 +1,109 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1000px; /* Increased the max-width */
+    margin: 30px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.error-message {
+    color: #d9534f;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.form-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px; /* Increased gap between the two forms */
+}
+
+.form-section {
+    flex: 1;
+    padding: 50px; /* Increased padding */
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Enhanced box-shadow */
+    border: 1px solid #ddd; /* Added border */
+}
+
+.add-product-section h3,
+.update-product-section h3 {
+    font-size: 24px; /* Increased font size */
+    margin-bottom: 15px;
+    color: #007bff;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px; /* Increased margin */
+    color: #555;
+    font-weight: 500;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    padding: 14px; /* Increased padding */
+    margin-bottom: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+button {
+    padding: 14px; /* Increased padding */
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.divider {
+    width: 2px;
+    background-color: #ddd;
+    margin: 0 30px; /* Increased margin */
+}
+
+.links {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.links a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.links a:not(:last-child) {
+    margin-right: 15px;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
+    

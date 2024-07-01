@@ -1,109 +1,244 @@
+/* General Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
 }
 
-.actions {
-    text-align: center;
-    margin-top: 10px;
-}
-
+/* Header Styles */
 .header {
-    position: relative;
     padding: 10px 20px;
-    background-color: #fff;
-    border-bottom: 1px solid #ccc;
+    background-color: #007bff;
+    color: #fff;
+    border-bottom: 1px solid #0056b3;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
+/* Logo Styles */
+.logo img {
+    height: 40px; /* Adjust the height as needed */
+}
+
+/* Link Styles */
 .links {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-family: Arial, sans-serif;
-    background-color: #fff;
-    border: 5px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 1;
 }
 
 .links a {
-    color: #333;
+    color: #fff;
     text-decoration: none;
-    padding: 0 10px;
+    padding: 0 15px;
     font-size: 16px;
     transition: color 0.3s;
 }
 
 .links a:hover {
-    color: #007BFF;
+    color: #e2e6ea;
     text-decoration: underline;
 }
 
 .welcome-message {
-    display: inline;
     font-size: 16px;
+    margin: 0;
 }
 
-.container {
-    width: 80%;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+/* Banner Styles */
+.banner {
+    width: 100%;
+    margin-bottom: 20px;
 }
 
-.cart-item {
+.banner img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Main Content Styles */
+.main-content {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 15px 0;
-    border-bottom: 1px solid #ccc;
+    gap: 20px;
 }
 
-.cart-item:last-child {
-    border-bottom: none;
+/* Cart Container Styles */
+.cart-container {
+    flex: 1; /* Take up remaining space */
+    max-width: 60%; /* Adjust as needed */
 }
 
-.cart-item h3 {
+/* Payment Container Styles */
+.payment-container {
+    flex: 1; /* Take up remaining space */
+    max-width: 35%; /* Adjust as needed */
+}
+
+/* Cart Item Styles */
+.cart-item {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+    border: 1px solid #ddd; /* Border for cart item */
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+}
+
+/* Item Info Styles */
+.item-info h3 {
     margin: 0;
-    font-size: 18px;
+    font-size: 20px;
+    color: #333;
 }
 
-.cart-item p {
+.item-info p {
     margin: 0;
     font-size: 16px;
     color: #555;
 }
 
-.cart-item .quantity {
-    font-size: 16px;
-    color: #007BFF;
+/* Update Cart Form Styles */
+.update-cart-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.cart-item .remove {
-    background-color: #dc3545;
+/* Quantity Input */
+.item-quantity {
+    font-size: 16px;
+    color: #007bff;
+}
+
+.item-quantity label {
+    margin-right: 10px;
+}
+
+/* Remove Item Form Styles */
+.remove-item-form {
+    margin-top: 10px;
+}
+
+/* Form Styles */
+.cart-form, .payment-form {
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px; /* Space between forms */
+}
+
+.cart-form h3, .payment-form h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Form Group Styles */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 16px;
+    color: #555;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Buttons Styles */
+.btn-primary {
+    background-color: #007bff;
     color: #fff;
     border: none;
-    padding: 10px;
+    padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
+    display: block;
+    width: 100%;
+    text-align: center;
     transition: background-color 0.3s;
 }
 
-.cart-item .remove:hover {
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Remove Button Styles */
+.btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.btn-danger i {
+    margin-right: 5px;
+}
+
+.btn-danger:hover {
     background-color: #c82333;
 }
 
-.actions a:hover {
-    text-decoration: none;
-    opacity: 0.8;
+/* Message Styles */
+.error-message, .success-message {
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 20px;
 }
 
-.actions a.btn-danger {
-    background-color: #dc3545;
+.success-message {
+    color: #28a745;
+}
+
+.error-message {
+    color: #dc3545;
+}
+
+.empty-cart-message {
+    text-align: center;
+    font-size: 18px;
+    color: #555;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .main-content {
+        flex-direction: column;
+    }
+
+    .cart-container, .payment-container {
+        max-width: 100%;
+    }
+
+    .payment-container {
+        margin-top: 20px;
+    }
 }

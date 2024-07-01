@@ -10,31 +10,72 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="stylesheets/productView.css">
+  <script src="https://kit.fontawesome.com/c991f90e06.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
-  <div class="header">
-    <div class="header-content">
-      <div class="logo">
-        <a href="/homePage">
-          <img src="/images/logo.svg"
-            alt="University Icon" class="university-icon">
-        </a>
-      </div>
-      <h1>Shopping University of electronic and technology</h1>
-      <div class="links">
-        <a href="/homePage">Trang chủ</a>
-        <a href="/logout">Đăng xuất</a>
-        <a href="/addproduct">Thêm sản phẩm</a>
-        <% if (error) { %>
-          <p class="error-message" style="color: red;"><%= error %></p>
-        <% } %>
-      </div>
+  <header>
+    <!-- logo -->
+    <div class="logo">
+      <a href="/homePage"> <img src="/images/logo.svg" alt="University Icon" class="university-icon">
+      </a>
     </div>
-  </div>
+    <!-- menu ve truong -->
+    <nav>
+      <ul>
+        <li><a href="/homePage">Trang Chủ</a></li>
+        <li><a href="/homePage">Giới hiệu</a></li>
+        <li><a href="/homePage">Sinh viên</a></li>
+        <li><a href="/homePage">Giảng viên</a></li>
+        <li><a href="/homePage">Tuyển sinh</a></li>
+        <li><a href="/homePage">Tuyển dụng</a></li>
+        <li><a href="/product-table"><i class="fa-solid fa-shop"></i></a></li>
+      </ul>
+    </nav>
+    <% if(user) { %>
+      <div class="login">
+        <div class="top-row">
+          <div class="account-image">
+            <form action="/getProfile" method="GET">
+              <a href="/getProfile">
+                <% if(user.image) { %>
+                  <img src="<%= user.image %>" alt="User Image">
+                  <% } else { %>
+                    <img src="https://via.placeholder.com/200" alt="Avatar User">
+                    <% } %>
+              </a>
+            </form>
+
+          </div>
+          <h4 class="welcome-message"><span class="username">
+              <%= user.username.toUpperCase()%>
+            </span></h4>
+
+          <a class="mycart" href="/myCart"><i class="fa-solid fa-cart-arrow-down"></i></a>
+          <a class="addProduct"href="/addproduct"><i class="fa-solid fa-plus"></i></a>
+          <a class="logout" href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a><br>
+          <div>
+            <% if (error) { %>
+              <p class="error-message" style="color: red;"><%= error %></p>
+            <% } %>
+          </div>
+        
+        </div>
+      </div>
+      <% } else { %>
+        <div class="login">
+          <a href="/login">Đăng nhập</a>
+          <a href="/signup">Đăng ký</a>
+          </p>
+        </div>
+        <% } %>
+          </div>
+
+  </header>
 
   <div class="banner">
-    <img src="https://via.placeholder.com/1200x300" alt="Banner Image" class="banner-img">
+    <img src="/images/slide2-uetImage.jpg" alt="Banner Image" class="banner-img">
   </div>
 
   <div class="container mt-5">
@@ -44,9 +85,18 @@
           <div class="product-item">
             <img src="https://placehold.co/600x400" alt="<%= product.name %>" class="product-img">
             <div class="product-details">
-              <p><strong>Name:</strong> <%= product.name %></p>
-              <p><strong>Type:</strong> <%= product.type %></p>
-              <p><strong>Remaining Amount:</strong> <%= product.amount %></p>
+              <p><strong>Name:</strong>
+                <%= product.name %>
+              </p>
+              <p><strong>Type:</strong>
+                <%= product.type %>
+              </p>
+              <p><strong>Remaining Amount:</strong>
+                <%= product.amount %>
+              </p> 
+              <p><strong>Price:</strong>
+                <%= product.price %>$
+              </p>
               <div class="actions">
                 <!-- Add to Cart form -->
                 <form action="/add-to-cart/<%= product.id %>" method="POST" style="display: inline;">
@@ -58,12 +108,74 @@
               </div>
             </div>
           </div>
-        <% }) %>
-      <% } else { %>
-        <p class="no-products-message">No products available.</p>
-      <% } %>
+          <% }) %>
+            <% } else { %>
+              <p class="no-products-message">No products available.</p>
+              <% } %>
     </div>
   </div>
+  <footer>
+    <!-- thong tin lien he -->
+    <div class="footer">
+      <div class="footer1">
+        <div class="thongtin1">
+          <h2>Hợp tác - Phát triển</h2>
+          <a href=""><i class="fa-solid fa-paperclip"></i><span>Giới Thiệu</span></a><br>
+          <a href=""><i class="fa-solid fa-paperclip"></i><span>Tin Tức</span></a><br>
+          <a href=""><i class="fa-solid fa-paperclip"></i><span>Các Đối Tác</span></a><br>
+        </div>
+        <div class="thongtin2">
+          <h2>Đảm bảo chất lượng</h2>
+          <a href=""><i class="fa-solid fa-paperclip"></i><span>Trung tâm đảm bảo chất
+              lượng</span></a><br>
+          <a href=""><i class="fa-solid fa-paperclip"></i><span>Ba công khai</span></a><br>
+          <a href=""><i class="fa-solid fa-paperclip"></i><span>Kiểm định chất
+              lượng</span></a><br>
+        </div>
+        <div class="thongtin3">
+          <h2>TRUNG TÂM - LAB</h2>
+          <a href=""><i class="fa-solid fa-paperclip"></i><span>TT Nghiên cứu Điện tử Viễn
+              thông</span></a><br>
+          <a href=""><i class="fa-solid fa-paperclip"></i><span>TT Công nghệ tích hợp liên ngành
+              GSHT</span></a><br>
+          <a href=""><i class="fa-solid fa-paperclip"></i><span>TT Máy tính</span></a><br>
+          <a href=""><i class="fa-solid fa-paperclip"></i><span>PTN Trọng điểm Công nghệ Micro và
+              Nano</span></a><br>
+          <a href=""><i class="fa-solid fa-paperclip"></i><span>PTN Trọng điểm Hệ thống tích hợp
+              thông
+              minh</span></a><br>
+        </div>
+        <div class="thongtin4">
+          <h2>Đoàn thể</h2>
+          <a href=""><i class="fa-solid fa-paperclip"></i><span>Công Đoàn</span></a><br>
+          <a href=""><i class="fa-solid fa-paperclip"></i><span>Đoàn Thanh Niên</span></a><br>
+          <a href=""><i class="fa-solid fa-paperclip"></i><span>Hội Sinh Viên</span></a><br>
+        </div>
+      </div>
+      <div class="footer2">
+        <div class="thongtin5">
+          <a href=""><i class="fa-solid fa-code"></i><span>2024 Trường Đại học Công nghệ, Đại học
+              Quốc Gia
+              Hà Nội</span></a><br>
+          <a href=""><i class="fa-solid fa-map-location-dot"></i><span>Địa chỉ: Số 144 đường Xuân
+              Thủy,
+              Cầu Giấy, Hà Nội</span></a><br>
+          <a href=""><i class="fa-solid fa-phone"></i><span>Điện thoại: 0123456789</span></a><br>
+          <a href=""><i class="fa-solid fa-envelope"></i><span>Email:
+              uet@vnu.edu.vn</span></a><br>
+        </div>
+        <div class="thongtin6">
+          <a href="https://www.facebook.com/vuquocviet.0904"><i class="fa-brands fa-facebook"></i></a><br>
+          <a href="https://www.instagram.com/vi.et_/"><i class="fa-brands fa-instagram"></i></a><br>
+          <button class="back-to-top" onclick="scrollToTop()">
+            <p>đầu trang</p>
+          </button>
+        </div>
+      </div>
+      <script src="/javascript/main.js"></script>
+    </div>
+  </footer>
+
 
   <!-- Optional JavaScript -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

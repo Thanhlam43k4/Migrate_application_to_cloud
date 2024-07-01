@@ -6,69 +6,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart</title>
     <link rel="stylesheet" href="/stylesheets/cartstyle.css">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
     <div class="header">
+        <a href="/homePage" class="logo">
+            <img src="/images/logo.png" alt="Shopping Cart Logo">
+        </a>
         <% if (user) { %>
             <div class="links">
-                <a href="/homePage">Trang chủ</a> |
-                <h4 class="welcome-message">Xin chào, <%= user.username %>
-                </h4> |
-                <a href="/product-table">Cửa Hàng</a> |
-                <a href="/myCart">Giỏ hàng</a> |
-                <a href="/logout">Đăng xuất</a>
+                <a href="/homePage">Trang chủ</a> 
+                <h4 class="welcome-message">Xin chào, <%= user.username %></h4> 
+                <a href="/product-table"><i class="fa-solid fa-shop"></i></a>
+                <a class="mycart" href="/myCart"><i class="fa-solid fa-cart-arrow-down"></i></a>
+                <a class="logout" href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a>
             </div>
-            <% } else { %>
-                <div class="links">
-                    <a href="/homePage">Homepage</a> |
-                    <a href="/login">Login</a> |
-                    <a href="/register">Register</a>
-                </div>
-                <% } %>
+        <% } else { %>
+            <div class="links">
+                <a href="/homePage">Homepage</a> |
+                <a href="/login">Login</a> |
+                <a href="/register">Register</a>
+            </div>
+        <% } %>
     </div>
 
-    <div class="container">
-        <h2>Shopping Cart</h2>
-        <% if (error) { %>
-            <p class="error-message" style="color: red;">
-                <%= error %>
-            </p>
+    <div class="banner">
+        <img src="/images/banner.jpg" alt="Special Offer Banner">
+    </div>
+
+    <div class="main-content">
+        <div class="cart-container">
+            <h2>Shopping Cart</h2>
+            <% if (error) { %>
+                <p class="error-message"><%= error %></p>
             <% } %>
+            <% if (success) { %>
+                <p class="success-message"><%= success %></p>
+            <% } %>
+            <% if (cartItems.length > 0) { %>
+                <% cartItems.forEach(item => { %>
+                    <div class="cart-item">
+                        <div class="item-info">
+                            <h3><%= item.name %></h3>
+                            <p>Added by: <%= item.username %></p>
+                        </div>
+                        <div class="item-quantity">
+                            <label for="quantity-<%= item.id %>">Quantity:<%= item.quantity%></label>
 
-                <% if (success) { %>
-                    <p class="success-message" style="color: green;">
-                        <%= success %>
-                    </p>
-                    <% } %>
+                        </div>
+                        
+                        <form action="/remove-from-cart/<%= item.id %>" method="POST" class="remove-item-form">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-trash-alt"></i> Remove
+                            </button>
+                        </form>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <p class="empty-cart-message">Your cart is empty.</p>
+            <% } %>
+        </div>
 
-                        <% if (cartItems.length> 0) { %>
-                            <% cartItems.forEach(item=> { %>
-                                <div class="cart-item">
-                                    <div>
-                                        <h3>
-                                            <%=item.name %>
-                                        </h3>
-                                        <p>Added by: <%= item.username %>
-                                        </p>
-                                    </div>
-                                    <div class="quantity">
-                                        Quantity: <%= item.quantity %>
-                                    </div>
-
-                                    <form action="/remove-from-cart/<%= item.id %>" method="POST"
-                                        style="display: inline;">
-                                        <button type="submit" class="btn btn-danger">
-                                            <i class="fas fa-trash-alt"></i>Remove
-                                        </button>
-                                    </form>
-                                </div>
-                                <% }) %>
-                                    <% } else { %>
-                                        <p>Your cart is empty.</p>
-                                        <% } %>
+        <div class="payment-container">
+            <h2>Payment Details</h2>
+            <form class="payment-form" action="/process-payment" method="POST">
+                <div class="form-group">
+                    <label for="cardNumber">Card Number:</label>
+                    <input type="text" id="cardNumber" name="cardNumber" placeholder="Card Number" required>
+                </div>
+                <div class="form-group">
+                    <label for="expiryDate">Expiry Date:</label>
+                    <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY" required>
+                </div>
+                <div class="form-group">
+                    <label for="cvv">CVV:</label>
+                    <input type="text" id="cvv" name="cvv" placeholder="CVV" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Pay Now</button>
+            </form>
+        </div>
     </div>
 </body>
 
 </html>
+ 
