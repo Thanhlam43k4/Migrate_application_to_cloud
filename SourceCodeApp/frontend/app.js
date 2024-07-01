@@ -356,7 +356,45 @@ app.get('/getProfile', authenticateJWT_log, async (req, res) => {
     res.redirect('/login?error= Your session login is expired Please login again')
   }
 })
-
+app.post('/update-profile',authenticateJWT_log,async(req,res)=>{
+  if(req.user != null){
+      let id = req.user.id;
+      try{
+        let phone = req.body.phone;
+        let gender = req.body.gender;
+        let city = req.body.city;
+        let country = req.body.country;
+        let address = req.body.address;
+        const response = await axios.post(`http://${process.env.CUSTOMER_SERVICE_URL}:${process.env.CUSTOMER_PORT}/updateProfile`,{
+          user_id: id,
+          phone: phone,
+          gender: gender,
+          city: city,
+          country: country,
+          address:address
+        })
+        if(response.data.msg == 'Update Information Successfully!!'){
+          let user = {
+            user_id: id,
+            phone: phone,
+            gender: gender,
+            city: city,
+            country: country,
+            address:address
+          }
+          console.log(user);
+          res.redirect('/getProfile');
+        }else{
+          res.redirect('/getProfile');
+        }
+      }catch(err){
+        console.log(err);
+        throw err;
+      }
+  }else{
+    res.redirect('/login?error= Your session login is expired Please login again')
+  }
+})
 app.listen(port, () => {
   console.log(`Frontend server listening at http://${process.env.SERVER_URL}:${port}`);
 });

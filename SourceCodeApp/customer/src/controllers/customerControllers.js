@@ -66,14 +66,14 @@ async function signup(req, res) {
                     console.log(results);
                     res.status(200).json({ msg: 'Email is already existed' })
                 } else {
-                    
+
                     customerRepository.signup({ username, email, password })
                     res.status(200).json({ msg: 'Add user successfully', email });
                 }
             })
 
     } catch (err) {
-        console.log(err);
+        console.log('Error', err);
         throw err;
     }
 
@@ -139,10 +139,10 @@ async function login(req, res) {
 async function getProfile(req, res) {
     const customerId = req.body.id;
     try {
-        con.query('SELECT * FROM customers WHERE id = ?',
+        con.query('SELECT * FROM cus_profile WHERE user_id = ?',
             [customerId],
             function (err, results) {
-                res.status(200).json({results});
+                res.status(200).json({ results });
                 console.log(results);
             });
     } catch (err) {
@@ -214,25 +214,25 @@ async function checkverify(req, res) {
         throw err;
     }
 }
-const updatePassword = async(req,res) =>{
+const updatePassword = async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
 
     const hashkey = process.env.SALT_ROUNDS;
     const hashpassword = await bcrypt.hash(password, parseInt(hashkey));
-    try{
+    try {
         con.query(`UPDATE customers SET password = ?  WHERE email = ?`,
-        [hashpassword,email],
-        function(err,results){
-            if(err){
-                console.log(err);
-                console.log('Can not update new password')
-            }
-        })
+            [hashpassword, email],
+            function (err, results) {
+                if (err) {
+                    console.log(err);
+                    console.log('Can not update new password')
+                }
+            })
         console.log('Change password')
-        res.status(200).json({msg : 'Change Password Successfully!'});
-    }catch(err){
-        res.status(200).json({msg : 'Error from the queries'});
+        res.status(200).json({ msg: 'Change Password Successfully!' });
+    } catch (err) {
+        res.status(200).json({ msg: 'Error from the queries' });
         throw err;
     }
 
@@ -277,14 +277,31 @@ const sendEmailController = async (req, res) => {
         })
     }
 }
-async function updateProfile(req,res){
+async function updateProfile(req, res) {
     const user_id = req.body.user_id;
     const phone = req.body.phone;
     const gender = req.body.gender;
     const city = req.body.city;
-    const country = req.body.city;
-
-
+    const country = req.body.country;
+    const address = req.body.address;
+    try {
+        con.query(`UPDATE cus_profile 
+        SET phone = ?, gender = ?, city = ?, country = ?, address = ? 
+        WHERE user_id = ?`,
+        [phone,gender,city,country,address,user_id],
+        function(err,results){
+            if(err){
+                console.log(err);
+                res.status(200).json({msg : 'Error Query'})
+            }
+            if(results){
+                res.status(200).json({msg:'Update Information Successfully!!'})
+            }
+        })
+    }catch(err){
+        console.log('Error',err);
+        throw err;
+    }
 }
 
 
@@ -300,5 +317,6 @@ export default {
     sendEmailController,
     verify,
     checkverify,
-    updatePassword
+    updatePassword,
+    updateProfile
 }

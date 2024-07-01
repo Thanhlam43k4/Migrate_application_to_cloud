@@ -24,14 +24,17 @@ CREATE TABLE `products` (
 ) 
 CREATE TABLE `cus_profile` (
   `user_id` int NOT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `username` varchar(50) DEFAULT NULL,
+  `address` varchar(500) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
   `gender` enum('male', 'female') DEFAULT NULL,
   `city` varchar(100) DEFAULT NULL,
   `country` varchar(100) DEFAULT NULL,
   `profile_picture` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
   FOREIGN KEY (`user_id`) REFERENCES `customers`(`id`)
 );
-
 CREATE TABLE `cart` (
   `id` int NOT NULL AUTO_INCREMENT,
   `customer_id` int DEFAULT NULL,
@@ -49,10 +52,11 @@ DELIMITER $$
 
 CREATE TRIGGER after_customer_insert
 AFTER INSERT ON customers
+
 FOR EACH ROW
 BEGIN
   INSERT INTO cus_profile (user_id, phone, gender, city, country, profile_picture) 
-  VALUES (NEW.id, NULL, NULL, NULL, NULL, NULL);
+  VALUES (NEW.id, NEW.email, NEW.username, NULL, NULL, NULL, NULL, NULL);
 END$$
 
 DELIMITER ;

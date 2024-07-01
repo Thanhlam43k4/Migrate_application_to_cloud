@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs'
 import * as dotenv from 'dotenv'
 import { con } from '../database/database.js'
 import axios from 'axios'
+
 dotenv.config({ path: '../.env' })
 import jwt from "jsonwebtoken"
 
@@ -16,38 +17,42 @@ async function comparePassword(plainPassword, hashedPassword) {
         throw new Error('Error comparing passwords');
     }
 }
+function queryAsync(sql, values) {
+    return new Promise((resolve, reject) => {
+        con.query(sql, values, (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(results);
+            }
+        });
+    });
+}
 
-const signup = async ({
-    username,
-    email,
-    password,
-}) => {
+const signup = async ({ username, email, password }) => {
     try {
-        let userId = null;
         const hashkey = process.env.SALT_ROUNDS;
         const hashpassword = await bcrypt.hash(password, parseInt(hashkey));
-        //Insert into Database
-        await con.query(`INSERT INTO customers (username, email, password) 
-                        VALUES (?, ?, ?)`,
-            [username, email, hashpassword],
-            function (err, results) {
-                if (err) {
-                    console.log('Error not add user!!');
-                    throw err;
 
-                }
-                userId = results.insertId
+        // Insert into Database
+        const results = await queryAsync(
+            `INSERT INTO customers (username, email, password) VALUES (?, ?, ?)`,
+            [username, email, hashpassword]
+        );
 
-            })
-        const token_reg = await jwt.sign({ userId, email }, process.env.JWT_SECRET, { expiresIn: '5m' })
+        const userId = results.insertId;
+        console.log(userId);
+
+        await queryAsync(
+            `INSERT INTO cus_profile (user_id, email, username) VALUES (?, ?, ?)`,
+            [userId, email, username]
+        );
+        const token_reg = await jwt.sign({ userId, email }, process.env.JWT_SECRET, { expiresIn: '10m' });
         return token_reg;
     } catch (err) {
         console.error('Error during signup:', err);
     }
-}
-
-
-
+};
 const updateCus = async ({
     address, phoneNumber,
     customerId
