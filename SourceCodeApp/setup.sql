@@ -71,3 +71,4 @@ INSERT INTO products (id, name, type, amount) VALUES
 (32, 'Sách Nhập Môn Lập Trình- UET', 'Books', 5000),
 (33, 'Combo Sách Giải Tích 1 + 2 + 3 (DHQGHN)', 'Books', 2004),
 (34, 'Combo Sách Đại số tuyến tính + Vật lý đại cương (1, 2,3)', 'Books', 6000);
+

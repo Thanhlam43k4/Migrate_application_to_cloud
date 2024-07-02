@@ -262,8 +262,7 @@ app.post('/add-to-cart/:id', authenticateJWT_log, async (req, res) => {
   try {
     let productId = req.params.id;
     let customerId = req.user.id;
-    let quantity = 1000;
-    const response = await axios.post(`http://${process.env.SHOPPING_SERVICE_URL}:${process.env.SHOPPING_PORT}/addtoCartDemo`, { productId, customerId, quantity })
+    const response = await axios.post(`http://${process.env.SHOPPING_SERVICE_URL}:${process.env.SHOPPING_PORT}/addtoCartDemo`, { productId, customerId})
     console.log('Add product to Cart Sucessfully!');
 
     res.redirect('/myCart?successMessage= Add product to Cart Successfully!');
@@ -273,6 +272,25 @@ app.post('/add-to-cart/:id', authenticateJWT_log, async (req, res) => {
     res.redirect('/product-table')
   }
 })
+
+app.post('/updateCartQuantity/:id',authenticateJWT_log,async (req,res) =>{
+  const CartId = req.params.id;
+  const quantity = req.body.selectedQuantity;
+  console.log(quantity);
+  try{
+    const response = await axios.post(`http://${process.env.SHOPPING_SERVICE_URL}:${process.env.SHOPPING_PORT}/updateCartQuantity`,{
+      CartId: CartId,
+      quantity, quantity
+    })
+    if(response.data.msg == 'Update Quantity from cart successfully'){
+      res.redirect('/myCart')
+    }
+  }catch(err){
+    console.log(err);
+    throw err;
+  }
+})
+
 app.post('/remove-from-cart/:id', authenticateJWT_log, async (req, res) => {
   try {
     let cartId = req.params.id;

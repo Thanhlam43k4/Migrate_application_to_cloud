@@ -18,7 +18,7 @@ app.use(cookieParser())
 
 const router = express.Router();
 
-
+router.post('/updateCartQuantity',shoppingControllers.updateCartQuantity);
 router.post('/addtoCartDemo',shoppingControllers.addtoCartDemo);
 router.post('/getCartDemo',shoppingControllers.getCartDemo);
 router.post('/removetoCartDemo',shoppingControllers.removetoCartDemo);

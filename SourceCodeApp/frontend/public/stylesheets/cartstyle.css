@@ -9,10 +9,10 @@ body {
 /* Header Styles */
 .header {
     padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
+    background-color: #e9e5e5;
+    color: black;
     border-bottom: 1px solid #0056b3;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 15px #1C3377;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -26,22 +26,23 @@ body {
 /* Link Styles */
 .links {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     flex-grow: 1;
 }
 
 .links a {
-    color: #fff;
+    color: black;
     text-decoration: none;
     padding: 0 15px;
     font-size: 16px;
+    margin: 0 10px;
     transition: color 0.3s;
 }
 
 .links a:hover {
-    color: #e2e6ea;
-    text-decoration: underline;
+    text-decoration: underline blue 3px;
+    text-underline-offset: 6px;
 }
 
 .welcome-message {
@@ -51,14 +52,16 @@ body {
 
 /* Banner Styles */
 .banner {
-    width: 100%;
-    margin-bottom: 20px;
+    width: 1600px;
+    height: 400px; /* Set a specific height for the banner */
+    object-fit: fill;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .banner img {
     width: 100%;
-    height: auto;
-    border-radius: 10px;
+    height: 100%;
+    object-fit: cover;
 }
 
 /* Main Content Styles */
@@ -66,18 +69,23 @@ body {
     display: flex;
     justify-content: space-between;
     gap: 20px;
+    padding: 20px; /* Add padding for better spacing */
 }
 
 /* Cart Container Styles */
 .cart-container {
-    flex: 1; /* Take up remaining space */
-    max-width: 60%; /* Adjust as needed */
+    flex: 1;
+    max-width: 60%;
+    background-color: #f9f9f9; /* Light background color for contrast */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Payment Container Styles */
 .payment-container {
-    flex: 1; /* Take up remaining space */
-    max-width: 35%; /* Adjust as needed */
+    flex: 1;
+    max-width: 35%;
 }
 
 /* Cart Item Styles */
@@ -86,7 +94,7 @@ body {
     flex-direction: column;
     gap: 15px;
     padding: 15px;
-    border: 1px solid #ddd; /* Border for cart item */
+    border: 1px solid #ddd;
     border-radius: 10px;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -106,26 +114,55 @@ body {
     color: #555;
 }
 
-/* Update Cart Form Styles */
-.update-cart-form {
+/* Item Details Styles */
+.item-details {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 10px;
 }
 
-/* Quantity Input */
-.item-quantity {
+/* Price Styles */
+.item-price {
     font-size: 16px;
-    color: #007bff;
+    color: #333;
+}
+
+/* Quantity Styles */
+.item-quantity {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Align quantity input to the right */
 }
 
 .item-quantity label {
-    margin-right: 10px;
+    font-size: 16px;
+    color: #007bff;
+    margin-bottom: 5px;
+}
+
+.item-quantity input[type="number"] {
+    width: 60px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
 
 /* Remove Item Form Styles */
 .remove-item-form {
     margin-top: 10px;
+}
+
+.remove-item-form .btn {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.remove-item-form .btn:hover {
+    background-color: #c82333;
 }
 
 /* Form Styles */
@@ -135,7 +172,7 @@ body {
     border: 1px solid #ddd;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px; /* Space between forms */
+    margin-bottom: 20px;
 }
 
 .cart-form h3, .payment-form h2 {
@@ -228,6 +265,14 @@ body {
     color: #555;
 }
 
+/* Credit Card Image */
+.creditCard {
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 /* Responsive Styles */
 @media (max-width: 768px) {
     .main-content {
@@ -241,4 +286,19 @@ body {
     .payment-container {
         margin-top: 20px;
     }
+}
+.cart-total {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.cart-total h3 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
 }

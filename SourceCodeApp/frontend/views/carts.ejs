@@ -6,88 +6,127 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart</title>
     <link rel="stylesheet" href="/stylesheets/cartstyle.css">
+    <link rel="icon" href="/images/logo.svg" type="image/svg">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
     <div class="header">
         <a href="/homePage" class="logo">
-            <img src="/images/logo.png" alt="Shopping Cart Logo">
+            <img src="/images/logo.svg" alt="Shopping Cart Logo">
         </a>
         <% if (user) { %>
             <div class="links">
-                <a href="/homePage">Trang chủ</a> 
-                <h4 class="welcome-message">Xin chào, <%= user.username %></h4> 
+                <h4 class="welcome-message" style="font-family: cursive; font-size: x-large;">UET Ecommerce Website</h4>
+                <a href="/homePage"><b>Trang chủ</b></a>
+                <h4 class="welcome-message">Xin chào, <%= user.username %>
+                </h4>
                 <a href="/product-table"><i class="fa-solid fa-shop"></i></a>
                 <a class="mycart" href="/myCart"><i class="fa-solid fa-cart-arrow-down"></i></a>
                 <a class="logout" href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a>
             </div>
-        <% } else { %>
-            <div class="links">
-                <a href="/homePage">Homepage</a> |
-                <a href="/login">Login</a> |
-                <a href="/register">Register</a>
-            </div>
-        <% } %>
+            <% } else { %>
+                <div class="links">
+                    <a href="/homePage">Homepage</a> |
+                    <a href="/login">Login</a> |
+                    <a href="/register">Register</a>
+                </div>
+                <% } %>
     </div>
 
     <div class="banner">
-        <img src="/images/banner.jpg" alt="Special Offer Banner">
+        <img src="https://placehold.co/600x400" width="400px" alt="Special Offer Banner">
     </div>
 
     <div class="main-content">
         <div class="cart-container">
             <h2>Shopping Cart</h2>
             <% if (error) { %>
-                <p class="error-message"><%= error %></p>
-            <% } %>
-            <% if (success) { %>
-                <p class="success-message"><%= success %></p>
-            <% } %>
-            <% if (cartItems.length > 0) { %>
-                <% cartItems.forEach(item => { %>
-                    <div class="cart-item">
-                        <div class="item-info">
-                            <h3><%= item.name %></h3>
-                            <p>Added by: <%= item.username %></p>
-                        </div>
-                        <div class="item-quantity">
-                            <label for="quantity-<%= item.id %>">Quantity:<%= item.quantity%></label>
+                <p class="error-message">
+                    <%= error %>
+                </p>
+                <% } %>
+                    <% if (success) { %>
+                        <p class="success-message">
+                            <%= success %>
+                        </p>
+                        <% } %>
+                            <% if (cartItems.length> 0) { %>
+                                <% cartItems.forEach(item=> { %>
+                                    <div class="cart-item">
+                                        <form action="/"></form>
+                                        <div class="item-info">
+                                            <h3>
+                                                <%= item.name %>
+                                            </h3>
+                                            <p>Added by: <%= item.username %>
+                                            </p>
+                                        </div>
+                                        <div class="item-details">
+                                            <div class="item-price">
+                                                <label for="price-<%= item.price %>">Price Each: $<%= item.price %>
+                                                </label>
+                                            </div>
+                                            <form action="/updateCartQuantity/<%= item.id %>" method="POST">
+                                                <div class="item-quantity">
+                                                    <label style="color:green">Total Remain: <%= item.amount %></label>
+                                                    <input type="number" name="selectedQuantity" id="selectedQuantity"
+                                                        max="<%=item.amount%>" value="<%= item.quantity %>"
+                                                        oninput="checkQuantity(this, max)">
+                                                </div><br>  
+                                                <button type="submit" class="btn btn-primary">Update Quantity</button>
+                                            </form>
+                                        </div>
+                                        <form action="/remove-from-cart/<%= item.id %>" method="POST"
+                                            class="remove-item-form">
+                                            <button type="submit" class="btn btn-danger">
+                                                <i class="fas fa-trash-alt"></i> Remove
+                                            </button>
+                                        </form>
+                                    </div>
 
-                        </div>
-                        
-                        <form action="/remove-from-cart/<%= item.id %>" method="POST" class="remove-item-form">
-                            <button type="submit" class="btn btn-danger">
-                                <i class="fas fa-trash-alt"></i> Remove
-                            </button>
-                        </form>
-                    </div>
-                <% }) %>
-            <% } else { %>
-                <p class="empty-cart-message">Your cart is empty.</p>
-            <% } %>
+
+                                    <% }) %>
+                                        <div class="cart-total">
+                                            <h3>Total: $<span id="cart-total">0.00</span></h3>
+                                        </div>
+                                        <% } else { %>
+                                            <p class="empty-cart-message">Your cart is empty.</p>
+                                            <% } %>
+
         </div>
 
         <div class="payment-container">
             <h2>Payment Details</h2>
-            <form class="payment-form" action="/process-payment" method="POST">
+            <form class="payment-form" action="/Postpayment" method="POST">
                 <div class="form-group">
                     <label for="cardNumber">Card Number:</label>
-                    <input type="text" id="cardNumber" name="cardNumber" placeholder="Card Number" required>
+                    <input type="text" id="cardNumber" name="cardNumber" placeholder="Card Number"
+                        value="4208585190116667" readonly>
                 </div>
                 <div class="form-group">
                     <label for="expiryDate">Expiry Date:</label>
-                    <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY" required>
+                    <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY" value="06/2027" readonly>
                 </div>
                 <div class="form-group">
                     <label for="cvv">CVV:</label>
-                    <input type="text" id="cvv" name="cvv" placeholder="CVV" required>
+                    <input type="text" id="cvv" name="cvv" placeholder="CVV" value="508" readonly>
                 </div>
                 <button type="submit" class="btn btn-primary">Pay Now</button>
             </form>
+            <img src="/images/CreditCard.jpg" class="creditCard" alt="Credit Card Method">
         </div>
     </div>
+
+    <script>
+        function checkQuantity(input, maxQuantity) {
+            if (parseInt(input.value) > maxQuantity) {
+                alert('The selected quantity exceeds the available stock.');
+                input.value = maxQuantity;
+            }
+        }
+    </script>
 </body>
 
 </html>
- 

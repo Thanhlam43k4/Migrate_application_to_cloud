@@ -33,7 +33,7 @@ dotenv.config({ path: '../.env' })
 async function getCartDemo(req, res) {
     const customerId = req.body.id;
     const query = `
-    SELECT customers.username,cart.id, products.name, cart.quantity
+    SELECT customers.username,cart.id, products.name, products.amount,cart.quantity, products.price
     FROM cart
     JOIN products ON cart.product_id = products.id
     JOIN customers ON cart.customer_id = customers.id
@@ -45,7 +45,9 @@ async function getCartDemo(req, res) {
                 if (err) {
                     console.log('Error Query Cart Service: ', err);
                 }
+                console.log(results);
                 res.status(200).json(results);
+
                 console.log('Get All Cart Successfully');
 
             })
@@ -63,15 +65,32 @@ async function removetoCartDemo(req, res) {
                 console.error('Error executing DeleteQuery query:', err);
                 throw new Error('Internal Server Error');
             }
-            res.status(200).json({ msg: 'Delete product from cart sucessfully', results })
+            res.status(200).json({ msg: 'Delete product from cart successfully', results })
         })
+
+}
+async function updateCartQuantity(req, res) {
+    const { CartId, quantity } = req.body;
+    const query = `UPDATE cart SET quantity = ? WHERE id = ?`;
+    try {
+        con.query(query, [quantity, CartId],
+            (err, results) => {
+                if (err) {
+                    console.error('Error executing DeleteQuery query:', err);
+                    throw new Error('Internal Server Error');
+                }
+                res.status(200).json({ msg: 'Update Quantity from cart successfully', results })
+            })
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
 
 }
 
 
-
 async function addtoCartDemo(req, res) {
-    const { productId, quantity, customerId } = req.body;
+    const { productId, customerId } = req.body;
     const checkQuery = 'SELECT * FROM cart  WHERE customer_id = ? AND product_id = ?';
 
     con.query(checkQuery, [customerId, productId],
@@ -80,35 +99,24 @@ async function addtoCartDemo(req, res) {
                 console.error('Error executing checkQuery query:', err);
                 throw new Error('Internal Server Error');
             }
-            if (results.size > 0) {
-                //Product is already in the cart, update the quantity
-                const updateQuery = 'UPDATE cart SET quantity = quantity + ? WHERE customer_id = ? AND product_id = ?';
-                con.query(updateQuery, [quantity, customerId, productId],
-                    function (err, result) {
-                        if (err) {
-                            console.error('Error executing UPDATE query:', err);
-                            throw new Error('Internal Server Error');
-                        }
-                        res.send('Cart updated successfully');
-                    })
-            } else {
-                const insertQuery = 'INSERT INTO CART (customer_id, product_id, quantity) VALUES (?,?,?)'
-                con.query(insertQuery, [customerId, productId, quantity],
-                    function (err, result) {
-                        if (err) throw err;
-                        console.log('Product added to cart');
-                        res.send('Product added to cart');
-                    })
-            }
+            const insertQuery = 'INSERT INTO CART (customer_id, product_id) VALUES (?,?)'
+            con.query(insertQuery, [customerId, productId],
+                function (err, result) {
+                    if (err) throw err;
+                    console.log('Product added to cart');
+                    res.send('Product added to cart');
+                })
+        }
 
-        })
-
+    )
 }
 
 
 
 
+
+
 export default {
-    getCartDemo, addtoCartDemo, removetoCartDemo
+    getCartDemo, addtoCartDemo, removetoCartDemo, updateCartQuantity
 
 }
