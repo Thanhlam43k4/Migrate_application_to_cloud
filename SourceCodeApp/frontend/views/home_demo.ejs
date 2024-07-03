@@ -14,65 +14,68 @@
 <body>
     <div class="main">
         <header>
-            <!-- logo -->
-            <div class="logo">
-                <a href="/homePage"> <img src="/images/logo.svg" alt="University Icon" class="university-icon">
-                </a>
-            </div>
-            <!-- menu ve truong -->
-            <nav>
-                <ul>
-                    <li><a href="/homePage">Trang Chủ</a></li>
-                    <li><a href="/homePage">Giới hiệu</a></li>
-                    <li><a href="/homePage">Sinh viên</a></li>
-                    <li><a href="/homePage">Giảng viên</a></li>
-                    <li><a href="/homePage">Tuyển sinh</a></li>
-                    <li><a href="/homePage">Tuyển dụng</a></li>
-                    <li><a href="/product-table"><i class="fa-solid fa-shop"></i></a></li>
-                </ul>
-            </nav>
-            <% if(user) { %>
-                <div class="login">
-                    <div class="top-row">
-                        <div class="account-image">
-                            <form action="/getProfile" method="GET">
-                                <a href="/getProfile">
-                                    <% if(user.profile_picture) { %>
-                                        <img src="<%= user.profile_picture %>" alt="User Image">
-                                        <% } else { %>
-                                            <img src="https://via.placeholder.com/200"alt="Avatar User">
-                                            <% } %>
-                                </a>
-                            </form>
-
-                        </div>
-                        <h4 class="welcome-message"><span class="username">
-                                <%= user.username.toUpperCase()%>
-                            </span></h4>
-                        <a class="mycart" href="/myCart"><i class="fa-solid fa-cart-arrow-down"></i></a>
-                        <a class="logout" href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a>
-                    </div>
+            <div class="head">
+                <!-- logo -->
+                <div class="logo">
+                    <a href="/homePage"> <img src="/images/logo.svg" alt="University Icon" class="university-icon">
+                    </a>
                 </div>
-                <% } else { %>
+                <!-- menu ve truong -->
+                <nav>
+                    <ul>
+                        <li><a href="/homePage">Trang Chủ</a></li>
+                        <li><a href="/homePage">Giới hiệu</a></li>
+                        <li><a href="/homePage">Sinh viên</a></li>
+                        <li><a href="/homePage">Giảng viên</a></li>
+                        <li><a href="/homePage">Tuyển sinh</a></li>
+                        <li><a href="/homePage">Tuyển dụng</a></li>
+                        <li><a href="/product-table">Cửa hàng</i></a></li>
+                    </ul>
+                </nav>
+                <% if(user) { %>
                     <div class="login">
-                        <a href="/login">Đăng nhập</a>
-                        <a href="/signup">Đăng ký</a>
-                        <% if (notification) { %>
-                            <div class="notification">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-alert-circle">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <line x1="12" y1="8" x2="12" y2="12"></line>
-                                    <line x1="12" y1="16" x2="12" y2="16"></line>
-                                </svg>
-                                <p>
-                                    <%= notification %>
-                                </p>
+                        <div class="top-row">
+                            <div class="account-image">
+                                <form action="/getProfile" method="GET">
+                                    <a href="/getProfile">
+                                        <% if(user.profile_picture) { %>
+                                            <img src="<%= user.profile_picture %>" alt="User Image">
+
+                                            <% } else { %>
+                                                <img src="https://via.placeholder.com/200" alt="Avatar User">
+                                                <% } %>
+                                    </a>
+                                    <h4 class="welcome-message"><span class="username">
+                                            <%= user.username.toUpperCase()%>
+                                        </span></h4>
+                                </form>
+
                             </div>
-                            <% } %>
+                            <a class="mycart" href="/myCart"><i class="fa-solid fa-cart-arrow-down"></i></a>
+                            <a class="logout" href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a>
+                        </div>
                     </div>
-                    <% } %>
+                    <% } else { %>
+                        <div class="login">
+                            <a href="/login">Đăng nhập</a>
+                            <a href="/signup">Đăng ký</a>
+                            <% if (notification) { %>
+                                <div class="notification">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-alert-circle">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                                        <line x1="12" y1="16" x2="12" y2="16"></line>
+                                    </svg>
+                                    <p>
+                                        <%= notification %>
+                                    </p>
+                                </div>
+                                <% } %>
+                        </div>
+                        <% } %>
+            </div>
         </header>
 
         <main>

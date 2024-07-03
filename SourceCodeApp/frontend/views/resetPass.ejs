@@ -7,26 +7,27 @@
   <title>Login UET WebSite</title>
   <link rel="icon" href="/images/logo.svg" type="image/svg">
   <link rel="stylesheet" href="/stylesheets/login.css">
+  <link rel="stylesheet" href="/stylesheets/style.css">
   <script src="https://kit.fontawesome.com/c991f90e06.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
   <header>
-    <!-- logo -->
-    <div class="logo">
-      <a href="/homePage"> <img src="/images/logo.svg" alt="University Icon" class="university-icon"></a>
-      <p>Đại học Quốc gia hà nội<br>Trường Đại học Công nghệ</p>
+    <div class="head">
+      <!-- logo -->
+      <div class="logo">
+        <a href="/homePage"> <img src="/images/logo.svg" alt="University Icon" class="university-icon"></a>
+        <p>Đại học Quốc gia hà nội<br>Trường Đại học Công nghệ</p>
+      </div>
+      <!-- menu ve truong -->
+      <nav>
+        <ul>
+          <li><a href="/homePage">Trang Chủ</a></li>
+          <li><a href="/homePage">Giới hiệu</a></li>
+          <li><a href="/product-table">Cửa hàng</a></li>
+        </ul>
+      </nav>
     </div>
-    <!-- menu ve truong -->
-    <nav>
-      <ul>
-        <li><a href="/homePage">Trang Chủ</a></li>
-        <li><a href="/homePage">Giới hiệu</a></li>
-        <li><a href="/product-table"><i class="fa-solid fa-shop"></i></a></li>
-      </ul>
-    </nav>
-
-
   </header>
   <div class="wrapper">
     <h2>Reset Password </h2>
@@ -45,12 +46,6 @@
               <div class="input-field">
                 <input type="email" name="email" required>
                 <label>Enter your email</label>
-              </div>
-              <div class="forget">
-                <label for="remember">
-                  <input type="checkbox" id="remember">
-                  <p>Remember me</p>
-                </label>
               </div>
               <button type="submit">Send Code to Email</button>
               <div class="register">
