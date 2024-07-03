@@ -7,26 +7,29 @@
   <title>Login UET WebSite</title>
   <link rel="icon" href="/images/logo.svg" type="image/svg">
   <link rel="stylesheet" href="/stylesheets/login.css">
+  <link rel="stylesheet" href="/stylesheets/style.css">
   <script src="https://kit.fontawesome.com/c991f90e06.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
   <header>
-    <!-- logo -->
-    <div class="logo">
-      <a href="/homePage"> <img src="/images/logo.svg" alt="University Icon" class="university-icon"></a>
-      <p>Đại học Quốc gia hà nội<br>Trường Đại học Công nghệ</p>
+    <div class="head">
+      <!-- logo -->
+      <div class="logo">
+        <a href="/homePage"> <img src="/images/logo.svg" alt="University Icon" class="university-icon"></a>
+        <p>Đại học Quốc gia hà nội<br>Trường Đại học Công nghệ</p>
+      </div>
+      <!-- menu ve truong -->
+      <nav>
+        <ul>
+          <li><a href="/homePage">Trang Chủ</a></li>
+          <li><a href="/homePage">Giới thiệu</a></li>
+          <li><a href="/product-table">Cửa Hàng</a></li>
+        </ul>
+      </nav>
+
+
     </div>
-    <!-- menu ve truong -->
-    <nav>
-      <ul>
-        <li><a href="/homePage">Trang Chủ</a></li>
-        <li><a href="/homePage">Giới thiệu</a></li>
-        <li><a href="/product-table"><i class="fa-solid fa-shop"></i></a></li>
-      </ul>
-    </nav>
-
-
   </header>
   <div class="wrapper">
     <h2>Login</h2>
@@ -41,7 +44,7 @@
             <%= success %>
           </p>
           <% } %>
-    <form action="/login" method="post">
+            <form action="/login" method="post">
               <div class="input-field">
                 <input type="email" name="email" required>
                 <label>Enter your email</label>
@@ -54,14 +57,14 @@
                 <label for="remember">
                   <input type="checkbox" id="remember">
                   <p>Remember me</p>
-                </label>  
+                </label>
                 <a href="/resetPass">Forgot password?</a>
               </div>
               <button type="submit">Log In</button>
               <div class="register">
                 <p>Don't have an account? <a href="/signup" style="color: black;">Register</a></p>
               </div>
-    </form>
+            </form>
   </div>
-  
+
 </body>

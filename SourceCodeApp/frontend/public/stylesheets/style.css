@@ -10,7 +10,7 @@ main {
     background-color: aqua;
 }
 
-header {
+header .head {
     display: flex; /* Use flexbox for layout */
     justify-content: space-between; /* Space out items evenly */
     align-items: center; /* Align items vertically in the center */
@@ -21,9 +21,7 @@ header {
     left: 0; /* Align to the left edge */
     right: 0; /* Align to the right edge */
     z-index: 1000; /* Ensure the header is above other elements */
-    padding: 10px 20px; /* Add some padding for better spacing */
 }
-
 
 .logo {
     float: left;
@@ -35,33 +33,30 @@ header {
     margin-top: 5px;
     line-height: 50px;
 }
-nav {
-    background-color: #e9e5e5; /* Optional: match the header background */
-}
 
 nav ul {
-    list-style: none; /* Remove default list style */
-    margin: 0; /* Reset margin */
-    padding: 0; /* Reset padding */
-    display: flex; /* Display items in a row */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
 }
 
 nav ul li {
-    margin: 0 10px; /* Space between list items */
+    margin: 0 10px;
 }
 
 nav ul li a {
-    text-decoration: none; /* Remove underline from links */
-    color: rgb(0, 0, 0); /* Set link color */
-    padding: 10px 15px; /* Add padding to links */
-    transition: background-color 0.3s ease, text-decoration 0.3s ease; /* Smooth transition */
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    padding: 10px 15px;
+    transition: background-color 0.3s ease;
 }
 
 nav ul li a:hover {
-    text-decoration: underline blue 3px; /* Add underline on hover */
-    text-underline-offset: 6px; /* Offset underline from text */
-    background-color: rgba(0, 0, 0, 0.1); /* Optional: Add a background color on hover */
+    text-decoration: underline blue 3px;
+    text-underline-offset: 6px;
 }
+
 .login {
     float: right;
     padding: 10px 20px;
@@ -353,4 +348,80 @@ footer {
 
 .notification p {
     margin: 0;
+}
+@media (max-width: 768px) {
+    header .head {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    nav ul {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    nav ul li {
+        margin: 5px 0;
+    }
+
+    .login {
+        display: none;
+        padding: 10px 0;
+        width: 100%;
+        text-align: center;
+    }
+    header .head:hover nav ul,
+    header .head:hover .login {
+        display: flex;
+    }
+
+    .top-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .welcome-message {
+        font-size: 14px;
+    }
+
+    .login a:not([href="/getProfile"]),
+    .login .logout,
+    .login .mycart {
+        padding: 10px;
+        width: 100%;
+        margin: 5px 0;
+        text-align: center;
+    }
+
+    main .news {
+        flex-direction: column;
+    }
+
+    .news .new1,
+    .news .new2 {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    footer .footer1,
+    footer .footer2 {
+        flex-direction: column;
+    }
+
+    footer .footer1 div,
+    footer .footer2 div {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .footer2 .thongtin6 {
+        flex-direction: row;
+        text-align: center;
+  }
+  .thongtin6 i,
+  .thongtin6 button{
+    padding: auto;
+    margin:0 15px;
+  }
 }
