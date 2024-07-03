@@ -6,4 +6,5 @@ product/node_modules
 
 shopping/node_modules
 
-frontend/uploads/*
+frontend/uploads/*.png
+frontend/uploads/*.jpg
