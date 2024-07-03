@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Success</title>
+    <link rel="stylesheet" href="/stylesheets/cartstyle.css">
+    <link rel="icon" href="/images/logo.svg" type="image/svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .success-container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .success-container h2 {
+            color: #28a745;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .success-container p {
+            color: #555;
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+
+        .bill-container {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .bill-container h3 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .bill-container .bill-details {
+            font-size: 18px;
+            color: #555;
+        }
+
+        .bill-container .bill-details p {
+            margin: 5px 0;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            display: inline-block;
+            text-align: center;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .creditCard {
+            width: 100%;
+            border-radius: 8px;
+            object-fit: cover;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="success-container">
+        <h2>Payment Successful!</h2>
+        <p>Thank you for your purchase. Here are the details of your transaction:</p>
+        <div class="bill-container">
+            <h3>Payment Bill</h3>
+            <div class="bill-details">
+                <p><strong>Card Number:</strong> **** **** **** 6667</p>
+                <p><strong>Type Card:</strong> VISA</p>
+                <p><strong>Name:</strong> <%= name %></p>
+                <p><strong>Expiry Date:</strong> 06/2027</p>
+                <p><strong>CVV:</strong> ***</p>
+                <p><strong>Total Paid:</strong> $<%= total %></p>
+            </div>
+        </div>
+        <a href="/homePage" class="btn btn-primary">Return to Homepage</a>
+        <img src="/images/CreditCard.jpg" class="creditCard" alt="Credit Card Method">
+    </div>
+</body>
+
+</html>

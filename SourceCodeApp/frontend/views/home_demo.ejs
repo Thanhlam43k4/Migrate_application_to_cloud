@@ -37,8 +37,8 @@
                         <div class="account-image">
                             <form action="/getProfile" method="GET">
                                 <a href="/getProfile">
-                                    <% if(user.image) { %>
-                                        <img src="<%= user.image %>" alt="User Image">
+                                    <% if(user.profile_picture) { %>
+                                        <img src="<%= user.profile_picture %>" alt="User Image">
                                         <% } else { %>
                                             <img src="https://via.placeholder.com/200"alt="Avatar User">
                                             <% } %>

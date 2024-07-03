@@ -58,7 +58,8 @@ async function getCartDemo(req, res) {
 }
 async function removetoCartDemo(req, res) {
     const { cartId, customerId } = req.body;
-    const query = `DELETE FROM cart WHERE customer_id = ? AND id = ?`;
+    console.log(typeof(customerId));
+        const query = `DELETE FROM cart WHERE customer_id = ? AND id = ?`;
     con.query(query, [customerId, cartId],
         (err, results) => {
             if (err) {
@@ -87,8 +88,6 @@ async function updateCartQuantity(req, res) {
     }
 
 }
-
-
 async function addtoCartDemo(req, res) {
     const { productId, customerId } = req.body;
     const checkQuery = 'SELECT * FROM cart  WHERE customer_id = ? AND product_id = ?';
@@ -110,13 +109,45 @@ async function addtoCartDemo(req, res) {
 
     )
 }
-
-
+async function addPayment(req, res) {
+    const { customerId, customerName, totalPrice, phone } = req.body;
+    const addQuery = 'INSERT INTO payments (customer_id,customer_name,phone,totalprice) VALUES (?,?,?,?)'
+    try {
+        con.query(addQuery, [customerId, customerName, phone, totalPrice],
+            function (err, results) {
+                if (err) {
+                    console.log(err);
+                    res.status(200).json({ error: 'Error Query Add Payment' })
+                }
+                res.status(200).json({ msg: 'Add Payment Successfully' })
+            })
+    } catch (err) {
+        console.log(err);
+        res.status(200).json({ error: 'Error Try Catch Exception of Payment Service' })
+    }
+}
+async function deleteAllCart(req, res) {
+    const customerId = req.body.customerId;
+    try {
+        const query = `DELETE FROM cart WHERE customer_id = ?`
+        con.query(query,[customerId],
+            function (err, results) {
+                if (err) {
+                    console.log(err);
+                    res.json({msg : err})
+                }
+                res.status(200).json({ msg: 'Delete all Cart Successfully' });
+            })
+    } catch (err) {
+        console.log(err);
+        res.status(200).json({ error: 'Error Try Catch Exception of Payment Service' })
+    }
+}
 
 
 
 
 export default {
-    getCartDemo, addtoCartDemo, removetoCartDemo, updateCartQuantity
+    getCartDemo, addtoCartDemo, removetoCartDemo, updateCartQuantity, addPayment,deleteAllCart
 
 }

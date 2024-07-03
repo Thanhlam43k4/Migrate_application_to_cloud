@@ -22,6 +22,7 @@ router.post('/updateCartQuantity',shoppingControllers.updateCartQuantity);
 router.post('/addtoCartDemo',shoppingControllers.addtoCartDemo);
 router.post('/getCartDemo',shoppingControllers.getCartDemo);
 router.post('/removetoCartDemo',shoppingControllers.removetoCartDemo);
-
+router.post('/addPayment',shoppingControllers.addPayment);
+router.post('/deleteAllCart',shoppingControllers.deleteAllCart);
 export default router
 

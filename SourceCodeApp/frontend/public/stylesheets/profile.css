@@ -164,16 +164,32 @@ nav ul li a:hover {
     text-align: center;
     margin-bottom: 20px;
 }
-
-.profile-picture {
-    border-radius: 50%;
-    border: 5px solid #fff;
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    margin-bottom: 10px;
+#profilePicture {
+    display: none;
 }
 
+/* Style the label element to look like a button */
+.profile-picture-label {
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+}
+
+.profile-picture-label:hover .profile-picture {
+    opacity: 0.8;
+}
+
+/* Style for the profile picture preview */
+.profile-picture {
+    display: block;
+    margin-bottom: 10px;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 2px solid #007bff;
+    transition: opacity 0.3s;
+}
 .user-name {
     margin: 0;
     font-size: 24px;

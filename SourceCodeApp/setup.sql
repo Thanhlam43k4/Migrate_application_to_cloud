@@ -1,6 +1,6 @@
-CREATE DATABASE customer_db;
+CREATE DATABASE customer_demo;
 
-USE customer_db;
+USE customer_demo;
 
 
 CREATE TABLE `customers` (
@@ -23,21 +23,6 @@ CREATE TABLE `products` (
   `expiration_date` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) 
-
-
-CREATE TABLE `cus_profile` (
-  `user_id` int NOT NULL,
-  `email` varchar(100) DEFAULT NULL,
-  `username` varchar(50) DEFAULT NULL,
-  `address` varchar(500) DEFAULT NULL,
-  `phone` varchar(20) DEFAULT NULL,
-  `gender` enum('male', 'female') DEFAULT NULL,
-  `city` varchar(100) DEFAULT NULL,
-  `country` varchar(100) DEFAULT NULL,
-  `profile_picture` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`user_id`),
-  FOREIGN KEY (`user_id`) REFERENCES `customers`(`id`)
-);
 CREATE TABLE `cart` (
   `id` int NOT NULL AUTO_INCREMENT,
   `customer_id` int DEFAULT NULL,
@@ -49,6 +34,30 @@ CREATE TABLE `cart` (
   CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
   CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
 )
+
+CREATE TABLE `cus_profile` (
+  `user_id` int NOT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `username` varchar(50) DEFAULT NULL,
+  `profile_picture` varchar(255) DEFAULT NULL,
+  `address` varchar(500) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `gender` enum('male', 'female') DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `country` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  FOREIGN KEY (`user_id`) REFERENCES `customers`(`id`)
+);
+CREATE TABLE `payments` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `customer_id` int NOT NULL,
+  `customer_name` varchar(100) NOT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `totalprice` decimal(10, 2) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
 
 /*Trigger whenever insert a new customers will automatically insert a new profile with this user_id */
 DELIMITER $$
@@ -71,4 +80,6 @@ INSERT INTO products (id, name, type, amount) VALUES
 (32, 'Sách Nhập Môn Lập Trình- UET', 'Books', 5000),
 (33, 'Combo Sách Giải Tích 1 + 2 + 3 (DHQGHN)', 'Books', 2004),
 (34, 'Combo Sách Đại số tuyến tính + Vật lý đại cương (1, 2,3)', 'Books', 6000);
+
+
 

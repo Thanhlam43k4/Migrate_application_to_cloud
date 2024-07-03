@@ -90,8 +90,6 @@ function queryAsync(sql, values) {
         });
     });
 }
-
-
 async function login(req, res) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -103,22 +101,25 @@ async function login(req, res) {
     let username = null;
     let id = null;
     let role = null;
-    let verified = null;    // const {email,password} = req.body;
-    queryAsync('SELECT * FROM customers WHERE email = ?', [email_])
+    let verified = null;   
+    let profile_picture = null; // const {email,password} = req.body;
+    queryAsync('SELECT * FROM customers JOIN cus_profile ON cus_profile.user_id = customers.id WHERE customers.email = ?', [email_])
         .then((results) => {
             if (results.length > 0) {
                 username = results[0].username;
                 id = results[0].id;
                 role = results[0].role;
                 verified = results[0].verified;
+                profile_picture = results[0].profile_picture;
                 const customerpassword = results[0].password;
-
                 return customerRepository.comparePassword(password_, customerpassword);
+            } else {
+                res.status(200).json({ msg: 'Email is not registered!!' })
             }
         })
         .then((passwordMatch) => {
             if (passwordMatch) {
-                const token = jwt.sign({ id: id, username: username, email: email_, role: role }, JWT_SECRET, { expiresIn: '20m' })
+                const token = jwt.sign({ id: id, username: username, email: email_, role: role,profile_picture: profile_picture}, JWT_SECRET, { expiresIn: '20m' })
                 console.log(`Login successfully with token ${token}`);
 
                 ///return customerRepository.getUser(username,email_);
@@ -287,22 +288,24 @@ async function updateProfile(req, res) {
     const city = req.body.city;
     const country = req.body.country;
     const address = req.body.address;
+    const profile_picture = req.body.profile_picture;
+
     try {
         con.query(`UPDATE cus_profile 
-        SET phone = ?, gender = ?, city = ?, country = ?, address = ? 
+        SET phone = ?, gender = ?, city = ?, country = ?, address = ?, profile_picture = ? 
         WHERE user_id = ?`,
-        [phone,gender,city,country,address,user_id],
-        function(err,results){
-            if(err){
-                console.log(err);
-                res.status(200).json({msg : 'Error Query'})
-            }
-            if(results){
-                res.status(200).json({msg:'Update Information Successfully!!'})
-            }
-        })
-    }catch(err){
-        console.log('Error',err);
+            [phone, gender, city, country, address, profile_picture, user_id],
+            function (err, results) {
+                if (err) {
+                    console.log(err);
+                    res.status(200).json({ msg: 'Error Query' });
+                }
+                if (results) {
+                    res.status(200).json({ msg: 'Update Information Successfully!!' });
+                }
+            });
+    } catch (err) {
+        console.log('Error', err);
         throw err;
     }
 }
