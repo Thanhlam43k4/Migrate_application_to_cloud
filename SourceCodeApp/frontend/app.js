@@ -15,9 +15,11 @@ const port = 3000;
 
 
 dotenv.config({ path: '../.env' })
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

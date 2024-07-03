@@ -14,10 +14,13 @@ import { sendEmailService } from "../repository/emailService.js";
 import jwt from "jsonwebtoken"
 import nodemailer from 'nodemailer'
 import dotenv from "dotenv"
+import path from "path"
+import fs from "fs"
 import cookieParser from 'cookie-parser'
 dotenv.config({ path: '../.env' })
 import bodyParser from 'body-parser';
 import express from 'express'
+import ejs from 'ejs'
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -27,6 +30,7 @@ app.use(cookieParser());
 
 const JWT_SECRET = process.env.JWT_SECRET
 let token_reg = null
+
 
 async function getAllUser(req, res) {
     const apiData = await fetchData();
@@ -101,7 +105,7 @@ async function login(req, res) {
     let username = null;
     let id = null;
     let role = null;
-    let verified = null;   
+    let verified = null;
     let profile_picture = null; // const {email,password} = req.body;
     queryAsync('SELECT * FROM customers JOIN cus_profile ON cus_profile.user_id = customers.id WHERE customers.email = ?', [email_])
         .then((results) => {
@@ -119,7 +123,7 @@ async function login(req, res) {
         })
         .then((passwordMatch) => {
             if (passwordMatch) {
-                const token = jwt.sign({ id: id, username: username, email: email_, role: role,profile_picture: profile_picture}, JWT_SECRET, { expiresIn: '20m' })
+                const token = jwt.sign({ id: id, username: username, email: email_, role: role, profile_picture: profile_picture }, JWT_SECRET, { expiresIn: '20m' })
                 console.log(`Login successfully with token ${token}`);
 
                 ///return customerRepository.getUser(username,email_);
@@ -244,13 +248,18 @@ const sendEmailController = async (req, res) => {
         console.log(req.body.msg);
         let URL_LINK = null;
         let EMAIL_MESAGE = null;
+        let subject = null;
+
         if (req.body.msg == 'Sign Up Email!!') {
-            EMAIL_MESAGE = `Please verify your email by clicking the following link`;
-            URL_LINK = `http://localhost:3000/verify/${email}/${req.body.code}`
+            subject = "Verify Your Email at VNU_UET";
+            EMAIL_MESAGE = `Please verify your email by clicking the link below.`;
+            URL_LINK = `http://localhost:3000/verify/${email}/${req.body.code}`;
         } else if (req.body.msg == 'Reset password Email!!') {
-            EMAIL_MESAGE = `Please reset your password by clicking the following link`;
-            URL_LINK = `http://localhost:3000/resetPass/${email}/${req.body.code}`
+            subject = "Reset Your Password at VNU_UET";
+            EMAIL_MESAGE = `Please reset your password by clicking the link below.`;
+            URL_LINK = `http://localhost:3000/resetPass/${email}/${req.body.code}`;
         }
+
         if (email) {
             const transporter = nodemailer.createTransport({
                 host: "smtp.gmail.com",
@@ -261,26 +270,93 @@ const sendEmailController = async (req, res) => {
                     pass: process.env.EMAIL_PASSWORD,
                 },
             });
+
             const info = await transporter.sendMail({
-                from: `"Uet WebSite for verfication" ${process.env.EMAIL_USERNAME}`, // sender address
+                from: `UET WEBSITE ThanhLam && VuQuocViet`, // sender address
                 to: email, // list of receivers
-                subject: "Verification your email at website VNU_UET", // Subject line
+                subject: subject, // Subject line
                 text: `${EMAIL_MESAGE}: ${URL_LINK}`,
-                html: `<p>${EMAIL_MESAGE} <a href=${URL_LINK}>Verify Email</a></p>`,
+                html: `
+                <html>
+                <head>
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            color: #333;
+                            background-color: #f4f4f4;
+                            margin: 0;
+                            padding: 20px;
+                        }
+                        .container {
+                            max-width: 600px;
+                            margin: 0 auto;
+                            background-color: #ffffff;
+                            padding: 20px;
+                            border-radius: 8px;
+                            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                        }
+                        h1 {
+                            color: #4CAF50;
+                            font-size: 24px;
+                            margin-bottom: 10px;
+                        }
+                        p {
+                            font-size: 16px;
+                            line-height: 1.5;
+                            margin: 10px 0;
+                        }
+                        a {
+                            display: inline-block;
+                            padding: 10px 15px;
+                            margin-top: 10px;
+                            color: #ffffff;
+                            background-color: #4CAF50;
+                            text-decoration: none;
+                            border-radius: 5px;
+                        }
+                        a:hover {
+                            background-color: #45a049;
+                        }
+                        .footer {
+                            margin-top: 20px;
+                            text-align: center;
+                            font-size: 14px;
+                            color: #888888;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <h1>${subject}</h1>
+                        <p>${EMAIL_MESAGE}</p>
+                        <a href="${URL_LINK}">Click Here</a>
+
+                        <div class="footer">
+                            <p>If you did not request this, please ignore this email.</p>
+                            <p>Thank you,</p>
+                            <p>VNU_UET Team</p>
+                        </div>
+                    </div>
+                </body>
+                </html>
+                `,
             });
+
             return res.json(info);
         }
+
         return res.json({
             status: 'err',
             msg: 'The email is required'
-        })
+        });
+
     } catch (err) {
         console.log(err);
         return res.json({
             status: 'err'
-        })
+        });
     }
-}
+};
 async function updateProfile(req, res) {
     const user_id = req.body.user_id;
     const phone = req.body.phone;
