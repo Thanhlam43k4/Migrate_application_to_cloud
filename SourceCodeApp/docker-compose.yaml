@@ -1,5 +1,19 @@
   version : '3'
   services:
+    #mysql_server container
+    mysql_server:
+      container_name: mysql_server
+      build:
+        context:  ./mysql
+        dockerfile: Dockerfile
+      environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_DATABASE=customer_db
+      networks:
+      - micro-dev-net
+    #Front_end container
     front_end:
       container_name: front_end
       build:
@@ -15,7 +29,7 @@
         - .env
       networks:
         - micro-dev-net
-
+    #Customer container 
     customer:
       container_name: customer
       build:
@@ -28,7 +42,7 @@
         - .env 
       networks:
         - micro-dev-net
-
+    #Product container
     product:
       container_name: product
       build:
@@ -41,7 +55,21 @@
         - .env 
       networks:
         - micro-dev-net
-        
+    #Shopping container
+    shopping:
+      container_name: shopping
+      build:
+       context: ./shopping
+       dockerfile: Dockerfile
+      ports:
+        - "8002:8002" 
+      restart: always
+      env_file:
+        - .env 
+      networks:
+        - micro-dev-net
+
+    #Nginx container
     nginx:
       container_name: nginx
       build:
@@ -54,8 +82,6 @@
         - .env
       networks:
         - micro-dev-net
-
-
 
   networks:
     micro-dev-net:

@@ -6,7 +6,6 @@ const path = require('path');
 const dotenv = require('dotenv')
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
-const { createClient } = require('redis');
 const crypto = require('crypto');
 const multer = require('multer');
 const fs = require('fs');

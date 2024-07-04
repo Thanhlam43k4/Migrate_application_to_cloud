@@ -1,6 +1,6 @@
-CREATE DATABASE customer_demo;
+CREATE DATABASE customer_db;
 
-USE customer_demo;
+USE customer_db;
 
 
 CREATE TABLE `customers` (
@@ -11,7 +11,7 @@ CREATE TABLE `customers` (
   `role` enum('user','admin') DEFAULT 'user',
   `verified` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) 
+);
 
 
 CREATE TABLE `products` (
@@ -22,7 +22,7 @@ CREATE TABLE `products` (
   `price` decimal(10,2) DEFAULT NULL,
   `expiration_date` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) 
+);
 CREATE TABLE `cart` (
   `id` int NOT NULL AUTO_INCREMENT,
   `customer_id` int DEFAULT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE `cart` (
   KEY `product_id` (`product_id`),
   CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
   CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
-)
+);
 
 CREATE TABLE `cus_profile` (
   `user_id` int NOT NULL,
