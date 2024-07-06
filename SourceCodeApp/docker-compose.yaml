@@ -25,7 +25,7 @@
       depends_on:
       - "customer"
       - "product"
-      - "mysql_sever"
+      - "mysql_server"
       env_file:
         - .env
       networks:

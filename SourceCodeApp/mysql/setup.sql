@@ -75,12 +75,11 @@ END$$
 DELIMITER ;
 
 
-INSERT INTO products (id, name, type, amount) VALUES
-(30, 'Áo khoác đồng phục ĐHQGHN', 'Uniform', 10000),
-(31, 'Áo thể chất ĐHQGHN', 'Uniform', 10000),
-(32, 'Sách Nhập Môn Lập Trình- UET', 'Books', 5000),
-(33, 'Combo Sách Giải Tích 1 + 2 + 3 (DHQGHN)', 'Books', 2004),
-(34, 'Combo Sách Đại số tuyến tính + Vật lý đại cương (1, 2,3)', 'Books', 6000);
-(36, 'Combo Sách Giải Tích 1 + 2 (DHQGHN)', 'Books', 2004),
+INSERT INTO products (id, name, type, amount,price) VALUES
+(30, 'Uniform Jacket ĐHQGHN', 'Uniform', 10000,105.66),
+(31, 'Physical shirt ĐHQGHN', 'Uniform', 10000,200.465),
+(32, 'Introduction to Programming Books - UET', 'Books', 5000,150.4),
+(33, 'Calculus Book Combo 1 + 2 + 3 (DHQGHN)', 'Books', 2004,123.4),
+(34, 'Combo Book Linear Algebra + General Physics (1,2,3)', 'Books', 6000,353.5);
 
 
