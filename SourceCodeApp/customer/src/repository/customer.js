@@ -42,11 +42,6 @@ const signup = async ({ username, email, password }) => {
 
         const userId = results.insertId;
         console.log(userId);
-
-        await queryAsync(
-            `INSERT INTO cus_profile (user_id, email, username) VALUES (?, ?, ?)`,
-            [userId, email, username]
-        );
         const token_reg = await jwt.sign({ userId, email }, process.env.JWT_SECRET, { expiresIn: '10m' });
         return token_reg;
     } catch (err) {

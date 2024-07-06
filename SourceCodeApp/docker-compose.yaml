@@ -8,9 +8,8 @@
         dockerfile: Dockerfile
       environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=root
-      - MYSQL_DATABASE=customer_db
+      - MYSQL_USER=thanhlam
+      - MYSQL_PASSWORD=lamcoivodoi123
       networks:
       - micro-dev-net
     #Front_end container
