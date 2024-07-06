@@ -45,13 +45,6 @@
         - .env 
       networks:
         - micro-dev-net
-      deploy:
-        replicas: 3
-        update_config:
-          parallelism: 2
-          delay: 10s
-        restart_policy:
-          condition: on-failure
 
     #Product container
     product:
@@ -84,14 +77,6 @@
         - .env 
       networks:
         - micro-dev-net
-      deploy:
-        replicas: 3
-        update_config:
-          parallelism: 2
-          delay: 10s
-        restart_policy:
-          condition: on-failure
-
     #Nginx container
     nginx:
       container_name: nginx
