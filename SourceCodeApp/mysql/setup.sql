@@ -76,8 +76,8 @@ DELIMITER ;
 
 
 INSERT INTO products (id, name, type, amount,price) VALUES
-(30, 'Uniform Jacket ĐHQGHN', 'Uniform', 10000,105.66),
-(31, 'Physical shirt ĐHQGHN', 'Uniform', 10000,200.465),
+(30, 'Uniform Jacket DHQGHN', 'Uniform', 10000,105.66),
+(31, 'Physical shirt DHQGHN', 'Uniform', 10000,200.465),
 (32, 'Introduction to Programming Books - UET', 'Books', 5000,150.4),
 (33, 'Calculus Book Combo 1 + 2 + 3 (DHQGHN)', 'Books', 2004,123.4),
 (34, 'Combo Book Linear Algebra + General Physics (1,2,3)', 'Books', 6000,353.5);

@@ -107,6 +107,7 @@ async function login(req, res) {
     let role = null;
     let verified = null;
     let profile_picture = null; // const {email,password} = req.body;
+    let key = 0;
     queryAsync('SELECT * FROM customers JOIN cus_profile ON cus_profile.user_id = customers.id WHERE customers.email = ?', [email_])
         .then((results) => {
             if (results.length > 0) {
@@ -118,19 +119,18 @@ async function login(req, res) {
                 const customerpassword = results[0].password;
                 return customerRepository.comparePassword(password_, customerpassword);
             } else {
-                res.status(200).json({ msg: 'Email is not registered!!' })
+                res.status(200).json({ msg: 'Email is not registered!!'});
+                key = 1;
             }
         })
         .then((passwordMatch) => {
-            if (passwordMatch) {
+            if (passwordMatch && key != 1) {
                 const token = jwt.sign({ id: id, username: username, email: email_, role: role, profile_picture: profile_picture }, JWT_SECRET, { expiresIn: '20m' })
                 console.log(`Login successfully with token ${token}`);
-
                 ///return customerRepository.getUser(username,email_);
-
                 res.status(200).json({ msg: 'Login Successfully', token });
-            } else {
-                console.log(`password Doesn't not match`)
+            } else if(key != 1) {
+                console.log(`Password doesn't not match`)
                 res.status(200).json({ msg: `Password doesn't not match!!` })
             }
         })
@@ -253,11 +253,11 @@ const sendEmailController = async (req, res) => {
         if (req.body.msg == 'Sign Up Email!!') {
             subject = "Verify Your Email at VNU_UET";
             EMAIL_MESAGE = `Please verify your email by clicking the link below.`;
-            URL_LINK = `http://localhost:3000/verify/${email}/${req.body.code}`;
+            URL_LINK = `http://${process.env.SERVER_URL}:3000/verify/${email}/${req.body.code}`;
         } else if (req.body.msg == 'Reset password Email!!') {
             subject = "Reset Your Password at VNU_UET";
             EMAIL_MESAGE = `Please reset your password by clicking the link below.`;
-            URL_LINK = `http://localhost:3000/resetPass/${email}/${req.body.code}`;
+            URL_LINK = `http://${process.env.SERVER_URL}:3000/resetPass/${email}/${req.body.code}`;
         }
 
         if (email) {
