@@ -19,53 +19,55 @@
     <h2><i class="fa-solid fa-box"></i> Product Management</h2>
 
     <% if (error) { %>
-      <p class="error-message"><%= error %></p>
-    <% } %>
+      <p class="error-message">
+        <%= error %>
+      </p>
+      <% } %>
 
-    <div class="form-container">
-      <!-- Add Product Form -->
-      <div class="form-section add-product-section">
-        <h3>Add Product</h3>
-        <form class="add-product-form" action="/addproduct" method="post">
-          <label for="name">Name:</label>
-          <input type="text" id="name" name="name" required>
+        <div class="form-container">
+          <!-- Add Product Form -->
+          <div class="form-section add-product-section">
+            <h3>Add Product</h3>
+            <form class="add-product-form" action="/addproduct" method="post">
+              <label for="name">Name:</label>
+              <input type="text" id="name" name="name" required>
 
-          <label for="type">Type:</label>
-          <input type="text" id="type" name="type" required>
+              <label for="type">Type:</label>
+              <input type="text" id="type" name="type" required>
 
-          <label for="amount">Amount:</label>
-          <input type="number" id="amount" name="amount" required>
+              <label for="amount">Amount:</label>
+              <input type="number" id="amount" name="amount" required>
 
-          <label for="price">Price:</label>
-          <input type="number" name="price" step="0.01" id="price" required>
+              <label for="price">Price:</label>
+              <input type="number" name="price" step="0.01" id="price" required>
 
-          <button type="submit">Add Product</button>
-        </form>
-      </div>
+              <button type="submit">Add Product</button>
+            </form>
+          </div>
 
-      <!-- Divider -->
-      <div class="divider"></div>
+          <!-- Divider -->
+          <div class="divider"></div>
 
-      <!-- Update Product Form -->
-      <div class="form-section update-product-section">
-        <h3>Update Product</h3>
-        <form class="update-product-form" action="/updateproduct" method="post">
-          <label for="name">Product Name:</label>
-          <input type="text" id="name" name="name" required>
-          <label for="updatePrice">New Price:</label>
-          <input type="number" name="updatePrice" step="0.01" id="updatePrice" required>
+          <!-- Update Product Form -->
+          <div class="form-section update-product-section">
+            <h3>Update Product</h3>
+            <form class="update-product-form" action="/updateproduct" method="post">
+              <label for="name">Product Name:</label>
+              <input type="text" id="name" name="name" required>
+              <label for="updatePrice">New Price:</label>
+              <input type="number" name="updatePrice" step="0.01" id="updatePrice" required>
 
-          <button type="submit">Update Product</button>
-        </form>
-      </div>
-    </div>
+              <button type="submit">Update Product</button>
+            </form>
+          </div>
+        </div>
 
-    <div class="links">
-      <a href="/homePage"><i class="fa-solid fa-house"></i> Homepage</a> |
-      <a href="/signup"><i class="fa-solid fa-user-plus"></i> Register</a> |
-      <a class="mycart" href="/myCart"><i class="fa-solid fa-cart-arrow-down"></i> My Cart</a> |
-      <a href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
-    </div>
+        <div class="links">
+          <a href="/homePage"><i class="fa-solid fa-house"></i> Homepage</a> |
+          <a href="/signup"><i class="fa-solid fa-user-plus"></i> Register</a> |
+          <a class="mycart" href="/myCart"><i class="fa-solid fa-cart-arrow-down"></i> My Cart</a> |
+          <a href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </div>
   </div>
 </body>
 

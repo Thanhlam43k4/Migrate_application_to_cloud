@@ -24,7 +24,7 @@
                 <nav>
                     <ul>
                         <li><a href="/homePage">Trang Chủ</a></li>
-                        <li><a href="/homePage">Giới hiệu</a></li>
+                        <li><a href="/homePage">Giới thiệu</a></li>
                         <li><a href="/homePage">Sinh viên</a></li>
                         <li><a href="/homePage">Giảng viên</a></li>
                         <li><a href="/homePage">Tuyển sinh</a></li>
@@ -45,12 +45,12 @@
                                                 <img src="https://via.placeholder.com/200" alt="Avatar User">
                                                 <% } %>
                                     </a>
-                                    <h4 class="welcome-message"><span class="username">
-                                            <%= user.username.toUpperCase()%>
-                                        </span></h4>
                                 </form>
 
                             </div>
+                            <h4 class="welcome-message"><span class="username">
+                                    <%= user.username.toUpperCase()%>
+                                </span></h4>
                             <a class="mycart" href="/myCart"><i class="fa-solid fa-cart-arrow-down"></i></a>
                             <a class="logout" href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a>
                         </div>

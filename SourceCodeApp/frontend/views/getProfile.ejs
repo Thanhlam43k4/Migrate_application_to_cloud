@@ -7,116 +7,185 @@
     <title>VNU University of Engineering and Technology - VNU-UET</title>
     <link rel="icon" href="/images/logo.svg" type="image/svg">
     <link rel="stylesheet" href="/stylesheets/profile.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
     <script src="https://kit.fontawesome.com/c991f90e06.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
     <div class="main">
         <header>
-            <div class="logo">
-                <a href="/homePage"> <img src="/images/logo.svg" alt="University Icon" class="university-icon">
-                </a>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="/homePage">Trang Chủ</a></li>
-                    <li><a href="/homePage">Giới hiệu</a></li>
-                    <li><a href="/homePage">Sinh viên</a></li>
-                    <li><a href="/homePage">Giảng viên</a></li>
-                    <li><a href="/homePage">Tuyển sinh</a></li>
-                    <li><a href="/homePage">Tuyển dụng</a></li>
-                    <li><a href="/product-table">Cửa Hàng</a></li>
-                </ul>
-            </nav>
-            <% if(user) { %>
-                <div class="login">
-                    <div class="top-row">
-                        <div class="account-image">
-                            <form action="/getProfile" method="GET">
-                                <a href="/getProfile">
-                                    <% if(user.profile_picture) { %>
-                                        <img src="<%= user.profile_picture %>" alt="User Image">
-                                    <% } else { %>
-                                        <img src="https://via.placeholder.com/200" alt="Avatar User">
-                                    <% } %>
-                                </a>
-                            </form>
+            <div class="head">
+                <div class="logo">
+                    <a href="/homePage"> <img src="/images/logo.svg" alt="University Icon" class="university-icon">
+                    </a>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="/homePage">Trang Chủ</a></li>
+                        <li><a href="/homePage">Giới thiệu</a></li>
+                        <li><a href="/homePage">Sinh viên</a></li>
+                        <li><a href="/homePage">Giảng viên</a></li>
+                        <li><a href="/homePage">Tuyển sinh</a></li>
+                        <li><a href="/homePage">Tuyển dụng</a></li>
+                        <li><a href="/product-table">Cửa Hàng</a></li>
+                    </ul>
+                </nav>
+                <% if(user) { %>
+                    <div class="login">
+                        <div class="top-row">
+                            <div class="account-image">
+                                <form action="/getProfile" method="GET">
+                                    <a href="/getProfile">
+                                        <% if(user.profile_picture) { %>
+                                            <img src="<%= user.profile_picture %>" alt="User Image">
+                                            <% } else { %>
+                                                <img src="https://via.placeholder.com/200" alt="Avatar User">
+                                                <% } %>
+                                    </a>
+                                </form>
+                            </div>
+                            <h4 class="welcome-message"><span class="username">
+                                    <%= user.username.toUpperCase() %>
+                                </span></h4>
+                            <a class="mycart" href="/myCart"><i class="fa-solid fa-cart-arrow-down"></i></a>
+                            <a class="logout" href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a>
                         </div>
-                        <h4 class="welcome-message"><span class="username">
-                                <%= user.username.toUpperCase() %>
-                            </span></h4>
-                        <a class="mycart" href="/myCart"><i class="fa-solid fa-cart-arrow-down"></i></a>
-                        <a class="logout" href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a>
                     </div>
-                </div>
-            <% } else { %>
-                <div class="login">
-                    <a href="/login">Đăng nhập</a>
-                    <a href="/signup">Đăng ký</a>
-                </div>
-            <% } %>
+                    <% } else { %>
+                        <div class="login">
+                            <a href="/login">Đăng nhập</a>
+                            <a href="/signup">Đăng ký</a>
+                        </div>
+                        <% } %>
+            </div>
         </header>
-        <main class="profile-container">
+        <main>
             <div class="profile-left">
-                <form action="/update-profile" method="POST" enctype="multipart/form-data">
+                <div class="profile-user">
                     <div class="profile-header">
                         <label for="profilePicture" class="profile-picture-label">
                             <% if(user.profile_picture) { %>
                                 <img src="<%= user.profile_picture %>" alt="Profile Picture" class="profile-picture">
-                            <% } else { %>
-                                <img src="https://via.placeholder.com/200" alt="Profile Picture" class="profile-picture">
-                            <% } %>
-                            <input type="file" id="profilePicture" name="profilePicture" accept="image/*" hidden>
+                                <% } else { %>
+                                    <img src="https://upload.wikimedia.org/wikipedia/vi/thumb/b/bf/Logo_HUET.svg/1200px-Logo_HUET.svg.png"
+                                        alt="Profile Picture" class="profile-picture">
+                                    <% } %>
+                                        <input type="file" id="profilePicture" name="profilePicture" accept="image/*"
+                                            hidden>
                         </label>
-                        <h1 class="user-name">
-                            <%= user.name %>
-                        </h1>
                     </div>
-                    <div class="profile-details">
-                        <% if(user) { %>
-                            <div class="profile-info">
-                                <label for="email">Email:</label>
-                                <input type="email" id="email" name="email" value="<%= user.email %>" readonly>
-                            </div>
-                            <div class="profile-info">
-                                <label for="username">Username:</label>
-                                <input type="text" id="username" name="username" value="<%= user.username %>" readonly>
-                            </div>
-                            <div class="profile-info">
-                                <label for="address">Address:</label>
-                                <input type="text" id="address" name="address" value="<%= user.address %>" required>
-                            </div>
-                            <div class="profile-info">
-                                <label for="gender">Gender:</label>
-                                <select id="gender" name="gender" required>
-                                    <option value="male" <%=user.gender==='male' ? 'selected' : '' %>>Male</option>
-                                    <option value="female" <%=user.gender==='female' ? 'selected' : '' %>>Female</option>
-                                </select>
-                            </div>
-                            <div class="profile-info">
-                                <label for="phone">Phone:</label>
-                                <input type="tel" id="phone" name="phone" value="<%= user.phone %>" required>
-                            </div>
-                            <div class="profile-info">
-                                <label for="city">City:</label>
-                                <input type="text" id="city" name="city" value="<%= user.city %>" required>
-                            </div>
-                            <div class="profile-info">
-                                <label for="country">Country:</label>
-                                <input type="text" id="country" name="country" value="<%= user.country %>" required>
-                            </div>
-                            <button type="submit" class="save-button">Save</button>
-                        <% } %>
+                    <ul>
+                        <li>
+                            <i class="fa-regular fa-user"></i>
+                            <span>
+                                <%= user.username%>
+                            </span>
+                        </li>
+                        <li class="edit">
+                            <button id="editProfileBtn" data-content="#edit" onclick="openModal()">Edit Profile</button>
+                        </li>
+                        <li>
+                            <i class="fa-regular fa-envelope"></i>
+                            <span>
+                                <%= user.email %>
+                            </span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>
+                                <%= user.address %>
+                            </span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-venus-mars"></i>
+                            <span>
+                                <%= user.gender %>
+                            </span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-phone"></i>
+                            <span>
+                                <%= user.phone %>
+                            </span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-city"></i>
+                            <span>
+                                <%= user.city %>
+                            </span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-earth-americas"></i>
+                            <span>
+                                <%= user.country %>
+                            </span>
+                        </li>
+
+                    </ul>
+
+                </div>
+                <div id="myModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeModal()">&times;</span>
+                        <div id="edit" class="edit-profile">
+                            <form action="/update-profile" method="POST" enctype="multipart/form-data">
+                                <div class="profile-header2">
+                                    <label for="profilePicture" class="profile-picture-label">
+                                        <% if(user.profile_picture) { %>
+                                            <img src="<%= user.profile_picture %>" alt="Profile Picture"
+                                                class="profile-picture">
+                                            <% } else { %>
+                                                <img src="https://via.placeholder.com/200" alt="Profile Picture"
+                                                    class="profile-picture">
+                                                <% } %>
+                                                    <input type="file" id="profilePicture" name="profilePicture"
+                                                        accept="image/*" hidden>
+                                    </label>
+                                </div>
+                                <div class="profile-details">
+                                    <% if(user) { %>
+                                        <div class="profile-info">
+                                            <label for="address">Address:</label>
+                                            <input type="text" id="address" name="address" value="<%= user.address %>"
+                                                required>
+                                        </div>
+                                        <div class="profile-info">
+                                            <label for="gender">Gender:</label>
+                                            <select id="gender" name="gender" required>
+                                                <option value="male" <%=user.gender==='male' ? 'selected' : '' %>>Male
+                                                </option>
+                                                <option value="female" <%=user.gender==='female' ? 'selected' : '' %>
+                                                    >Female</option>
+                                            </select>
+                                        </div>
+                                        <div class="profile-info">
+                                            <label for="phone">Phone:</label>
+                                            <input type="tel" id="phone" name="phone" value="<%= user.phone %>"
+                                                required>
+                                        </div>
+                                        <div class="profile-info">
+                                            <label for="city">City:</label>
+                                            <input type="text" id="city" name="city" value="<%= user.city %>" required>
+                                        </div>
+                                        <div class="profile-info">
+                                            <label for="country">Country:</label>
+                                            <input type="text" id="country" name="country" value="<%= user.country %>"
+                                                required>
+                                        </div>
+                                        <button type="submit" class="save-button">Save</button>
+                                        <% } %>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </form>
-            </div>
-            <div class="profile-right">
-                <img src="/images/uet-sideImage.png" alt="Sample Image 1" class="side-image">
-                <img src="/images/slide2-uetImage.jpg" alt="Sample Image 2" class="side-image">
-                <img src="/images/slide3-uetImage.jpg" alt="Sample Image 3" class="side-image">
+                </div>
+                <div id="profile-content" class="profile-right">
+                    <img src="/images/baner1.svg" alt="Sample Image 1" class="side-image">
+                </div>
             </div>
         </main>
         <footer>
+            <!-- thong tin lien he -->
             <div class="footer">
                 <div class="footer1">
                     <div class="thongtin1">
@@ -127,17 +196,24 @@
                     </div>
                     <div class="thongtin2">
                         <h2>Đảm bảo chất lượng</h2>
-                        <a href=""><i class="fa-solid fa-paperclip"></i><span>Trung tâm đảm bảo chất lượng</span></a><br>
+                        <a href=""><i class="fa-solid fa-paperclip"></i><span>Trung tâm đảm bảo chất
+                                lượng</span></a><br>
                         <a href=""><i class="fa-solid fa-paperclip"></i><span>Ba công khai</span></a><br>
-                        <a href=""><i class="fa-solid fa-paperclip"></i><span>Kiểm định chất lượng</span></a><br>
+                        <a href=""><i class="fa-solid fa-paperclip"></i><span>Kiểm định chất
+                                lượng</span></a><br>
                     </div>
                     <div class="thongtin3">
                         <h2>TRUNG TÂM - LAB</h2>
-                        <a href=""><i class="fa-solid fa-paperclip"></i><span>TT Nghiên cứu Điện tử Viễn thông</span></a><br>
-                        <a href=""><i class="fa-solid fa-paperclip"></i><span>TT Công nghệ tích hợp liên ngành GSHT</span></a><br>
+                        <a href=""><i class="fa-solid fa-paperclip"></i><span>TT Nghiên cứu Điện tử Viễn
+                                thông</span></a><br>
+                        <a href=""><i class="fa-solid fa-paperclip"></i><span>TT Công nghệ tích hợp liên ngành
+                                GSHT</span></a><br>
                         <a href=""><i class="fa-solid fa-paperclip"></i><span>TT Máy tính</span></a><br>
-                        <a href=""><i class="fa-solid fa-paperclip"></i><span>PTN Trọng điểm Công nghệ Micro và Nano</span></a><br>
-                        <a href=""><i class="fa-solid fa-paperclip"></i><span>PTN Trọng điểm Hệ thống tích hợp thông minh</span></a><br>
+                        <a href=""><i class="fa-solid fa-paperclip"></i><span>PTN Trọng điểm Công nghệ Micro và
+                                Nano</span></a><br>
+                        <a href=""><i class="fa-solid fa-paperclip"></i><span>PTN Trọng điểm Hệ thống tích hợp
+                                thông
+                                minh</span></a><br>
                     </div>
                     <div class="thongtin4">
                         <h2>Đoàn thể</h2>
@@ -148,10 +224,15 @@
                 </div>
                 <div class="footer2">
                     <div class="thongtin5">
-                        <a href=""><i class="fa-solid fa-code"></i><span>2024 Trường Đại học Công nghệ, Đại học Quốc Gia Hà Nội</span></a><br>
-                        <a href=""><i class="fa-solid fa-map-location-dot"></i><span>Địa chỉ: Số 144 đường Xuân Thủy, Cầu Giấy, Hà Nội</span></a><br>
+                        <a href=""><i class="fa-solid fa-code"></i><span>2024 Trường Đại học Công nghệ, Đại học
+                                Quốc Gia
+                                Hà Nội</span></a><br>
+                        <a href=""><i class="fa-solid fa-map-location-dot"></i><span>Địa chỉ: Số 144 đường Xuân
+                                Thủy,
+                                Cầu Giấy, Hà Nội</span></a><br>
                         <a href=""><i class="fa-solid fa-phone"></i><span>Điện thoại: 0123456789</span></a><br>
-                        <a href=""><i class="fa-solid fa-envelope"></i><span>Email: uet@vnu.edu.vn</span></a><br>
+                        <a href=""><i class="fa-solid fa-envelope"></i><span>Email:
+                                uet@vnu.edu.vn</span></a><br>
                     </div>
                     <div class="thongtin6">
                         <a href="https://www.facebook.com/vuquocviet.0904"><i class="fa-brands fa-facebook"></i></a><br>
