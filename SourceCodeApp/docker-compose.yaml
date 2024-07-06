@@ -25,11 +25,13 @@
       depends_on:
       - "customer"
       - "product"
+      - "mysql_sever"
       env_file:
         - .env
       networks:
         - micro-dev-net
     #Customer container 
+
     customer:
       container_name: customer
       build:
@@ -38,6 +40,8 @@
       ports:
         - "8003:8003" 
       restart: always
+      depends_on:
+      - mysql_server
       env_file:
         - .env 
       networks:
@@ -51,10 +55,13 @@
       ports:
         - "8001:8001" 
       restart: always
+      depends_on:
+      - mysql_server
       env_file:
         - .env 
       networks:
         - micro-dev-net
+      
     #Shopping container
     shopping:
       container_name: shopping
@@ -64,6 +71,8 @@
       ports:
         - "8002:8002" 
       restart: always
+      depends_on:
+      - mysql_server
       env_file:
         - .env 
       networks:

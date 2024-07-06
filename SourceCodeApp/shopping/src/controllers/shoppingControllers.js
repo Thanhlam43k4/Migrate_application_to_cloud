@@ -98,7 +98,7 @@ async function addtoCartDemo(req, res) {
                 console.error('Error executing checkQuery query:', err);
                 throw new Error('Internal Server Error');
             }
-            const insertQuery = 'INSERT INTO CART (customer_id, product_id) VALUES (?,?)'
+            const insertQuery = 'INSERT INTO cart (customer_id, product_id) VALUES (?,?)'
             con.query(insertQuery, [customerId, productId],
                 function (err, result) {
                     if (err) throw err;
