@@ -48,6 +48,7 @@ resource "aws_instance" "ec2_public1" {
         Name = "Ec2-instance"
     }
 }
+/*
 resource "aws_instance" "ec2_public2" {
     ami = var.ami_id
     instance_type = var.instance_type
@@ -61,3 +62,4 @@ resource "aws_instance" "ec2_public2" {
         Name = "Ec2-instance"
     }
 }
+*/

@@ -60,6 +60,7 @@ CREATE TABLE `payments` (
 
 
 /*Trigger whenever insert a new customers will automatically insert a new profile with this user_id */
+use customer_db;
 DELIMITER $$
 
 CREATE TRIGGER after_customer_insert
@@ -67,7 +68,7 @@ AFTER INSERT ON customers
 
 FOR EACH ROW
 BEGIN
-  INSERT INTO cus_profile (user_id, phone, gender, city, country, profile_picture) 
+  INSERT INTO cus_profile (user_id, email, username, phone, gender, city, country, profile_picture) 
   VALUES (NEW.id, NEW.email, NEW.username, NULL, NULL, NULL, NULL, NULL);
 END$$
 
@@ -80,6 +81,6 @@ INSERT INTO products (id, name, type, amount) VALUES
 (32, 'Sách Nhập Môn Lập Trình- UET', 'Books', 5000),
 (33, 'Combo Sách Giải Tích 1 + 2 + 3 (DHQGHN)', 'Books', 2004),
 (34, 'Combo Sách Đại số tuyến tính + Vật lý đại cương (1, 2,3)', 'Books', 6000);
-
+(36, 'Combo Sách Giải Tích 1 + 2 (DHQGHN)', 'Books', 2004),
 
 

@@ -25,6 +25,8 @@ output "public_ip1" {
   value = module.ec2.public_ip1
 }
 
+/*
 output "public_ip2"{
   value = module.ec2.public_ip2
 }
+*/

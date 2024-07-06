@@ -1,18 +1,13 @@
-FROM mysql:latest as builder
+FROM mysql:8.0.31
 
-
-RUN ["sed", "-i", "s/exec \"$@\"/echo \"not running $@\"/", "/usr/local/bin/docker-entrypoint.sh"]
-
-# needed for intialization
-ENV MYSQL_ROOT_PASSWORD=root
 
 
 COPY setup.sql /docker-entrypoint-initdb.d/
 
+# needed for intialization
+ENV MYSQL_ROOT_PASSWORD=root
+ENV MYSQL_DATABASE=customer_db;
+ENV MYSQL_USER=root
 
 
-RUN ["/usr/local/bin/docker-entrypoint.sh", "mysqld", "--datadir", "/initialized-db"]
-
-FROM mysql:latest
-
-COPY --from=builder /initialized-db /var/lib/mysql
+EXPOSE 3306

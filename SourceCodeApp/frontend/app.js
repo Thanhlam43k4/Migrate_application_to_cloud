@@ -459,7 +459,7 @@ app.post('/remove-from-cart/:id', authenticateJWT_log, async (req, res) => {
   try {
     let cartId = req.params.id;
     let customerId = req.user.id;
-    const response = await axios.post(`http://localhost:8002/removetoCartDemo`, { customerId, cartId });
+    const response = await axios.post(`http://${process.env.SHOPPING_SERVICE_URL}:${process.env.SHOPPING_PORT}/removetoCartDemo`, { customerId, cartId });
 
     console.log('Remove product from Cart Sucessfully!');
     res.redirect('/myCart?successMessage= Remove product from Cart Successfully!');
