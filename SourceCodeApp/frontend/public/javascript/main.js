@@ -1,7 +1,7 @@
 function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
+// kiểm tra mật khẩu
 document.getElementById('password2').addEventListener('input', function () {
     var password = document.getElementById('password').value;
     var confirmPassword = document.getElementById('password2').value;
@@ -16,3 +16,20 @@ document.getElementById('password2').addEventListener('input', function () {
       submitBtn.disabled = false;
     }
   });
+
+
+  function openModal() {
+    var modal = document.getElementById('myModal');
+    modal.style.display = 'block';
+}
+
+var closeButton = document.getElementsByClassName('close')[0];
+
+closeButton.onclick = function () {
+    var modal = document.getElementById('myModal');
+    modal.style.display = 'none';
+}
+function closeModal() {
+  var modal = document.getElementById('myModal');
+  modal.style.display = 'none';
+}

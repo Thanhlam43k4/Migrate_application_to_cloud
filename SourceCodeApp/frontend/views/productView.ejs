@@ -5,117 +5,132 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Product View UET Website</title>
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <!-- Font Awesome -->
   <link rel="icon" href="/images/logo.svg" type="image/svg">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="stylesheets/productView.css">
+  <link rel="stylesheet" href="stylesheets/style.css">
   <script src="https://kit.fontawesome.com/c991f90e06.js" crossorigin="anonymous"></script>
 
 </head>
 
 <body>
   <header>
-    <!-- logo -->
-    <div class="logo">
-      <a href="/homePage"> <img src="/images/logo.svg" alt="University Icon" class="university-icon">
-      </a>
-    </div>
-    <!-- menu ve truong -->
-    <nav>
-      <ul>
-        <li><a href="/homePage">Trang Chủ</a></li>
-        <li><a href="/homePage">Giới hiệu</a></li>
-        <li><a href="/homePage">Sinh viên</a></li>
-        <li><a href="/homePage">Giảng viên</a></li>
-        <li><a href="/homePage">Tuyển sinh</a></li>
-        <li><a href="/homePage">Tuyển dụng</a></li>
-        <li><a href="/product-table"><i class="fa-solid fa-shop"></i></a></li>
-      </ul>
-    </nav>
-    <% if(user) { %>
-      <div class="login">
-        <div class="top-row">
-          <div class="account-image">
-            <form action="/getProfile" method="GET">
-              <a href="/getProfile">
-                <% if(user.profile_picture) { %>
-                  <img src="<%= user.profile_picture %>" alt="User Image">
-                  <% } else { %>
-                    <img src="https://via.placeholder.com/200" alt="Avatar User">
-                    <% } %>
-              </a>
-            </form>
-
-          </div>
-          <h4 class="welcome-message"><span class="username">
-              <%= user.username.toUpperCase()%>
-            </span></h4>
-
-          <a class="mycart" href="/myCart"><i class="fa-solid fa-cart-arrow-down"></i></a>
-          <a class="addProduct"href="/addproduct"><i class="fa-solid fa-plus"></i></a>
-          <a class="logout" href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a><br>
-          <div>
-            <% if (error) { %>
-              <p class="error-message" style="color: red;"><%= error %></p>
-            <% } %>
-          </div>
-        
-        </div>
+    <div class="head">
+      <!-- logo -->
+      <div class="logo">
+        <a href="/homePage"> <img src="/images/logo.svg" alt="University Icon" class="university-icon">
+        </a>
       </div>
-      <% } else { %>
+      <!-- menu ve truong -->
+      <nav>
+        <ul>
+          <li><a href="/homePage">Trang Chủ</a></li>
+          <li><a href="/homePage">Giới thiệu</a></li>
+          <li><a href="/homePage">Sinh viên</a></li>
+          <li><a href="/homePage">Giảng viên</a></li>
+          <li><a href="/homePage">Tuyển sinh</a></li>
+          <li><a href="/homePage">Tuyển dụng</a></li>
+          <li><a href="/product-table">Cửa hàng</i></a></li>
+        </ul>
+      </nav>
+      <% if(user) { %>
         <div class="login">
-          <a href="/login">Đăng nhập</a>
-          <a href="/signup">Đăng ký</a>
-          </p>
-        </div>
-        <% } %>
+          <div class="top-row">
+            <div class="account-image">
+              <form action="/getProfile" method="GET">
+                <a href="/getProfile">
+                  <% if(user.profile_picture) { %>
+                    <img src="<%= user.profile_picture %>" alt="User Image">
+
+                    <% } else { %>
+                      <img src="https://via.placeholder.com/200" alt="Avatar User">
+                      <% } %>
+                </a>
+              </form>
+
+            </div>
+            <h4 class="welcome-message"><span class="username">
+                <%= user.username.toUpperCase()%>
+              </span></h4>
+            <a class="mycart" href="/myCart"><i class="fa-solid fa-cart-arrow-down"></i></a>
+            <a class="logout" href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a>
           </div>
-
+        </div>
+        <% } else { %>
+          <div class="login">
+            <a href="/login">Đăng nhập</a>
+            <a href="/signup">Đăng ký</a>
+            <% if (notification) { %>
+              <div class="notification">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-alert-circle">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="12"></line>
+                  <line x1="12" y1="16" x2="12" y2="16"></line>
+                </svg>
+                <p>
+                  <%= notification %>
+                </p>
+              </div>
+              <% } %>
+          </div>
+          <% } %>
+    </div>
   </header>
+  <main>
+    <div class="banner">
+      <img src="/images/baner_shop.svg" alt="Banner Shop" class="banner-img">
+    </div>
+    <div class="container">
+      <div class="filter-container">
+        <h2>Bộ lọc tìm kiếm</h2>
+        <div class="filter-section">
+          <h3>Theo Danh Mục</h3>
+          <label><input type="radio" name="price" value="all" checked> All</label>
+          <label><input type="radio" name="price" value="books">Books</label>
+          <label><input type="radio" name="price" value="yniform">Uniform</label>
 
-  <div class="banner">
-    <img src="/images/slide2-uetImage.jpg" alt="Banner Image" class="banner-img">
-  </div>
+          <div class="filter-section">
+            <h3>Theo Khoảng Giá</h3>
+            <label><input type="radio" name="price" value="all" checked> All</label>
+            <label><input type="radio" name="price" value="0-50"> $0 - $50</label>
+            <label><input type="radio" name="price" value="51-100"> $51 - $100</label>
+            <label><input type="radio" name="price" value="101-200"> $101 - $200</label>
+          </div>
+        </div>
 
-  <div class="container mt-5">
-    <div class="product-list">
-      <% if(products && products.length> 0) { %>
-        <% products.forEach(product=> { %>
-          <div class="product-item">
-            <img src="https://placehold.co/600x400" alt="<%= product.name %>" class="product-img">
-            <div class="product-details">
-              <p><strong>Name:</strong>
-                <%= product.name %>
-              </p>
-              <p><strong>Type:</strong>
-                <%= product.type %>
-              </p>
-              <p><strong>Remaining Amount:</strong>
-                <%= product.amount %>
-              </p> 
-              <p><strong>Price:</strong>
-                <%= product.price %>$
-              </p>
-              <div class="actions">
-                <!-- Add to Cart form -->
-                <form action="/add-to-cart/<%= product.id %>" method="POST" style="display: inline;">
-                  <button type="submit" class="btn btn-success">
-                    <i class="fas fa-cart-plus"></i> Add to Cart
-                  </button>
-                </form>
-                <!-- Remove button (optional) -->
+      </div>
+      <div class="product-list">
+        <% if(products && products.length> 0) { %>
+          <% products.forEach(product=> { %>
+            <div class="card">
+              <div class="imgBox">
+                <img src="/images/logo.svg" alt="<%= product.name %>" class="product-img">
+              </div>
+              <div class="contentBox">
+                <h3>
+                  <%= product.name %>
+                </h3>
+                <h2 class="price">
+                  <%= product.price %>$
+                </h2>
+                <div class="actions">
+                  <form action="/add-to-cart/<%= product.id %>" method="POST" style="display: inline;">
+                    <button type="submit" class="buy">Buy Now</button>
+                  </form>
+                </div>
               </div>
             </div>
-          </div>
-          <% }) %>
-            <% } else { %>
-              <p class="no-products-message">No products available.</p>
-              <% } %>
+            <% }) %>
+              <% } else { %>
+                <p class="no-products-message">No products available.</p>
+                <% } %>
+      </div>
     </div>
-  </div>
+  </main>
   <footer>
     <!-- thong tin lien he -->
     <div class="footer">
@@ -178,8 +193,8 @@
     </div>
   </footer>
 
-
   <!-- Optional JavaScript -->
+  <script src="/javascript/main.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
