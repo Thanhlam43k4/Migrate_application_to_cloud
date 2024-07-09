@@ -7,12 +7,13 @@ const AddProduct = async ({
     name,
     type,
     amount,
-    price
+    price,
+    image
 }) => {
     try {
-        con.query(`INSERT INTO products(name,type,amount,price)
-                    VALUES (?, ?, ?, ?)`,
-            [name, type, amount,price],
+        con.query(`INSERT INTO products(name,type,amount,price,image)
+                    VALUES (?, ?, ?, ?,?)`,
+            [name, type, amount,price,image],
             function (err, results) {
                 if (err) {
                     console.log('Error not add products!!');

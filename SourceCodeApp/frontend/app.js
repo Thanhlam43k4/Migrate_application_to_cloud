@@ -122,7 +122,6 @@ app.get('/product-table', authenticateJWT_access_key, async (req, res) => {
   const errorMessage = req.query.error;
   try {
     const response = await axios.get(`http://${process.env.PRODUCT_SERVICE_URL}:${process.env.PRODUCT_PORT}/api/v1/data`)
-    console.log(response.data);
     res.render('productView', { user: req.user, products: response.data, error: errorMessage });
 
   } catch (err) {
@@ -281,9 +280,33 @@ app.get('/getProfile', authenticateJWT_log, async (req, res) => {
 
 
 
+app.post('/addproduct', authenticateJWT_access_key, checkAdminRole, upload.single('profilePicture'), async (req, res) => {
+  const { name, type, amount, price, image} = req.body;
+  console.log(req.filename)
+  try {
+    // Make a POST request to your backend API
+    const price = parseFloat(req.body.price);
+    const response = await axios.post(`http://${process.env.PRODUCT_SERVICE_URL}:${process.env.PRODUCT_PORT}/add-products`, {//dockerfile http://product:8001/add-products
+      name: name,
+      type: type,
+      amount: amount,
+      price: price,
+      image: image ? `/uploads/${image}` : null,
+    });
 
-
-
+    if (response.data.msg === 'Product has already existed!!!') {
+      // Redirect to the same page with error message
+      res.redirect('/addproduct?error=Product has already existed');
+    } else if (response.data.msg == "Add product successfully!!!") {
+      // Redirect to the same page without error message
+      res.redirect('/product-table');
+    }
+  } catch (error) {
+    // Handle errors
+    console.error('Error adding product:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 
 
@@ -333,30 +356,9 @@ app.post('/update-profile', authenticateJWT_log, upload.single('profilePicture')
   }
 });
 
-app.post('/addproduct', authenticateJWT_access_key, checkAdminRole, async (req, res) => {
-  const { name, type, amount, price } = req.body;
-  try {
-    // Make a POST request to your backend API
-    const price = parseFloat(req.body.price);
-    const response = await axios.post(`http://${process.env.PRODUCT_SERVICE_URL}:${process.env.PRODUCT_PORT}/add-products`, {//dockerfile http://product:8001/add-products
-      name: name,
-      type: type,
-      amount: amount,
-      price: price
-    });
-    if (response.data.msg === 'Product has already existed!!!') {
-      // Redirect to the same page with error message
-      res.redirect('/addproduct?error=Product has already existed');
-    } else if (response.data.msg == "Add product successfully!!!") {
-      // Redirect to the same page without error message
-      res.redirect('/product-table');
-    }
-  } catch (error) {
-    // Handle errors
-    console.error('Error adding product:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
+
+
+
 app.get('/', (req, res) => {
   res.redirect('/homePage');
 })

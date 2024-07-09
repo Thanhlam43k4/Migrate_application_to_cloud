@@ -40,6 +40,13 @@
 
               <label for="price">Price:</label>
               <input type="number" name="price" step="0.01" id="price" required>
+              <label for="image" class="productImage">
+
+                <img src="https://via.placeholder.com/200" alt="Profile Picture" class="profile-picture">
+
+                <input type="file" id="image" name="image" accept="image/*" hidden>
+              </label>
+
 
               <button type="submit">Add Product</button>
             </form>
@@ -51,7 +58,7 @@
           <!-- Update Product Form -->
           <div class="form-section update-product-section">
             <h3>Update Product</h3>
-            <form class="update-product-form" action="/updateproduct" method="post">
+            <form class="update-product-form" action="/updateProduct" method="post">
               <label for="name">Product Name:</label>
               <input type="text" id="name" name="name" required>
               <label for="updatePrice">New Price:</label>

@@ -119,7 +119,7 @@ async function login(req, res) {
                 const customerpassword = results[0].password;
                 return customerRepository.comparePassword(password_, customerpassword);
             } else {
-                res.status(200).json({ msg: 'Email is not registered!!'});
+                res.status(200).json({ msg: 'Email is not registered!!' });
                 key = 1;
             }
         })
@@ -129,7 +129,7 @@ async function login(req, res) {
                 console.log(`Login successfully with token ${token}`);
                 ///return customerRepository.getUser(username,email_);
                 res.status(200).json({ msg: 'Login Successfully', token });
-            } else if(key != 1) {
+            } else if (key != 1) {
                 console.log(`Password doesn't not match`)
                 res.status(200).json({ msg: `Password doesn't not match!!` })
             }
@@ -365,12 +365,18 @@ async function updateProfile(req, res) {
     const country = req.body.country;
     const address = req.body.address;
     const profile_picture = req.body.profile_picture;
-
+    let attributeUpdate = [phone, gender, city, country, address, profile_picture, user_id];
+    let query = `UPDATE cus_profile 
+    SET phone = ?, gender = ?, city = ?, country = ?, address = ?, profile_picture = ? 
+    WHERE user_id = ?`
+    if (profile_picture == null) {
+        query = `UPDATE cus_profile 
+            SET phone = ?, gender = ?, city = ?, country = ?, address = ? 
+            WHERE user_id = ?`;
+        attributeUpdate = [phone, gender, city, country, address,user_id];    
+    }
     try {
-        con.query(`UPDATE cus_profile 
-        SET phone = ?, gender = ?, city = ?, country = ?, address = ?, profile_picture = ? 
-        WHERE user_id = ?`,
-            [phone, gender, city, country, address, profile_picture, user_id],
+        con.query(query,attributeUpdate,
             function (err, results) {
                 if (err) {
                     console.log(err);

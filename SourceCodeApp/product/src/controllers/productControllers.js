@@ -11,7 +11,7 @@ import productRepository from '../repository/product.js'
 
 async function AddProduct(req,res){
 
-    const {name,type,amount,price} = req.body;
+    const {name,type,amount,price,image} = req.body;
     con.query(
         'SELECT * FROM products WHERE name = ?',
         [name],
@@ -24,7 +24,7 @@ async function AddProduct(req,res){
             if (results.length > 0) {
                 res.json({ msg: 'Product has already existed!!!' })
             }else{
-                productRepository.AddProduct({name,type,amount,price})
+                productRepository.AddProduct({name,type,amount,price,image})
                 res.json({msg: "Add product successfully!!!"})
             }
         })    
@@ -52,7 +52,7 @@ async function getAllProduct(req,res){
         con.query('SELECT * FROM products',
             function(err,results){
                 res.status(200).json(results);
-                console.log('Get All Products Successfully');
+                console.log('Get All Products Successfully: ',results);
             })
     }catch(err){
         console.log('Error druing get all Products')

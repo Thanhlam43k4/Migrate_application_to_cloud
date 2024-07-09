@@ -55,6 +55,7 @@
                 <%= user.username.toUpperCase()%>
               </span></h4>
             <a class="mycart" href="/myCart"><i class="fa-solid fa-cart-arrow-down"></i></a>
+            <a class="addProduct"href="/addproduct"><i class="fa-solid fa-plus"></i></a>
             <a class="logout" href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a>
           </div>
         </div>
@@ -108,7 +109,12 @@
           <% products.forEach(product=> { %>
             <div class="card">
               <div class="imgBox">
-                <img src="/images/logo.svg" alt="<%= product.name %>" class="product-img">
+                <% if(product.image) {%>
+                <img src= <%= product.image %> alt="<%= product.name %>" class="product-img">
+                <% }else { %>
+                <img src="/productImage/ao1.png" alt="productImage">
+
+                <% } %>
               </div>
               <div class="contentBox">
                 <h3>
