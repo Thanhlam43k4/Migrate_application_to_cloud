@@ -34,9 +34,9 @@
 
 **CLOUD Environment and Architecture**
 
-- Architecture Pattern 1: Multier Application
+- Architecture Pattern 1: Multier Application.
 
 <img align = "center" alt = "coding" width = "600" src = "https://blogger.googleusercontent.com/img/a/AVvXsEhiSoCQEQuyePWlQc1lr_Po_9QL-nOuAPZ4thffVDLEG3CQ6mqY9TlVHQbFP9-yZf99S6Dp2Oeu7fY4K1aTyA0eLPCKmdHdd_WsOohE0Q-OfBL7lxvloCgRwykFcLPNLqXKnwn6PoYZXuJfZABaXHP8nXK6Z6SwujX_P950MedJ81ljGbm-3BYXFN-HWuHK">
 
-
+- Architecture Pattern 2: Auto Scailing Group Architecture.
 
