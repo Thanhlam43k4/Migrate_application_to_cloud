@@ -40,3 +40,5 @@
 
 - Architecture Pattern 2: Auto Scailing Group Architecture.
 
+<img align = "center" alt = "coding" width = "600" src = "https://blogger.googleusercontent.com/img/a/AVvXsEg6H9fvZmJqAzJDQHmpO_U95d6woZkHcN7UcPHibDBIC_sBRyqlENLZtb0zMuKyZ6kE4ymH-fZzyNmhtHKUWUL4NxgdYNdxsE_1owKkt6-j4khmprb4htnxYyC6TftrAK5JIi9f34K1KSVeP0_INiwCmHKcIfXygE0isC1fHsh2Au_EooOfSGuF2q_-1LLP">
+
