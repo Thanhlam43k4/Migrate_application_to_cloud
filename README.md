@@ -34,6 +34,8 @@
 
 **CLOUD Environment and Architecture**
 
+- Architecture Pattern 1: Multier Application
+
 <img align = "center" alt = "coding" width = "600" src = "https://blogger.googleusercontent.com/img/a/AVvXsEiqmWdsA9GXMmrN8EvleZQbbSOcSB0IguNtw4pB-DDDwouCUPTepm-Aoa91ZdoOJlQbmdmFVfjy-1qUNuKAaOLFInCtN4YsB0Ou7T8ioqtHfA0FgtMi9BQebXy9mgcd8BpdwDNV-aBdQgnoAVn4oIGhJrzb6Pq3YIVZPbA-CJL4ZSSxt18-ghpMxkrWsIhL">
 
 
