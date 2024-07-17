@@ -36,7 +36,7 @@
 
 - Architecture Pattern 1: Multier Application
 
-<img align = "center" alt = "coding" width = "600" src = "https://blogger.googleusercontent.com/img/a/AVvXsEiqmWdsA9GXMmrN8EvleZQbbSOcSB0IguNtw4pB-DDDwouCUPTepm-Aoa91ZdoOJlQbmdmFVfjy-1qUNuKAaOLFInCtN4YsB0Ou7T8ioqtHfA0FgtMi9BQebXy9mgcd8BpdwDNV-aBdQgnoAVn4oIGhJrzb6Pq3YIVZPbA-CJL4ZSSxt18-ghpMxkrWsIhL">
+<img align = "center" alt = "coding" width = "600" src = "https://blogger.googleusercontent.com/img/a/AVvXsEhiSoCQEQuyePWlQc1lr_Po_9QL-nOuAPZ4thffVDLEG3CQ6mqY9TlVHQbFP9-yZf99S6Dp2Oeu7fY4K1aTyA0eLPCKmdHdd_WsOohE0Q-OfBL7lxvloCgRwykFcLPNLqXKnwn6PoYZXuJfZABaXHP8nXK6Z6SwujX_P950MedJ81ljGbm-3BYXFN-HWuHK">
 
 
 
