@@ -19,22 +19,22 @@
 3. **Configure the Cluster**:
    - Choose the Cluster Infrastructure(eg `AWS Fargate (serverless)` or `Amazon EC2 instances`).
    - If you choose EC2 Instances you need to config your infrastructure:
-           + **Cluster name**: Enter a name for your cluster (e.g., `ecsdemo`).
      
-           + **Provisioning Model**: Choose **On-Demand Instance** or **Spot Instances**.
+           + Cluster name: Enter a name for your cluster (e.g., `ecsdemo`).
      
-           + **EC2 instance type**: Select the instance type (e.g., `t3.micro`).
+           + Provisioning Model: Choose **On-Demand Instance** or **Spot Instances**.
      
-           + **Number of instances**: Enter the number of instances to launch.
+           + EC2 instance type: Select the instance type (e.g., `t3.micro`).
      
-           + **VPC**: Select your VPC.
+           + Number of instances: Enter the number of instances to launch.
      
-           + **Subnets**: Select the subnets where you want to launch your instances.
+           + VPC: Select your VPC.
      
-           + **Security group**: Choose an existing security group or create a new one.
+           + Subnets: Select the subnets where you want to launch your instances.
+     
+           + Security group: Choose an existing security group or create a new one.
   
-   
-           + **Key pair**: Select an existing key pair or create a new one.
+           + Key pair: Select an existing key pair or create a new one.
 
 4. **Advanced Options (Optional)**:
    - Configure any additional options such as container instance IAM role, CloudWatch Container Insights, etc.
