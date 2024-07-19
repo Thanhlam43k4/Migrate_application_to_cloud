@@ -73,9 +73,6 @@ const
     checkverify
   }
     = require('./middleware/checkmiddle.js')
-
-
-
 let random_Code = null;
 app.get('/login', (req, res) => {
   // Pass error message as a parameter if present
@@ -274,12 +271,6 @@ app.get('/getProfile', authenticateJWT_log, async (req, res) => {
     res.redirect('/login?error= Your session login is expired Please login again')
   }
 })
-
-
-
-
-
-
 app.post('/addproduct', authenticateJWT_access_key, checkAdminRole, upload.single('profilePicture'), async (req, res) => {
   const { name, type, amount, price, image} = req.body;
   console.log(req.filename)
@@ -307,10 +298,6 @@ app.post('/addproduct', authenticateJWT_access_key, checkAdminRole, upload.singl
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
-
-
-
 app.post('/update-profile', authenticateJWT_log, upload.single('profilePicture'), handleFileUploadError, async (req, res) => {
   if (req.user != null) {
     let id = req.user.id;
@@ -355,10 +342,6 @@ app.post('/update-profile', authenticateJWT_log, upload.single('profilePicture')
     res.redirect('/login?error=Your session login is expired. Please login again.');
   }
 });
-
-
-
-
 app.get('/', (req, res) => {
   res.redirect('/homePage');
 })
@@ -498,11 +481,6 @@ app.post('/payment', authenticateJWT_log, async (req, res) => {
     throw err;
   }
 });
-
-
-
-
-
 
 app.listen(port, () => {
   console.log(`Frontend server listening at http://${process.env.SERVER_URL}:${port}`);

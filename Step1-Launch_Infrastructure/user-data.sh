@@ -17,9 +17,9 @@ sudo systemctl start mysqld
 
 ###Install Nginx
 
-###sudo yum install nginx -y
-###sudo systemctl enable nginx
-###sudo systemctl start nginx
+#sudo yum install nginx -y
+#sudo systemctl enable nginx
+#sudo systemctl start nginx
 
 
 ###Install docker 
