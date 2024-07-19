@@ -10,8 +10,8 @@ SouceCodeApp/shopping/node_modules
 
 
 
-Step1-Launch_Infrastructure/.terraform.lock.hcl
-Step1-Launch_Infrastructure/terraform.tfstate
-Step1-Launch_Infrastructure/terraform.tfstate.backup
-Step1-Launch_Infrastructure/.terraform/providers/registry.terraform.io/hashicorp/aws/5.48.0/windows_amd64/terraform-provider-aws_v5.48.0_x5.exe
-Step1-Launch_Infrastructure/.terraform/modules/modules.json
+Architecture1_MultierApp/Step1-Launch_Infrastructure/.terraform.lock.hcl
+Architecture1_MultierApp/Step1-Launch_Infrastructure/terraform.tfstate
+Architecture1_MultierApp/Step1-Launch_Infrastructure/terraform.tfstate.backup
+Architecture1_MultierApp/Step1-Launch_Infrastructure/.terraform/providers/registry.terraform.io/hashicorp/aws/5.48.0/windows_amd64/terraform-provider-aws_v5.48.0_x5.exe
+Architecture1_MultierApp/Step1-Launch_Infrastructure/.terraform/modules/modules.json
