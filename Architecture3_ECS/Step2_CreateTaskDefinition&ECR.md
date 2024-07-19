@@ -16,7 +16,7 @@
 
 ## Step 2: Create a Public Repository
 
-1. In the navigation pane, choose **Repositories**.
+1. In the navigation panel, choose **Repositories**.
 2. Click on **Create repository**.
 3. Configure the repository settings:
    - **Visibility settings**: Select **Public**.
@@ -60,7 +60,7 @@
      <img align = "center" alt = "coding" width = "600" src = "https://blogger.googleusercontent.com/img/a/AVvXsEglOgQZkhTl416zFzYE_7u-xr_iUTw-WJ-OoDu2LXQyL3u0Jg0yQDlWWKClBWCMkVqR1-ZbJBDHhRsRFTA5Cvg8N2z0vsyi9N1K4ZeDgrfdq6s0YXhttdIWFNioPNO3OsyDH5qzSP1mqudS9gVosd_9aAWqBGFO5zNDJVUJ2--MpoXvYUU55DcEZ8K2zNIl">
 ## Step 4: Create a Task Definition
 
-1. In the navigation pane, choose **Task Definitions**.
+1. In the navigation panel, choose **Task Definitions**.
 2. Click on **Create new Task Definition**.
 3. Select **EC2** or **Fargate** launch type compatibility, then click **Next step**.
 
