@@ -64,7 +64,22 @@
 2. Click on **Create new Task Definition**.
 3. Select **EC2** or **Fargate** launch type compatibility, then click **Next step**.
 
-## Step 5: Configure Task Definition
+## Step 5: Create S3 Bucket Store for env file
+
+1. Click on **Create bucket**.
+2. Configure the bucket settings:
+   - **Bucket name**: Enter a unique name for your bucket (e.g., `my-env-files-bucket`).
+   - **AWS Region**: Select the AWS Region where you want the bucket to reside.
+3. Configure additional settings (optional):
+   - **Bucket Versioning**: Enable versioning if you want to keep multiple versions of your environment files.
+   - **Encryption**: Enable server-side encryption to protect your environment files.
+4. Configure permissions and properties if necessary.
+5. Click **Create bucket** to create the bucket.
+
+
+
+
+## Step 6: Configure Task Definition
 
 1. **Task Definition Name**:
    - Enter a name for the task definition (e.g., `my-microservices-task`).
@@ -112,7 +127,7 @@
 
 7. Click **Create** to create the task definition.
 
-## Step 6: Create a Service
+## Step 8: Create a Service
 
 1. In the Amazon ECS console, navigate to **Clusters** and select your cluster.
 2. Click on **Create** and then **Create Service**.
