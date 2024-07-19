@@ -6,4 +6,4 @@
 
 
 
-***Step1: Create ECS Cluster and Register Ec2 Instance to Cluster
+**Step1: Create ECS Cluster and Register Ec2 Instance to Cluster**
