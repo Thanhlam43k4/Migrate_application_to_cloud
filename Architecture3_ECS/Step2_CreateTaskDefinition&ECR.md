@@ -33,7 +33,8 @@
 
 - I have 4 public Repository for 4 service ( `customer`,`frontend`,`shopping`,`product`)
 
-<img src = "">
+<img align = "center" alt = "coding" width = "600" src = "https://blogger.googleusercontent.com/img/a/AVvXsEigo-SxBlumpOCOrREytmcHieoKXZd8FYq0XVJ3_J7BcGPD2yuCTi7679HiWh3sNq-sDeK0NCuXUMzxOkQHCG8-mdBQQoosfy_EMnuJO4PczeQ52fR2NF3sbSqQyjNKYt2IEmBe1Fftnf86-qcByM0KSQzlnYuv_lZqbPKuJyVWAvPmBqSxvBxnjDesS3Zz">
+
 ## Step 3: Push Images to the Repository
 
 1. **Authenticate Docker to your public registry**:
