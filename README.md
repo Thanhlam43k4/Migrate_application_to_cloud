@@ -42,3 +42,7 @@
 
 <img align = "center" alt = "coding" width = "600" src = "https://blogger.googleusercontent.com/img/a/AVvXsEg6H9fvZmJqAzJDQHmpO_U95d6woZkHcN7UcPHibDBIC_sBRyqlENLZtb0zMuKyZ6kE4ymH-fZzyNmhtHKUWUL4NxgdYNdxsE_1owKkt6-j4khmprb4htnxYyC6TftrAK5JIi9f34K1KSVeP0_INiwCmHKcIfXygE0isC1fHsh2Au_EooOfSGuF2q_-1LLP">
 
+- Archiecture Pattern 3: Elastic Container Service
+<img align = "center" alt = "coding" width = "600" src = "https://blogger.googleusercontent.com/img/a/AVvXsEj101HNCuxW75HOOine0v7SG7pXGGHRhTYjkgkPhOpgzbiH_XU-NOy67b1W4zhPZ9xqB6bzaZcsVYWFYnULNMamZo-KOcYXOK8vg_Ymgd6giLv0dSeYoIYLVRJTQM-ra0RhiaUXHd4V9qIDiGenPb1bkuOdvGbOjiCr4SXg6MAb_HoUF-ADiqVjcCWarfJ0">
+
+
