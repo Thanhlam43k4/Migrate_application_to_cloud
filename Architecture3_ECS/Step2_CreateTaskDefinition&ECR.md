@@ -31,6 +31,9 @@
      
 4. Click on **Create repository** to create the public repository.
 
+- I have 4 public Repository for 4 service ( `customer`,`frontend`,`shopping`,`product`)
+
+<img src = "">
 ## Step 3: Push Images to the Repository
 
 1. **Authenticate Docker to your public registry**:
