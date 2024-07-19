@@ -58,11 +58,74 @@
    - My four microservices application images
      
      <img align = "center" alt = "coding" width = "600" src = "https://blogger.googleusercontent.com/img/a/AVvXsEglOgQZkhTl416zFzYE_7u-xr_iUTw-WJ-OoDu2LXQyL3u0Jg0yQDlWWKClBWCMkVqR1-ZbJBDHhRsRFTA5Cvg8N2z0vsyi9N1K4ZeDgrfdq6s0YXhttdIWFNioPNO3OsyDH5qzSP1mqudS9gVosd_9aAWqBGFO5zNDJVUJ2--MpoXvYUU55DcEZ8K2zNIl">
-       
+## Step 4: Create a Task Definition
+
+1. In the navigation pane, choose **Task Definitions**.
+2. Click on **Create new Task Definition**.
+3. Select **EC2** or **Fargate** launch type compatibility, then click **Next step**.
+
+## Step 5: Configure Task Definition
+
+1. **Task Definition Name**:
+   - Enter a name for the task definition (e.g., `my-microservices-task`).
+
+2. **Task Role**:
+   - Select an existing IAM role or create a new one that grants the necessary permissions for your tasks.
+
+3. **Network Mode**:
+   - Select the network mode for your task (e.g., `awsvpc` for Fargate).
+
+4. **Task Execution Role**:
+   - Select an IAM role that grants the ECS service permission to pull images from ECR and manage logs.
+
+5. **Container Definitions**:
+   - Click **Add container** for each of your services (`customer`, `shopping`, `products`, and `frontend`) and configure as follows:
+
+### Container Configuration
+
+#### Customer Service
+- **Container name**: `customer`
+- **Image**: `public.ecr.aws/<your-account-id>/customer:latest`
+- **Memory Limits**: Set memory limits (e.g., `256` soft limit)
+- **Port Mappings**: Add port mappings (e.g., `80:80`)
+
+#### Shopping Service
+- **Container name**: `shopping`
+- **Image**: `public.ecr.aws/<your-account-id>/shopping:latest`
+- **Memory Limits**: Set memory limits (e.g., `256` soft limit)
+- **Port Mappings**: Add port mappings (e.g., `81:80`)
+
+#### Products Service
+- **Container name**: `products`
+- **Image**: `public.ecr.aws/<your-account-id>/products:latest`
+- **Memory Limits**: Set memory limits (e.g., `256` soft limit)
+- **Port Mappings**: Add port mappings (e.g., `82:80`)
+
+#### Frontend Service
+- **Container name**: `frontend`
+- **Image**: `public.ecr.aws/<your-account-id>/frontend:latest`
+- **Memory Limits**: Set memory limits (e.g., `256` soft limit)
+- **Port Mappings**: Add port mappings (e.g., `83:80`)
+
+6. **Additional Configuration**:
+   - Configure environment variables, log configuration, health checks, and other container settings as needed.
+
+7. Click **Create** to create the task definition.
+
+## Step 6: Create a Service
+
+1. In the Amazon ECS console, navigate to **Clusters** and select your cluster.
+2. Click on **Create** and then **Create Service**.
+3. Choose the launch type compatibility (`EC2` or `Fargate`).
+4. Configure the service name, number of tasks, and other settings.
+5. Select the task definition created in Step 3.
+6. Configure networking, load balancer, and other settings as needed.
+7. Click **Create Service**.
+
 ## Additional Notes
 
-- Ensure your IAM user has the necessary permissions to create and manage ECR repositories.
-- For more information on managing ECR repositories and pushing images, refer to the [Amazon ECR documentation](https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html).
+- Ensure your IAM roles have the necessary permissions to pull images from ECR and manage ECS tasks.
+- For a production environment, consider configuring auto-scaling and load balancing for your services.
 
 ## License
 
