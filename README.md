@@ -45,4 +45,8 @@
 - Archiecture Pattern 3: Elastic Container Service
 <img align = "center" alt = "coding" width = "600" src = "https://blogger.googleusercontent.com/img/a/AVvXsEj101HNCuxW75HOOine0v7SG7pXGGHRhTYjkgkPhOpgzbiH_XU-NOy67b1W4zhPZ9xqB6bzaZcsVYWFYnULNMamZo-KOcYXOK8vg_Ymgd6giLv0dSeYoIYLVRJTQM-ra0RhiaUXHd4V9qIDiGenPb1bkuOdvGbOjiCr4SXg6MAb_HoUF-ADiqVjcCWarfJ0">
 
+    + ECS architecture:
+
+      <img align = "center" alt = "coding" width = "600" src ="    https://blogger.googleusercontent.com/img/a/AVvXsEiN3JPzIbeFA0E6Ms3LLCkM4hg8Oucpwm-L-ljUPVouLtW282kmEQz7KqylTX1tGCjcOXY4nh5dW6WbgvxFgo4VsYILufULsBEzYL5ScD4JOYDHfsh1xP0Ohp-oKo1cZf3aGUr9NjPsceF3209uwq0c0lKHZZ1c3yRXZhmHPmMNbV4kNRtCULtwolrhVwxN">
+      
 
