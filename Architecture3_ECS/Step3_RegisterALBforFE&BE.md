@@ -29,13 +29,19 @@ This README file provides instructions for setting up two Application Load Balan
 
 Create target groups for each service to define the destination for the load balancer.
 
-#### Frontend Target Group
+#### Target Group
 
-```sh
-aws elbv2 create-target-group \
-    --name frontend-target-group \
-    --protocol HTTP \
-    --port 3000 \
-    --vpc-id <your-vpc-id> \
-    --target-type instance
+<img align = "center" alt = "coding" width = "600" src = "https://blogger.googleusercontent.com/img/a/AVvXsEgBtcD2PYaIGJm4XSR2LGr_jggeEJjhjzW8xIT8hET_bF3_AlOKW0D7eWqrLnig_75-m_RHYnmBse_1ht9pYwDEl6dCIv4H0C4qboRXnTQwRHo0isEBTAzkLXcyayVS_emETGCKNfwHJF5eD9E2O70BhzQF2XAEHCP3lW8hdo0-RfznRL9HPFH8t2lgDyME">
+
+
+
+
+### 2. Register to LoadBalancer
+
+### Application Load Balancer
+
+<img align = "center" alt = "coding" width = "600" src = "https://blogger.googleusercontent.com/img/a/AVvXsEhOr8La1vAwRSWv3vLhFKpf82ArIUTKbxLnuHEVB5Dc2hQ3USJfqrlldE42eQ3QzFnlo1VWVo-yrURNmX3qCOS-J902ylKHrgWHc1Cht6hugEQFlvu-uEQCWhJO8nuR4p7Isa0Tzcc82UoBAO4K65GgPK4a8UcrlcnXVNEqfDC3iqWl3TEwy_jonCPLbV7f">
+
+
+
 
