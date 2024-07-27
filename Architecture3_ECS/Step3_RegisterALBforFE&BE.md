@@ -38,10 +38,10 @@ Create target groups for each service to define the destination for the load bal
 
 ### 2. Register to LoadBalancer
 
-### Application Load Balancer
+#### Application Load Balancer
 
 <img align = "center" alt = "coding" width = "600" src = "https://blogger.googleusercontent.com/img/a/AVvXsEhOr8La1vAwRSWv3vLhFKpf82ArIUTKbxLnuHEVB5Dc2hQ3USJfqrlldE42eQ3QzFnlo1VWVo-yrURNmX3qCOS-J902ylKHrgWHc1Cht6hugEQFlvu-uEQCWhJO8nuR4p7Isa0Tzcc82UoBAO4K65GgPK4a8UcrlcnXVNEqfDC3iqWl3TEwy_jonCPLbV7f">
 
 
 
-
+-> We already set up all the config for ALB for frontend for user and backend for call API between these services !!!
