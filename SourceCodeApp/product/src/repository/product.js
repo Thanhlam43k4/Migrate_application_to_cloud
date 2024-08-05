@@ -17,8 +17,10 @@ const AddProduct = async ({
             function (err, results) {
                 if (err) {
                     console.log('Error not add products!!');
+                }else{
+                    console.log('Insert Product Successfully!!!!');
                 }
-                console.log('Insert Product Successfully!!!!');
+                
                 console.log(results);
             })
     } catch (err) {

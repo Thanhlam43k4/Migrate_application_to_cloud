@@ -18,7 +18,7 @@ CREATE TABLE `products` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
-  `image` varchar(255) DEFAULT NULL;
+  `image` varchar(255) DEFAULT NULL,
   `amount` int DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL,
   `expiration_date` timestamp NULL DEFAULT NULL,
@@ -61,7 +61,6 @@ CREATE TABLE `payments` (
 
 
 /*Trigger whenever insert a new customers will automatically insert a new profile with this user_id */
-use customer_db;
 DELIMITER $$
 
 CREATE TRIGGER after_customer_insert
