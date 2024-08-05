@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deploy
+spec:
+  selector:
+    matchLabels:
+      app: mysql-deploy
+  template:
+    metadata:
+      labels:
+        app: mysql-deploy
+    spec:
+      containers:
+        - name: mysql-deploy
+          image: mysql:8.0
+          envFrom:
+            - configMapRef:
+                name: micro-config-map
+            - secretRef:
+                name: micro-secret
+           
+
+          resources:
+            limits:
+              memory: "500Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+           - name: mysql-storage
+             mountPath: /var/lib/mysql
+
+      volumes:
+        - name: mysql-storage
+          persistentVolumeClaim:
+            claimName: mysql-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-svc
+spec:
+  selector:
+    app: mysql-deploy
+  ports:
+    - port: 3306
+      targetPort: 3306
+      nodePort: 30000
+  type: NodePort

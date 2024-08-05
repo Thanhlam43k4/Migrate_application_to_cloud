@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-deploy
+spec:
+  selector:
+    matchLabels:
+      app: product-deploy
+  template:
+    metadata:
+      labels:
+        app: product-deploy
+    spec:
+      containers:
+        - name: product-deploy
+          image: public.ecr.aws/n1z3k8d0/micro-app-product
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: micro-config-map
+            - secretRef:
+                name: micro-secret
+          resources:
+            limits:
+              memory: "250Mi"
+              cpu: "100m"
+          ports:
+            - containerPort: 8001
+
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-svc
+spec:
+  selector:
+    app: product-deploy
+  ports:
+  - port: 8001
+    targetPort: 8001
+    nodePort: 30001
+  type: NodePort
+

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: micro-config-map
+data:
+  MYSQL_USER: thanhlam
+  MYSQL_USER_ROOT: root
+  MYSQL_HOST: mysql-svc.default.svc.cluster.local
+  MYSQL_DATABASE: customer_db
+  CUSTOMER_SERVICE_URL: customer-svc.default.svc.cluster.local
+  PRODUCT_SERVICE_URL: product-svc.default.svc.cluster.local
+  SHOPPING_SERVICE_URL: shopping-svc.default.svc.cluster.local
+  SHOPPING_PORT: '8002'
+  PRODUCT_PORT: '8001'   
+  CUSTOMER_PORT: '8003'
+  SERVER_URL: frontend-svc.default.svc.cluster.local
+  EMAIL_USERNAME: nguyenthanhlam71204@gmail.com

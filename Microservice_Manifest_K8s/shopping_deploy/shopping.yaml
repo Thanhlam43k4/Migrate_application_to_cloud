@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shopping-deploy
+spec:
+  selector:
+    matchLabels:
+      app: shopping-deploy
+  template:
+    metadata:
+      labels:
+        app: shopping-deploy
+    spec:
+      containers:
+        - name: shopping-deploy
+          image: public.ecr.aws/n1z3k8d0/micro-app-shopping
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: micro-config-map
+            - secretRef:
+                name: micro-secret
+          resources:
+            limits:
+              memory: "250Mi"
+              cpu: "100m"
+          ports:
+            - containerPort: 8002
+
+--- 
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: shopping-svc
+spec:
+  selector:
+    app: shopping-deploy
+  ports:
+  - port: 8002
+    targetPort: 8002
+  type: ClusterIP
+
