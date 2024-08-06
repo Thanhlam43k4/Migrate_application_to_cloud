@@ -27,7 +27,7 @@
 
 **Dev Environment and Architecture** 
 
-<img align = "center" alt = "coding" width = "600" src = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhaR-oiDHczwaEb3YbmvccT4dH6y5hXAI2BAOC9oxINdTWBosSZ9HiSmrQ3E4H_ZWNiIVnRvIokqCxvTzkcelz0JJGmO_IjUiX8TBQc8kSPR58YXqIgRiwHNS7LldQjfyomINi__qZLCxBgJoj_3WdLax5wVM6SuMlRW5igKt59Idza3p0haJ1mpiGMFyOa/s1257/microservice_structure.png"> 
+<img align = "center" alt = "coding" width = "600" src = "https://blogger.googleusercontent.com/img/a/AVvXsEjVgunjjP5Mn3UjJYO84L5UkYhghhu3Y3I9xZS7u4yfewkyD6bABvYwPywkQVISL2PdzzTdPyEf9l4sYQ5NidOOEalrey2r410lwZOTHO_3coRpqCeutErYRXqzZXf7NLM6H4E7u-saos97bVYNPF03KJv_AhV0coogSGfSczCOr3gKhxYWnW0XGMcNupTF">
 
 - Kubernetes Architecture
 
