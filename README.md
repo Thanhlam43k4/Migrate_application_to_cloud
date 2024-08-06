@@ -27,13 +27,11 @@
 
 **Dev Environment and Architecture** 
 
-<img align = "center" alt = "coding" width = "600" src = "https://blogger.googleusercontent.com/img/a/AVvXsEjVgunjjP5Mn3UjJYO84L5UkYhghhu3Y3I9xZS7u4yfewkyD6bABvYwPywkQVISL2PdzzTdPyEf9l4sYQ5NidOOEalrey2r410lwZOTHO_3coRpqCeutErYRXqzZXf7NLM6H4E7u-saos97bVYNPF03KJv_AhV0coogSGfSczCOr3gKhxYWnW0XGMcNupTF">
 
 - Kubernetes Architecture
 
 
-<img align = "center" alt = "coding" width = "600" src = " https://blogger.googleusercontent.com/img/a/AVvXsEjVgunjjP5Mn3UjJYO84L5UkYhghhu3Y3I9xZS7u4yfewkyD6bABvYwPywkQVISL2PdzzTdPyEf9l4sYQ5NidOOEalrey2r410lwZOTHO_3coRpqCeutErYRXqzZXf7NLM6H4E7u-saos97bVYNPF03KJv_AhV0coogSGfSczCOr3gKhxYWnW0XGMcNupTF">
- 
+<img align = "center" alt = "coding" width = "600" src = "https://blogger.googleusercontent.com/img/a/AVvXsEjVgunjjP5Mn3UjJYO84L5UkYhghhu3Y3I9xZS7u4yfewkyD6bABvYwPywkQVISL2PdzzTdPyEf9l4sYQ5NidOOEalrey2r410lwZOTHO_3coRpqCeutErYRXqzZXf7NLM6H4E7u-saos97bVYNPF03KJv_AhV0coogSGfSczCOr3gKhxYWnW0XGMcNupTF">
 
 
 **CLOUD Environment and Architecture**
